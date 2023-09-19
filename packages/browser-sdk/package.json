@@ -1,0 +1,14 @@
+{
+  "name": "@supertab/browser-sdk",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@laterpay/tapper-sdk": "^19.0.0"
+  }
+}
