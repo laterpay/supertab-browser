@@ -1,0 +1,2 @@
+[install.scopes]
+"@laterpay" = { token = "$NPM_TOKEN", url = "https://npm.pkg.github.com/" }
