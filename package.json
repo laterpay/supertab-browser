@@ -4,6 +4,7 @@
   "type": "module",
   "sideEffects": false,
   "devDependencies": {
+    "@happy-dom/global-registrator": "^12.1.6",
     "bun-types": "latest"
   },
   "scripts": {
