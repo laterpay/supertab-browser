@@ -11,5 +11,5 @@ export async function getApiVersion() {
 
   const healthCheck = await new InternalApi(config).health();
 
-  console.log(`Tapper version: ${healthCheck.version}`);
+  return healthCheck.version;
 }

@@ -2,5 +2,5 @@
 "@laterpay" = { token = "$NPM_TOKEN", url = "https://npm.pkg.github.com/" }
 
 [test]
-preload = "./happydom.ts"
+preload = ["./src/setupTests.ts"]
 
