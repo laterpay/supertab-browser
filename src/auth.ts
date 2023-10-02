@@ -15,7 +15,7 @@ export type Authentication = {
 };
 
 export type Authorization = {
-  authCode: string;
+  url: URL;
   codeVerifier: string;
 };
 
@@ -48,8 +48,7 @@ export async function authorize({
   url.searchParams.set("audience_hint", "consumer");
   url.searchParams.set("screen_hint", screenHint);
 
-  const authCode = await handleAuthWindow(url);
-  return { authCode, codeVerifier };
+  return { url, codeVerifier };
 }
 
 // Exchange auth code for access token
@@ -135,7 +134,7 @@ export async function refreshAuthentication({
 }
 
 // Open sso window and wait for auth code
-async function handleAuthWindow(url: URL) {
+export async function handleAuthWindow(url: URL) {
   const state = url.searchParams.get("state");
   const scope = url.searchParams.get("scope");
   const authWindow = window.open(url.toString(), "ssoWindow");

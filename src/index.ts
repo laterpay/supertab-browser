@@ -5,6 +5,7 @@ import {
 } from "@laterpay/tapper-sdk";
 
 import {
+  handleAuthWindow,
   authorize,
   authenticate,
   refreshAuthentication,
@@ -35,7 +36,8 @@ export async function auth(options: AuthOptions & { silently: boolean }) {
     });
     return setAuthentication(authentication);
   } else if (!options.silently) {
-    const { authCode, codeVerifier } = await authorize(options);
+    const { url, codeVerifier } = await authorize(options);
+    const authCode = await handleAuthWindow(url);
     const authentication = await authenticate({
       ...options,
       codeVerifier,
