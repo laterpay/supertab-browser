@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <script type="module" src="../../index.ts"></script>
+    <script type="text/javascript">
+      const options = {
+        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
+        redirectUri: `https://signon.sbx.supertab.co/oauth2/auth-proxy?origin=${window.location.href}`,
+        authBaseUrl: "https://auth.sbx.laterpay.net",
+      }
+      let authentication;
+      let user;
+
+      window.addEventListener("load", async () => {
+        await startAuthFlow({ silently: true });
+
+        if (authentication) {
+          getCurrentUser();
+        }
+      });
+
+      async function getCurrentUser(auth) {
+        log(`Getting current user with options: ${JSON.stringify(options, null, 2)}`);
+
+        user = await Supertab.getCurrentUser(authentication);
+        log(JSON.stringify({ user }, null, 2));
+      }
+
+      async function startAuthFlow(props) {
+        log(`Starting auth flow with options: ${JSON.stringify({...options, ...props}, null, 2)}`);
+
+        authentication = await Supertab.auth({ ...options, ...props })
+
+        if (authentication) {
+          log(JSON.stringify({ authentication }, null, 2));
+        } else {
+          log("No authentication object returned");
+        }
+      }
+
+
+      function log(message) {
+        document.querySelector("pre").innerHTML += `\n${message}\n`;
+      }
+
+      function clearLog() {
+        localStorage.clear();
+        document.querySelector("pre").innerHTML = "";
+      }
+    </script>
+  </head>
+  <body>
+
+  <h1>Auth demo</h1>
+  <ul>
+    <li>
+      <button type="button" onClick="clearLog()">Clear</button>        
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow()">Auth</button>        
+    </li>
+    <li>
+      <button type="button" onClick="getCurrentUser()">Get User</button>
+    </li>
+  </ul>
+
+  <h2>console</h2>
+  <pre style="min-height:300px;background-color:#eee;white-space:break-spaces;">
+  </pre>
+</html>

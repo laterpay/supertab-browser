@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
-import { auth, getApiVersion } from "./src";
+import { auth, getApiVersion, getCurrentUser } from "./src";
 
 declare global {
   interface Window {
@@ -12,6 +12,7 @@ declare global {
 const Supertab = {
   auth,
   getApiVersion,
+  getCurrentUser,
 };
 
 if (typeof window !== "undefined") {
