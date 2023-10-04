@@ -19,6 +19,12 @@ export type Authorization = {
   codeVerifier: string;
 };
 
+export enum AuthStatus {
+  EXPIRED = "expired",
+  VALID = "valid",
+  MISSING = "missing",
+}
+
 // Complete authentication flow
 export async function authFlow(options: AuthOptions & { silently: boolean }) {
   const previousAuth = getAuthentication();
@@ -42,6 +48,20 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     });
     return setAuthentication(authentication);
   }
+}
+
+export function getAuthStatus(): AuthStatus {
+  const previousAuth = getAuthentication();
+  const isExpired = (previousAuth?.expiresAt || 0) < Date.now();
+
+  if (!previousAuth) {
+    return AuthStatus.MISSING;
+  }
+  if (isExpired) {
+    return AuthStatus.EXPIRED;
+  }
+
+  return AuthStatus.VALID;
 }
 
 // Create auth url and wait for auth code

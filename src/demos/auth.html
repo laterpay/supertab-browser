@@ -47,11 +47,20 @@
         localStorage.clear();
         document.querySelector("pre").innerHTML = "";
       }
+
+      window.setInterval(() => {
+        document.getElementById("auth-status").innerHTML = Supertab.authStatus;
+      }, 1000);
+
     </script>
   </head>
   <body>
 
   <h1>Auth demo</h1>
+  <p>
+    This demo shows how to use the auth flow.
+  </p>
+
   <ul>
     <li>
       <button type="button" onClick="clearLog()">Clear</button>        
@@ -65,7 +74,13 @@
     <li>
       <button type="button" onClick="getCurrentUser()">Get User</button>
     </li>
+
+    <li>
+      Auth Status:
+      <span id="auth-status">---</span>
+    </li>
   </ul>
+
 
   <h2>console</h2>
   <pre style="min-height:300px;background-color:#eee;white-space:break-spaces;">

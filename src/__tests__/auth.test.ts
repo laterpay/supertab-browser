@@ -1,5 +1,11 @@
-import { describe, it, expect, mock } from "bun:test";
-import { authorize, authenticate, handleAuthWindow } from "../auth";
+import { describe, it, expect, mock, beforeEach } from "bun:test";
+import {
+  authorize,
+  authenticate,
+  handleAuthWindow,
+  getAuthStatus,
+  AuthStatus,
+} from "../auth";
 import { rest, server } from "@/mocks/server";
 
 describe("auth", () => {
@@ -174,6 +180,43 @@ describe("auth", () => {
         async () =>
           await handleAuthWindow(new URL("https://auth.sbx.laterpaytest.net")),
       ).toThrow("window closed");
+    });
+  });
+
+  describe("getAuthStatus", () => {
+    beforeEach(() => {
+      const map = new Map();
+      const localStorage = {
+        getItem: map.get.bind(map),
+        setItem: map.set.bind(map),
+        removeItem: map.delete.bind(map),
+      };
+      global.localStorage = localStorage as unknown as Storage;
+    });
+
+    it("returns 'valid' if access token is valid", async () => {
+      localStorage.setItem(
+        "supertab-auth",
+        JSON.stringify({
+          expiresAt: Date.now() + 100000,
+        }),
+      );
+      expect(getAuthStatus()).toBe(AuthStatus.VALID);
+    });
+
+    it("returns 'missing' if access token is invalid", async () => {
+      localStorage.removeItem("supertab-auth");
+      expect(getAuthStatus()).toBe(AuthStatus.MISSING);
+    });
+
+    it("returns 'expired' if access token is expired", async () => {
+      localStorage.setItem(
+        "supertab-auth",
+        JSON.stringify({
+          expiresAt: Date.now() - 100000,
+        }),
+      );
+      expect(getAuthStatus()).toBe(AuthStatus.EXPIRED);
     });
   });
 });

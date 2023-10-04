@@ -5,7 +5,7 @@ import {
   UserIdentityApi,
 } from "@laterpay/tapper-sdk";
 
-import { authFlow } from "./auth";
+import { authFlow, getAuthStatus } from "./auth";
 
 export class Supertab {
   private clientId: string;
@@ -14,7 +14,11 @@ export class Supertab {
     this.clientId = options.clientId;
   }
 
-  auth(
+  get authStatus() {
+    return getAuthStatus();
+  }
+
+  async auth(
     {
       silently,
       screenHint,
