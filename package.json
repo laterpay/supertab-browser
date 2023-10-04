@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "bun build ./index.ts --outdir ./dist --minify",
-    "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external"
+    "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
+    "demo:auth": "bunx parcel serve --port 3000 --open --no-cache src/demos/auth.html"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -18,5 +19,8 @@
   "dependencies": {
     "@laterpay/auth": "^1.1.3",
     "@laterpay/tapper-sdk": "^19.0.0"
+  },
+  "targets": {
+    "module": false
   }
 }
