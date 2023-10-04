@@ -2,38 +2,39 @@
   <head>
     <script type="module" src="../../index.ts"></script>
     <script type="text/javascript">
-      const options = {
-        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
-        redirectUri: `https://signon.sbx.supertab.co/oauth2/auth-proxy?origin=${window.location.href}`,
-        authBaseUrl: "https://auth.sbx.laterpay.net",
-      }
       let authentication;
       let user;
 
       window.addEventListener("load", async () => {
-        await startAuthFlow({ silently: true });
-
-        if (authentication) {
-          getCurrentUser();
-        }
+        window.SupertabInit({
+          clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e"
+        })
       });
 
-      async function getCurrentUser(auth) {
-        log(`Getting current user with options: ${JSON.stringify(options, null, 2)}`);
+      async function getCurrentUser() {
+        log(`Getting current user`);
 
-        user = await Supertab.getCurrentUser(authentication);
-        log(JSON.stringify({ user }, null, 2));
+        try {
+          user = await Supertab.getCurrentUser(authentication);
+          log(JSON.stringify({ user }, null, 2));
+        } catch (e) {
+          log(JSON.stringify({ error: e.toString() }, null, 2));
+        }
       }
 
-      async function startAuthFlow(props) {
-        log(`Starting auth flow with options: ${JSON.stringify({...options, ...props}, null, 2)}`);
+      async function startAuthFlow(options) {
+        log(`Starting auth flow with options: ${JSON.stringify({...options}, null, 2)}`);
 
-        authentication = await Supertab.auth({ ...options, ...props })
+        try {
+          authentication = await Supertab.auth(options)
 
-        if (authentication) {
-          log(JSON.stringify({ authentication }, null, 2));
-        } else {
-          log("No authentication object returned");
+          if (authentication) {
+            log(JSON.stringify({ authentication }, null, 2));
+          } else {
+            log("No authentication object returned");
+          }
+        } catch (e) {
+          log(JSON.stringify({ error: e.toString() }, null, 2));
         }
       }
 
@@ -54,6 +55,9 @@
   <ul>
     <li>
       <button type="button" onClick="clearLog()">Clear</button>        
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow({ silently: true })">Auth (silently)</button>        
     </li>
     <li>
       <button type="button" onClick="startAuthFlow()">Auth</button>        

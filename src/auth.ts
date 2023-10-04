@@ -2,7 +2,7 @@ export type AuthOptions = {
   clientId: string;
   redirectUri: string;
   authBaseUrl: string;
-  screenHint: string;
+  screenHint?: string;
   loginAction?: string;
   state?: object;
 };
@@ -18,6 +18,31 @@ export type Authorization = {
   url: URL;
   codeVerifier: string;
 };
+
+// Complete authentication flow
+export async function authFlow(options: AuthOptions & { silently: boolean }) {
+  const previousAuth = getAuthentication();
+  const isExpired = (previousAuth?.expiresAt || 0) < Date.now();
+
+  if (previousAuth && !isExpired) {
+    return previousAuth;
+  } else if (previousAuth && isExpired) {
+    const authentication = await refreshAuthentication({
+      ...options,
+      ...previousAuth,
+    });
+    return setAuthentication(authentication);
+  } else if (!options.silently) {
+    const { url, codeVerifier } = await authorize(options);
+    const authCode = await handleAuthWindow(url);
+    const authentication = await authenticate({
+      ...options,
+      codeVerifier,
+      authCode,
+    });
+    return setAuthentication(authentication);
+  }
+}
 
 // Create auth url and wait for auth code
 export async function authorize({
@@ -113,6 +138,7 @@ export async function refreshAuthentication({
   params.append("client_id", clientId);
 
   const res = await fetch(url.toString(), {
+    method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -197,3 +223,13 @@ function generateCodeVerifier(length: number) {
 
   return text;
 }
+
+const getAuthentication = () => {
+  const entry = localStorage.getItem("supertab-auth");
+  return entry ? (JSON.parse(entry) as Authentication) : null;
+};
+
+const setAuthentication = (auth: Authentication) => {
+  localStorage.setItem("supertab-auth", JSON.stringify(auth));
+  return auth;
+};
