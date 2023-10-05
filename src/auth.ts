@@ -50,6 +50,7 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
   }
 }
 
+// Return auth status
 export function getAuthStatus(): AuthStatus {
   const previousAuth = getAuthentication();
   const isExpired = (previousAuth?.expiresAt || 0) < Date.now();
@@ -62,6 +63,11 @@ export function getAuthStatus(): AuthStatus {
   }
 
   return AuthStatus.VALID;
+}
+
+// Return accessToken
+export function getAccessToken(): string | undefined {
+  return getAuthentication()?.accessToken;
 }
 
 // Create auth url and wait for auth code

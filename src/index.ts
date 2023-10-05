@@ -1,17 +1,22 @@
-import { AUTH_BASE_URL, SSO_BASE_URL } from "@/env";
+import { AUTH_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL } from "@/env";
 import {
   Configuration,
   InternalApi,
   UserIdentityApi,
 } from "@laterpay/tapper-sdk";
 
-import { authFlow, getAuthStatus } from "./auth";
+import { authFlow, getAuthStatus, getAccessToken } from "./auth";
 
 export class Supertab {
   private clientId: string;
+  private tapperConfig: Configuration;
 
   constructor(options: { clientId: string }) {
     this.clientId = options.clientId;
+    this.tapperConfig = new Configuration({
+      basePath: TAPI_BASE_URL,
+      accessToken: () => `Bearer ${getAccessToken()}`,
+    });
   }
 
   get authStatus() {
@@ -45,21 +50,12 @@ export class Supertab {
   }
 
   async getApiVersion() {
-    const config = new Configuration({
-      basePath: "https://tapi.sbx.laterpay.net",
-    });
-
-    const healthCheck = await new InternalApi(config).health();
+    const healthCheck = await new InternalApi(this.tapperConfig).health();
 
     return healthCheck.version;
   }
 
-  async getCurrentUser({ accessToken }: { accessToken: string }) {
-    const config = new Configuration({
-      basePath: "https://tapi.sbx.laterpay.net",
-      accessToken: `Bearer ${accessToken}`,
-    });
-
-    return new UserIdentityApi(config).getCurrentUserV1();
+  async getCurrentUser() {
+    return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
   }
 }
