@@ -1,22 +1,21 @@
 /// <reference lib="dom" />
 /// <reference lib="dom.iterable" />
 
-import { auth, getApiVersion, getCurrentUser } from "./src";
+import { Supertab } from "./src";
 
 declare global {
   interface Window {
-    Supertab: typeof Supertab;
+    Supertab: Supertab;
+    SupertabInit: (options: { clientId: string }) => Supertab;
   }
 }
 
-const Supertab = {
-  auth,
-  getApiVersion,
-  getCurrentUser,
-};
-
 if (typeof window !== "undefined") {
-  (window as any).Supertab = Supertab;
+  window.SupertabInit = (options) => {
+    window.Supertab = new Supertab(options);
+
+    return window.Supertab;
+  };
 }
 
 export default Supertab;

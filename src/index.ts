@@ -1,67 +1,61 @@
+import { AUTH_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL } from "@/env";
 import {
   Configuration,
   InternalApi,
   UserIdentityApi,
 } from "@laterpay/tapper-sdk";
 
-import {
-  handleAuthWindow,
-  authorize,
-  authenticate,
-  refreshAuthentication,
-  AuthOptions,
-  Authentication,
-} from "./auth";
+import { authFlow, getAuthStatus, getAccessToken } from "./auth";
 
-const getAuthentication = () => {
-  const entry = localStorage.getItem("supertab-auth");
-  return entry ? (JSON.parse(entry) as Authentication) : null;
-};
+export class Supertab {
+  private clientId: string;
+  private tapperConfig: Configuration;
 
-const setAuthentication = (auth: Authentication) => {
-  localStorage.setItem("supertab-auth", JSON.stringify(auth));
-  return auth;
-};
-
-export async function auth(options: AuthOptions & { silently: boolean }) {
-  const previousAuth = getAuthentication();
-  const isExpired = (previousAuth?.expiresAt || 0) < Date.now();
-
-  if (previousAuth && !isExpired) {
-    return previousAuth;
-  } else if (previousAuth && isExpired) {
-    const authentication = await refreshAuthentication({
-      ...options,
-      ...previousAuth,
+  constructor(options: { clientId: string }) {
+    this.clientId = options.clientId;
+    this.tapperConfig = new Configuration({
+      basePath: TAPI_BASE_URL,
+      accessToken: () => `Bearer ${getAccessToken()}`,
     });
-    return setAuthentication(authentication);
-  } else if (!options.silently) {
-    const { url, codeVerifier } = await authorize(options);
-    const authCode = await handleAuthWindow(url);
-    const authentication = await authenticate({
-      ...options,
-      codeVerifier,
-      authCode,
-    });
-    return setAuthentication(authentication);
   }
-}
 
-export async function getApiVersion() {
-  const config = new Configuration({
-    basePath: "https://tapi.sbx.laterpay.net",
-  });
+  get authStatus() {
+    return getAuthStatus();
+  }
 
-  const healthCheck = await new InternalApi(config).health();
+  async auth(
+    {
+      silently,
+      screenHint,
+      state,
+      redirectUri,
+    }: {
+      silently: boolean;
+      screenHint?: string;
+      state?: object;
+      redirectUri: string;
+    } = {
+      silently: false,
+      redirectUri: window.location.href,
+    },
+  ) {
+    return authFlow({
+      silently,
+      screenHint,
+      state,
+      authBaseUrl: AUTH_BASE_URL,
+      redirectUri: `${SSO_BASE_URL}/oauth2/auth-proxy?origin=${redirectUri}`,
+      clientId: this.clientId,
+    });
+  }
 
-  return healthCheck.version;
-}
+  async getApiVersion() {
+    const healthCheck = await new InternalApi(this.tapperConfig).health();
 
-export async function getCurrentUser({ accessToken }: { accessToken: string }) {
-  const config = new Configuration({
-    basePath: "https://tapi.sbx.laterpay.net",
-    accessToken: `Bearer ${accessToken}`,
-  });
+    return healthCheck.version;
+  }
 
-  return new UserIdentityApi(config).getCurrentUserV1();
+  async getCurrentUser() {
+    return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
+  }
 }
