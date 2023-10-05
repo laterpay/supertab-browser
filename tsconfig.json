@@ -3,6 +3,7 @@
     "lib": ["ESNext"],
     "module": "esnext",
     "target": "esnext",
+    "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "moduleDetection": "force",
     "allowImportingTsExtensions": true,

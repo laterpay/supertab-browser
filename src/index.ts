@@ -5,7 +5,41 @@ import {
   UserIdentityApi,
 } from "@laterpay/tapper-sdk";
 
-import { authFlow, getAuthStatus, getAccessToken } from "./auth";
+import {
+  authFlow,
+  getAuthStatus,
+  getAccessToken,
+  AuthStatus,
+  AuthStatus,
+} from "./auth";
+
+interface Authenticable {
+  authStatus: AuthStatus;
+}
+
+function authenticated(
+  target: Authenticable,
+  propertyKey: string,
+  descriptor: PropertyDescriptor,
+) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = function (...args: any[]) {
+    if (target.authStatus === AuthStatus.MISSING) {
+      throw new Error(`Missing auth: ${propertyKey}`);
+    }
+    if (target.authStatus === AuthStatus.EXPIRED) {
+      throw new Error(`Expired auth: ${propertyKey}`);
+    }
+    if (target.authStatus !== AuthStatus.VALID) {
+      throw new Error(`Invalid auth: ${propertyKey}`);
+    }
+
+    return originalMethod.apply(this, args);
+  };
+
+  return descriptor;
+}
 
 export class Supertab {
   private clientId: string;
@@ -55,6 +89,7 @@ export class Supertab {
     return healthCheck.version;
   }
 
+  @authenticated
   async getCurrentUser() {
     return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
   }
