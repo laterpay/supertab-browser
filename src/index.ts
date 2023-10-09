@@ -134,6 +134,7 @@ export class Supertab {
         currency: currency.isoCode,
         baseUnit: currency.baseUnit,
         localeCode: language,
+        localeCode: this.language,
         showZeroFractionDigits: true,
       });
 
