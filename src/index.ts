@@ -91,6 +91,13 @@ export class Supertab {
 
   @authenticated
   async getCurrentUser() {
-    return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
+    const user = await new UserIdentityApi(
+      this.tapperConfig,
+    ).getCurrentUserV1();
+
+    return {
+      id: user.id,
+    };
   }
+
 }
