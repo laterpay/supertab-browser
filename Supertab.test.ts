@@ -61,4 +61,88 @@ describe("Supertab", () => {
       expect(await client.getCurrentUser()).toEqual(user);
     });
   });
+
+  describe(".getOfferings", () => {
+    test("return offerings with default currency", async () => {
+      const client = new Supertab({
+        clientId: "test-client-id",
+        language: "en-US",
+      });
+
+      server.withClientConfig({
+        contentKeys: [],
+        redirectUri: "",
+        siteName: "",
+        testMode: false,
+        offerings: [
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            price: {
+              amount: 100,
+              currency: "USD",
+            },
+          } as SiteOffering,
+        ],
+        currencies: [
+          {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
+        ] as Currency[],
+        suggestedCurrency: "USD",
+      });
+
+      expect(await client.getOfferings()).toEqual([
+        {
+          id: "test-offering-id",
+          description: "Test Offering Description",
+          price: "$1.00",
+        },
+      ]);
+    });
+
+    test("return offerings with given currency", async () => {
+      const client = new Supertab({
+        clientId: "test-client-id",
+        language: "pt-BR",
+      });
+
+      server.withClientConfig({
+        contentKeys: [],
+        redirectUri: "",
+        siteName: "",
+        testMode: false,
+        offerings: [
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            price: {
+              amount: 100,
+              currency: "BRL",
+            },
+          } as SiteOffering,
+        ],
+        currencies: [
+          {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
+          {
+            isoCode: "BRL",
+            baseUnit: 100,
+          },
+        ] as Currency[],
+        suggestedCurrency: "USD",
+      });
+
+      expect(await client.getOfferings({ currency: "BRL" })).toEqual([
+        {
+          id: "test-offering-id",
+          description: "Test Offering Description",
+          price: "R$ 1,00",
+        },
+      ]);
+    });
+  });
 });

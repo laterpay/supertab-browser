@@ -3,6 +3,8 @@ import {
   Configuration,
   InternalApi,
   UserIdentityApi,
+  ItemsApi,
+  Currency,
 } from "@laterpay/tapper-sdk";
 
 import {
@@ -12,6 +14,8 @@ import {
   AuthStatus,
   AuthStatus,
 } from "./auth";
+
+import { formatPrice } from "./price";
 
 interface Authenticable {
   authStatus: AuthStatus;
@@ -44,9 +48,11 @@ function authenticated(
 export class Supertab {
   private clientId: string;
   private tapperConfig: Configuration;
+  private language: string;
 
-  constructor(options: { clientId: string }) {
+  constructor(options: { clientId: string; language?: string }) {
     this.clientId = options.clientId;
+    this.language = options.language || window.navigator.language;
     this.tapperConfig = new Configuration({
       basePath: TAPI_BASE_URL,
       accessToken: () => `Bearer ${getAccessToken()}`,
@@ -92,5 +98,43 @@ export class Supertab {
   @authenticated
   async getCurrentUser() {
     return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
+  }
+
+  async getOfferings({ currency }: { currency?: string } = {}) {
+    const clientConfig = await new ItemsApi(
+      this.tapperConfig,
+    ).getClientConfigV1({
+      clientId: this.clientId,
+      currency,
+    });
+
+    const currenciesByCode: Record<string, Currency> =
+      clientConfig.currencies.reduce(
+        (acc, eachCurrency) => ({
+          ...acc,
+          [eachCurrency.isoCode]: eachCurrency,
+        }),
+        {},
+      );
+
+    const offerings = clientConfig.offerings.map((eachOffering) => {
+      const currency = currenciesByCode[eachOffering.price.currency];
+
+      const price = formatPrice({
+        amount: eachOffering.price.amount,
+        currency: currency.isoCode,
+        baseUnit: currency.baseUnit,
+        localeCode: this.language,
+        showZeroFractionDigits: true,
+      });
+
+      return {
+        id: eachOffering.id,
+        description: eachOffering.description,
+        price,
+      };
+    });
+
+    return offerings;
   }
 }
