@@ -1,7 +1,7 @@
 import { test, expect, describe } from "bun:test";
-import { rest, server } from "@/mocks/server";
+import { server } from "@/mocks/server";
 import Supertab from ".";
-import { UserResponse, UserResponseToJSON } from "@laterpay/tapper-sdk";
+import { Currency, SiteOffering, UserResponse } from "@laterpay/tapper-sdk";
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -14,17 +14,10 @@ describe("Supertab", () => {
   describe(".getApiVersion", () => {
     test("return api version from tapper", async () => {
       const client = new Supertab({ clientId: "test-client-id" });
-      server.use(
-        rest.get("https://tapi.sbx.laterpay.net/health", (_, res, ctx) =>
-          res(
-            ctx.status(200),
-            ctx.json({
-              status: "ok",
-              version: "1.0.0",
-            }),
-          ),
-        ),
-      );
+      server.withHealth({
+        status: "ok",
+        version: "1.0.0",
+      });
       expect(await client.getApiVersion()).toBe("1.0.0");
     });
   });
@@ -51,16 +44,9 @@ describe("Supertab", () => {
         isEmailVerified: true,
       };
 
-      server.use(
-        rest.get(
-          "https://tapi.sbx.laterpay.net/v1/identity/me",
-          (_, res, ctx) =>
-            res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
-        ),
-      );
-      expect(await client.getCurrentUser()).toEqual({
-        id: user.id,
-      });
+      server.withCurrentUser(user);
+
+      expect(await client.getCurrentUser()).toEqual(user);
     });
   });
 
