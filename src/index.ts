@@ -100,7 +100,10 @@ export class Supertab {
     return new UserIdentityApi(this.tapperConfig).getCurrentUserV1();
   }
 
-  async getOfferings({ currency }: { currency?: string } = {}) {
+  async getOfferings({
+    currency,
+    language = this.language,
+  }: { currency?: string; language?: string } = {}) {
     const clientConfig = await new ItemsApi(
       this.tapperConfig,
     ).getClientConfigV1({
@@ -124,7 +127,7 @@ export class Supertab {
         amount: eachOffering.price.amount,
         currency: currency.isoCode,
         baseUnit: currency.baseUnit,
-        localeCode: this.language,
+        localeCode: language,
         showZeroFractionDigits: true,
       });
 
