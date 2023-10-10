@@ -58,7 +58,9 @@ describe("Supertab", () => {
             res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
         ),
       );
-      expect(await client.getCurrentUser()).toEqual(user);
+      expect(await client.getCurrentUser()).toEqual({
+        id: user.id,
+      });
     });
   });
 
