@@ -7,13 +7,7 @@ import {
   Currency,
 } from "@laterpay/tapper-sdk";
 
-import {
-  authFlow,
-  getAuthStatus,
-  getAccessToken,
-  AuthStatus,
-  AuthStatus,
-} from "./auth";
+import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 
 import { formatPrice } from "./price";
 
@@ -134,6 +128,7 @@ export class Supertab {
         currency: currency.isoCode,
         baseUnit: currency.baseUnit,
         localeCode: language,
+        localeCode: this.language,
         showZeroFractionDigits: true,
       });
 

@@ -4,8 +4,13 @@ import { handlers } from "./handlers";
 import {
   ClientConfig,
   ClientConfigToJSON,
+  HealthResponse,
+  HealthResponseToJSON,
+  UserResponse,
+  UserResponseToJSON,
 } from "@laterpay/tapper-sdk";
 
+// typed mocks handlers
 const withClientConfig = (clientConfig: ClientConfig) => {
   server.use(
     rest.get(
@@ -17,9 +22,32 @@ const withClientConfig = (clientConfig: ClientConfig) => {
 
   return server;
 };
+
+const withCurrentUser = (user: UserResponse) => {
+  server.use(
+    rest.get("https://tapi.sbx.laterpay.net/v1/identity/me", (_, res, ctx) =>
+      res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
+    ),
+  );
+
+  return server;
+};
+
+const withHealth = (health: HealthResponse) => {
+  server.use(
+    rest.get("https://tapi.sbx.laterpay.net/health", (_, res, ctx) =>
+      res(ctx.status(200), ctx.json(HealthResponseToJSON(health))),
+    ),
+  );
+
+  return server;
+};
+
 // Setup requests interception using the given handlers.
 const server = Object.assign(setupServer(...handlers), {
   withClientConfig,
+  withCurrentUser,
+  withHealth,
 });
 
 export { server, rest };
