@@ -1,8 +1,53 @@
 import { rest } from "msw";
-import { setupServer, SetupServer } from "msw/node";
+import { type SetupServer, setupServer } from "msw/node";
 import { handlers } from "./handlers";
+import {
+  ClientConfig,
+  ClientConfigToJSON,
+  HealthResponse,
+  HealthResponseToJSON,
+  UserResponse,
+  UserResponseToJSON,
+} from "@laterpay/tapper-sdk";
+
+// typed mocks handlers
+const withClientConfig = (clientConfig: ClientConfig) => {
+  server.use(
+    rest.get(
+      "https://tapi.sbx.laterpay.net/v1/public/items/client/:id/config",
+      (_, res, ctx) =>
+        res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig))),
+    ),
+  );
+
+  return server;
+};
+
+const withCurrentUser = (user: UserResponse) => {
+  server.use(
+    rest.get("https://tapi.sbx.laterpay.net/v1/identity/me", (_, res, ctx) =>
+      res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
+    ),
+  );
+
+  return server;
+};
+
+const withHealth = (health: HealthResponse) => {
+  server.use(
+    rest.get("https://tapi.sbx.laterpay.net/health", (_, res, ctx) =>
+      res(ctx.status(200), ctx.json(HealthResponseToJSON(health))),
+    ),
+  );
+
+  return server;
+};
 
 // Setup requests interception using the given handlers.
-const server: SetupServer = setupServer(...handlers);
+const server = Object.assign(setupServer(...handlers), {
+  withClientConfig,
+  withCurrentUser,
+  withHealth,
+});
 
 export { server, rest };
