@@ -5,20 +5,18 @@ import {
   UserIdentityApi,
   ItemsApi,
   Currency,
+  AccessApi,
+  ClientConfig,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
-
 import { formatPrice } from "./price";
-
-interface Authenticable {
-  authStatus: AuthStatus;
-}
+import { AccessStatus, Authenticable, CheckAccessResponse } from "./types";
 
 function authenticated(
   target: Authenticable,
   propertyKey: string,
-  descriptor: PropertyDescriptor,
+  descriptor: PropertyDescriptor
 ) {
   const originalMethod = descriptor.value;
 
@@ -43,6 +41,7 @@ export class Supertab {
   private clientId: string;
   private tapperConfig: Configuration;
   private language: string;
+  private _clientConfig?: ClientConfig;
 
   constructor(options: { clientId: string; language?: string }) {
     this.clientId = options.clientId;
@@ -71,7 +70,7 @@ export class Supertab {
     } = {
       silently: false,
       redirectUri: window.location.href,
-    },
+    }
   ) {
     return authFlow({
       silently,
@@ -92,7 +91,7 @@ export class Supertab {
   @authenticated
   async getCurrentUser() {
     const user = await new UserIdentityApi(
-      this.tapperConfig,
+      this.tapperConfig
     ).getCurrentUserV1();
 
     return {
@@ -100,16 +99,22 @@ export class Supertab {
     };
   }
 
-  async getOfferings({
-    currency,
-    language = this.language,
-  }: { currency?: string; language?: string } = {}) {
-    const clientConfig = await new ItemsApi(
-      this.tapperConfig,
+  private async _getClientConfig() {
+    if (this._clientConfig) {
+      return this._clientConfig;
+    }
+
+    this._clientConfig = await new ItemsApi(
+      this.tapperConfig
     ).getClientConfigV1({
       clientId: this.clientId,
-      currency,
     });
+
+    return this._clientConfig;
+  }
+
+  async getOfferings({ language = this.language }: { language?: string } = {}) {
+    const clientConfig = await this._getClientConfig();
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -117,7 +122,7 @@ export class Supertab {
           ...acc,
           [eachCurrency.isoCode]: eachCurrency,
         }),
-        {},
+        {}
       );
 
     const offerings = clientConfig.offerings.map((eachOffering) => {
@@ -128,7 +133,6 @@ export class Supertab {
         currency: currency.isoCode,
         baseUnit: currency.baseUnit,
         localeCode: language,
-        localeCode: this.language,
         showZeroFractionDigits: true,
       });
 
@@ -140,5 +144,33 @@ export class Supertab {
     });
 
     return offerings;
+  }
+
+  @authenticated
+  async checkAccess() {
+    const clientConfig = await this._getClientConfig();
+    const contentKey = clientConfig.contentKeys.map(
+      (item) => item.contentKey
+    )[0] as string;
+
+    const access = await new AccessApi(this.tapperConfig).checkAccessV2({
+      contentKey,
+    });
+
+    if (access.access) {
+      return {
+        status: access.access.status
+          ? AccessStatus.GRANTED
+          : AccessStatus.DENIED,
+        details: {
+          contentKey: access.access.contentKey ?? "",
+          validTo: access.access.validTo ?? 0,
+        },
+      };
+    }
+
+    return {
+      status: AccessStatus.DENIED,
+    };
   }
 }
