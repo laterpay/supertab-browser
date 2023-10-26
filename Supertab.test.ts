@@ -46,7 +46,7 @@ describe("Supertab", () => {
 
       server.withCurrentUser(user);
 
-      expect(await client.getCurrentUser()).toEqual(user);
+      expect(await client.getCurrentUser()).toEqual({ id: user.id });
     });
   });
 
