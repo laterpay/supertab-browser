@@ -181,13 +181,13 @@ describe("Supertab", () => {
         access: {
           status: "Granted",
           contentKey: "test-content-key",
-          validTo: 1234567890,
+          validTo: 1700119519,
         },
       });
 
       expect(await client.checkAccess()).toEqual({
         contentKey: "test-content-key",
-        validTo: 1234567890,
+        validTo: new Date(1700119519 * 1000),
       });
     });
 

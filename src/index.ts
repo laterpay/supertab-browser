@@ -160,7 +160,9 @@ export class Supertab {
     if (access.access) {
       return {
         contentKey: access.access.contentKey ?? "",
-        validTo: access.access.validTo ?? 0,
+        validTo: access.access.validTo
+          ? new Date(access.access.validTo * 1000)
+          : undefined,
       };
     }
 
