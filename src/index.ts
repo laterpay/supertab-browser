@@ -11,7 +11,7 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
-import { AccessStatus, Authenticable, CheckAccessResponse } from "./types";
+import { Authenticable } from "./types";
 
 function authenticated(
   target: Authenticable,
@@ -159,18 +159,11 @@ export class Supertab {
 
     if (access.access) {
       return {
-        status: access.access.status
-          ? AccessStatus.GRANTED
-          : AccessStatus.DENIED,
-        details: {
-          contentKey: access.access.contentKey ?? "",
-          validTo: access.access.validTo ?? 0,
-        },
+        contentKey: access.access.contentKey ?? "",
+        validTo: access.access.validTo ?? 0,
       };
     }
 
-    return {
-      status: AccessStatus.DENIED,
-    };
+    return {};
   }
 }

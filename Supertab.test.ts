@@ -2,7 +2,6 @@ import { test, expect, describe } from "bun:test";
 import { server } from "@/mocks/server";
 import Supertab from ".";
 import { Currency, SiteOffering, UserResponse } from "@laterpay/tapper-sdk";
-import { AccessStatus } from "@/types";
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -187,11 +186,8 @@ describe("Supertab", () => {
       });
 
       expect(await client.checkAccess()).toEqual({
-        details: {
-          contentKey: "test-content-key",
-          validTo: 1234567890,
-        },
-        status: AccessStatus.GRANTED,
+        contentKey: "test-content-key",
+        validTo: 1234567890,
       });
     });
 
@@ -211,9 +207,7 @@ describe("Supertab", () => {
         access: null,
       });
 
-      expect(await client.checkAccess()).toEqual({
-        status: AccessStatus.DENIED,
-      });
+      expect(await client.checkAccess()).toEqual({});
     });
   });
 });
