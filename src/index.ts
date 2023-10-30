@@ -99,7 +99,7 @@ export class Supertab {
     };
   }
 
-  private async _getClientConfig() {
+  async #getClientConfig() {
     if (this._clientConfig) {
       return this._clientConfig;
     }
@@ -114,7 +114,7 @@ export class Supertab {
   }
 
   async getOfferings({ language = this.language }: { language?: string } = {}) {
-    const clientConfig = await this._getClientConfig();
+    const clientConfig = await this.#getClientConfig();
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -148,7 +148,7 @@ export class Supertab {
 
   @authenticated
   async checkAccess() {
-    const clientConfig = await this._getClientConfig();
+    const clientConfig = await this.#getClientConfig();
     const contentKey = clientConfig.contentKeys.map(
       (item) => item.contentKey
     )[0] as string;
@@ -164,8 +164,8 @@ export class Supertab {
           ? new Date(access.access.validTo * 1000)
           : undefined,
       };
+    } else {
+      throw new Error("Access denied");
     }
-
-    return {};
   }
 }
