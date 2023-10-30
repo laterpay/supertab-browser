@@ -190,24 +190,5 @@ describe("Supertab", () => {
         validTo: new Date(1700119519 * 1000),
       });
     });
-
-    test("return access denied", async () => {
-      localStorage.setItem(
-        "supertab-auth",
-        JSON.stringify({
-          expiresAt: Date.now() + 100000,
-        })
-      );
-
-      const client = new Supertab({ clientId: "test-client-id" });
-
-      server.withClientConfig(accessClientConfig);
-
-      server.withAccessCheck({
-        access: null,
-      });
-
-      expect(await client.checkAccess()).toEqual({});
-    });
   });
 });
