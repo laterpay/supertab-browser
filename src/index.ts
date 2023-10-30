@@ -7,11 +7,13 @@ import {
   Currency,
   AccessApi,
   ClientConfig,
+  AccessApi,
+  ClientConfig,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
-import { AccessStatus, Authenticable, CheckAccessResponse } from "./types";
+import { Authenticable } from "./types";
 
 function authenticated(
   target: Authenticable,
@@ -42,6 +44,7 @@ export class Supertab {
   private tapperConfig: Configuration;
   private language: string;
   private _clientConfig?: ClientConfig;
+  private _clientConfig?: ClientConfig;
 
   constructor(options: { clientId: string; language?: string }) {
     this.clientId = options.clientId;
@@ -71,6 +74,7 @@ export class Supertab {
       silently: false,
       redirectUri: window.location.href,
     }
+    }
   ) {
     return authFlow({
       silently,
@@ -92,6 +96,7 @@ export class Supertab {
   async getCurrentUser() {
     const user = await new UserIdentityApi(
       this.tapperConfig
+      this.tapperConfig
     ).getCurrentUserV1();
 
     return {
@@ -99,7 +104,7 @@ export class Supertab {
     };
   }
 
-  private async _getClientConfig() {
+  async #getClientConfig() {
     if (this._clientConfig) {
       return this._clientConfig;
     }
@@ -114,7 +119,7 @@ export class Supertab {
   }
 
   async getOfferings({ language = this.language }: { language?: string } = {}) {
-    const clientConfig = await this._getClientConfig();
+    const clientConfig = await this.#getClientConfig();
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -148,7 +153,7 @@ export class Supertab {
 
   @authenticated
   async checkAccess() {
-    const clientConfig = await this._getClientConfig();
+    const clientConfig = await this.#getClientConfig();
     const contentKey = clientConfig.contentKeys.map(
       (item) => item.contentKey
     )[0] as string;
@@ -159,18 +164,13 @@ export class Supertab {
 
     if (access.access) {
       return {
-        status: access.access.status
-          ? AccessStatus.GRANTED
-          : AccessStatus.DENIED,
-        details: {
-          contentKey: access.access.contentKey ?? "",
-          validTo: access.access.validTo ?? 0,
-        },
+        contentKey: access.access.contentKey ?? "",
+        validTo: access.access.validTo
+          ? new Date(access.access.validTo * 1000)
+          : undefined,
       };
+    } else {
+      throw new Error("Access denied");
     }
-
-    return {
-      status: AccessStatus.DENIED,
-    };
   }
 }
