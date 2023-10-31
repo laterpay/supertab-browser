@@ -71,7 +71,6 @@ export class Supertab {
       silently: false,
       redirectUri: window.location.href,
     }
-    }
   ) {
     return authFlow({
       silently,
