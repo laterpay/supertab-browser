@@ -97,7 +97,9 @@ export async function authorize({
   url.searchParams.set("client_id", clientId);
   url.searchParams.set("redirect_uri", redirectUri);
   url.searchParams.set("audience_hint", "consumer");
-  url.searchParams.set("screen_hint", screenHint);
+  if (screenHint) {
+    url.searchParams.set("screen_hint", screenHint);
+  }
 
   return { url, codeVerifier };
 }
