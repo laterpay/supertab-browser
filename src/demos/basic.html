@@ -1,0 +1,115 @@
+<html>
+
+<head>
+  <script type="module" src="../../index.ts"></script>
+  <script type="text/javascript">
+    let authentication;
+    let user;
+
+    window.addEventListener("load", async () => {
+      window.SupertabInit({
+        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e"
+      })
+    });
+
+    async function getCurrentUser() {
+      log(`Getting current user`);
+
+      try {
+        user = await Supertab.getCurrentUser(authentication);
+        log(JSON.stringify({
+          user
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
+    async function startAuthFlow(options) {
+      log(`Starting auth flow with options: ${JSON.stringify({...options}, null, 2)}`);
+
+      try {
+        authentication = await Supertab.auth(options)
+
+        if (authentication) {
+          log(JSON.stringify({
+            authentication
+          }, null, 2));
+        } else {
+          log("No authentication object returned");
+        }
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
+    async function checkAccess() {
+      log(`Checking access`);
+
+      try {
+        access = await Supertab.checkAccess();
+        log(JSON.stringify({
+          access
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
+    function log(message) {
+      document.querySelector("pre").innerHTML += `\n${message}\n`;
+    }
+
+    function clearLog() {
+      localStorage.clear();
+      document.querySelector("pre").innerHTML = "";
+    }
+
+    window.setInterval(() => {
+      document.getElementById("auth-status").innerHTML = Supertab.authStatus;
+    }, 1000);
+  </script>
+</head>
+
+<body>
+
+  <h1>Basic demo</h1>
+  <p>
+    This demo shows how to use the SDK functions.
+  </p>
+
+  <ul>
+    <li>
+      <button type="button" onClick="clearLog()">Clear</button>
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow({ silently: true })">Auth (silently)</button>
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow()">Auth</button>
+    </li>
+    <li>
+      <button type="button" onClick="getCurrentUser()">Get User</button>
+    </li>
+    <li>
+      <button type="button" onClick="checkAccess()">Check Access</button>
+    </li>
+
+    <li>
+      Auth Status:
+      <span id="auth-status">---</span>
+    </li>
+  </ul>
+
+
+  <h2>console</h2>
+  <pre style="min-height:300px;background-color:#eee;white-space:break-spaces;">
+  </pre>
+
+</html>

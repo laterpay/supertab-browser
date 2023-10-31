@@ -7,6 +7,8 @@ import {
   Currency,
   AccessApi,
   ClientConfig,
+  AccessApi,
+  ClientConfig,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -42,6 +44,7 @@ export class Supertab {
   private tapperConfig: Configuration;
   private language: string;
   private _clientConfig?: ClientConfig;
+  private _clientConfig?: ClientConfig;
 
   constructor(options: { clientId: string; language?: string }) {
     this.clientId = options.clientId;
@@ -71,6 +74,7 @@ export class Supertab {
       silently: false,
       redirectUri: window.location.href,
     }
+    }
   ) {
     return authFlow({
       silently,
@@ -91,6 +95,7 @@ export class Supertab {
   @authenticated
   async getCurrentUser() {
     const user = await new UserIdentityApi(
+      this.tapperConfig
       this.tapperConfig
     ).getCurrentUserV1();
 
