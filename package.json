@@ -22,7 +22,7 @@
   "scripts": {
     "bundle": "bun build ./index.ts --outdir ./dist --minify",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
-    "demo:auth": "bunx parcel serve --port 3000 --open --no-cache src/demos/auth.html",
+    "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
     "doc:build": "docusaurus build website",
     "doc:swizzle": "docusaurus swizzle website",
