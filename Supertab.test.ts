@@ -186,7 +186,6 @@ describe("Supertab", () => {
       });
 
       expect(await client.checkAccess()).toEqual({
-        contentKey: "test-content-key",
         validTo: new Date(1700119519 * 1000),
       });
     });
