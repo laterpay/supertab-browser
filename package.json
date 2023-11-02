@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@laterpay/auth": "^1.1.3",
-    "@laterpay/tapper-sdk": "^19.0.0",
+    "@laterpay/tapper-sdk": "latest",
     "zod": "^3.22.3"
   },
   "targets": {
