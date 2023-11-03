@@ -2,6 +2,10 @@
   "name": "supertab-browser",
   "module": "index.ts",
   "sideEffects": false,
+  "engines": {
+    "node": ">=21.0.0",
+    "npm": ">=10.0.0"
+  },
   "devDependencies": {
     "bun-types": "latest",
     "happy-dom": "^12.1.6",
