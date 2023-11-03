@@ -62,6 +62,21 @@
       }
     }
 
+    async function getActiveTab() {
+      log(`Fetching tab`);
+
+      try {
+        tab = await Supertab.getActiveTab();
+        log(JSON.stringify({
+          tab
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
     function log(message) {
       document.querySelector("pre").innerHTML += `\n${message}\n`;
     }
@@ -99,6 +114,9 @@
     </li>
     <li>
       <button type="button" onClick="checkAccess()">Check Access</button>
+    </li>
+    <li>
+      <button type="button" onClick="getActiveTab()">Get Active Tab</button>
     </li>
 
     <li>

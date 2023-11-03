@@ -8,6 +8,8 @@ import {
   ClientConfigToJSON,
   HealthResponse,
   HealthResponseToJSON,
+  PaginatedTabResponse,
+  PaginatedTabResponseToJSON,
   UserResponse,
   UserResponseToJSON,
 } from "@laterpay/tapper-sdk";
@@ -53,12 +55,21 @@ const withAccessCheck = (accessCheck: AccessResponse) => {
   );
 };
 
+const withGetTab = (tab: PaginatedTabResponse) => {
+  server.use(
+    rest.get("https://tapi.sbx.laterpay.net/v1/tabs", (_, res, ctx) =>
+      res(ctx.status(200), ctx.json(PaginatedTabResponseToJSON(tab)))
+    )
+  );
+};
+
 // Setup requests interception using the given handlers.
 const server = Object.assign(setupServer(...handlers), {
   withClientConfig,
   withCurrentUser,
   withHealth,
   withAccessCheck,
+  withGetTab,
 });
 
 export { server, rest };

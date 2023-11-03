@@ -7,6 +7,7 @@ import {
   Currency,
   AccessApi,
   ClientConfig,
+  TabsApi,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -165,6 +166,32 @@ export class Supertab {
       };
     } else {
       throw new Error("Access denied");
+    }
+  }
+
+  @authenticated
+  async getActiveTab() {
+    const tab = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
+      limit: 1,
+      paymentModel: "pay_later",
+    });
+
+    if (tab.data) {
+      return {
+        status: tab.data?.[0].status,
+        total: tab.data?.[0].total,
+        limit: tab.data?.[0].limit,
+        currency: tab.data?.[0].currency,
+        purchases: tab.data?.[0].purchases.map((purchase) => {
+          return {
+            purchaseDate: purchase.purchaseDate,
+            summary: purchase.summary,
+            price: purchase.price,
+          };
+        }),
+      };
+    } else {
+      throw new Error("User has no active tabs.");
     }
   }
 }
