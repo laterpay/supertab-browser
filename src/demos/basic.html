@@ -62,11 +62,11 @@
       }
     }
 
-    async function getActiveTab() {
+    async function getUserTab() {
       log(`Fetching tab`);
 
       try {
-        tab = await Supertab.getActiveTab();
+        tab = await Supertab.getUserTab();
         log(JSON.stringify({
           tab
         }, null, 2));
@@ -116,7 +116,7 @@
       <button type="button" onClick="checkAccess()">Check Access</button>
     </li>
     <li>
-      <button type="button" onClick="getActiveTab()">Get Active Tab</button>
+      <button type="button" onClick="getUserTab()">Get Active Tab</button>
     </li>
 
     <li>

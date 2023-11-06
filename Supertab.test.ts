@@ -191,8 +191,8 @@ describe("Supertab", () => {
     });
   });
 
-  describe(".getActiveTab", () => {
-    test("return active tab", async () => {
+  describe(".getUserTab", () => {
+    test("return user's tab", async () => {
       localStorage.setItem(
         "supertab-auth",
         JSON.stringify({
@@ -266,7 +266,7 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.getActiveTab()).toEqual({
+      expect(await client.getUserTab()).toEqual({
         status: "open",
         total: 50,
         limit: 500,

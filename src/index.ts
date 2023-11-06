@@ -170,7 +170,7 @@ export class Supertab {
   }
 
   @authenticated
-  async getActiveTab() {
+  async getUserTab() {
     const tab = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
       limit: 1,
       paymentModel: "pay_later",
