@@ -8,6 +8,7 @@ import {
   AccessApi,
   ClientConfig,
   TabsApi,
+  TabStatus,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -176,7 +177,9 @@ export class Supertab {
       paymentModel: "pay_later",
     });
 
-    if (tab.data) {
+    const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
+
+    if (tab.data && filterStatuses.includes(tab.data?.[0].status)) {
       return {
         status: tab.data?.[0].status,
         total: tab.data?.[0].total,
@@ -191,7 +194,7 @@ export class Supertab {
         }),
       };
     } else {
-      throw new Error("User has no active tabs.");
+      throw new Error("User has no open tabs.");
     }
   }
 }
