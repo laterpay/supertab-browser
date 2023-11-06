@@ -172,20 +172,22 @@ export class Supertab {
 
   @authenticated
   async getUserTab() {
-    const tab = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
+    const {
+      data: [tab],
+    } = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
       limit: 1,
       paymentModel: "pay_later",
     });
 
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
-    if (tab.data && filterStatuses.includes(tab.data?.[0].status)) {
+    if (filterStatuses.includes(tab.status)) {
       return {
-        status: tab.data?.[0].status,
-        total: tab.data?.[0].total,
-        limit: tab.data?.[0].limit,
-        currency: tab.data?.[0].currency,
-        purchases: tab.data?.[0].purchases.map((purchase) => {
+        status: tab.status,
+        total: tab.total,
+        limit: tab.limit,
+        currency: tab.currency,
+        purchases: tab.purchases.map((purchase) => {
           return {
             purchaseDate: purchase.purchaseDate,
             summary: purchase.summary,
