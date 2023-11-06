@@ -1,7 +1,12 @@
 import { test, expect, describe } from "bun:test";
 import { server } from "@/mocks/server";
 import Supertab from ".";
-import { Currency, SiteOffering, UserResponse } from "@laterpay/tapper-sdk";
+import {
+  Currency,
+  SiteOffering,
+  TabStatus,
+  UserResponse,
+} from "@laterpay/tapper-sdk";
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -189,5 +194,209 @@ describe("Supertab", () => {
         validTo: new Date(1700119519 * 1000),
       });
     });
+  });
+
+  describe(".getUserTab", () => {
+    test.each([TabStatus.Open, TabStatus.Full])(
+      "return user's %s tab",
+      async (status) => {
+        localStorage.setItem(
+          "supertab-auth",
+          JSON.stringify({
+            expiresAt: Date.now() + 100000,
+          })
+        );
+
+        const client = new Supertab({ clientId: "test-client-id" });
+
+        server.withGetTab({
+          data: [
+            {
+              id: "test-tab-id",
+              createdAt: new Date("2023-11-03T15:34:44.852Z"),
+              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+              merchantId: "test-merchant-id",
+              userId: "test-user-id",
+              status,
+              paidAt: null,
+              total: 50,
+              limit: 500,
+              currency: "USD",
+              paymentModel: "pay_later",
+              purchases: [
+                {
+                  id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+                  createdAt: new Date("2023-11-03T15:34:44.852Z"),
+                  updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+                  purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                  merchantId: "test-merchant-id",
+                  summary: "test-summary",
+                  price: {
+                    amount: 50,
+                    currency: "USD",
+                  },
+                  salesModel: "time_pass",
+                  paymentModel: "pay_later",
+                  metadata: {
+                    additionalProp1: {},
+                    additionalProp2: {},
+                    additionalProp3: {},
+                  },
+                  attributedTo: "test-id",
+                  offeringId: "test-offering-id",
+                  contentKey: "test-content-key",
+                  testMode: false,
+                  merchantName: "test-merchant-name",
+                },
+              ],
+              metadata: {
+                additionalProp1: {},
+                additionalProp2: {},
+                additionalProp3: {},
+              },
+              testMode: false,
+              tabStatistics: {
+                purchasesCount: 0,
+                obfuscatedPurchasesCount: 0,
+                obfuscatedPurchasesTotal: 0,
+              },
+            },
+          ],
+          metadata: {
+            count: 1,
+            perPage: 1,
+            links: {
+              previous: "",
+              next: "",
+            },
+            numberPages: 1,
+          },
+        });
+
+        expect(await client.getUserTab()).toEqual({
+          status,
+          total: 50,
+          limit: 500,
+          currency: "USD",
+          purchases: [
+            {
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              summary: "test-summary",
+              price: {
+                amount: 50,
+                currency: "USD",
+              },
+            },
+          ],
+        });
+      }
+    );
+  });
+
+  test("throw an error if no tabs", async () => {
+    localStorage.setItem(
+      "supertab-auth",
+      JSON.stringify({
+        expiresAt: Date.now() + 100000,
+      })
+    );
+
+    const client = new Supertab({ clientId: "test-client-id" });
+
+    server.withGetTab({
+      data: [],
+      metadata: {
+        count: 1,
+        perPage: 1,
+        links: {
+          previous: "",
+          next: "",
+        },
+        numberPages: 1,
+      },
+    });
+
+    expect(async () => {
+      await client.getUserTab();
+    }).toThrow(Error);
+  });
+
+  test("throw an error if no open tab", async () => {
+    localStorage.setItem(
+      "supertab-auth",
+      JSON.stringify({
+        expiresAt: Date.now() + 100000,
+      })
+    );
+
+    const client = new Supertab({ clientId: "test-client-id" });
+
+    server.withGetTab({
+      data: [
+        {
+          id: "test-tab-id",
+          createdAt: new Date("2023-11-03T15:34:44.852Z"),
+          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+          merchantId: "test-merchant-id",
+          userId: "test-user-id",
+          status: "closed",
+          paidAt: null,
+          total: 50,
+          limit: 500,
+          currency: "USD",
+          paymentModel: "pay_later",
+          purchases: [
+            {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+              createdAt: new Date("2023-11-03T15:34:44.852Z"),
+              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              merchantId: "test-merchant-id",
+              summary: "test-summary",
+              price: {
+                amount: 50,
+                currency: "USD",
+              },
+              salesModel: "time_pass",
+              paymentModel: "pay_later",
+              metadata: {
+                additionalProp1: {},
+                additionalProp2: {},
+                additionalProp3: {},
+              },
+              attributedTo: "test-id",
+              offeringId: "test-offering-id",
+              contentKey: "test-content-key",
+              testMode: false,
+              merchantName: "test-merchant-name",
+            },
+          ],
+          metadata: {
+            additionalProp1: {},
+            additionalProp2: {},
+            additionalProp3: {},
+          },
+          testMode: false,
+          tabStatistics: {
+            purchasesCount: 0,
+            obfuscatedPurchasesCount: 0,
+            obfuscatedPurchasesTotal: 0,
+          },
+        },
+      ],
+      metadata: {
+        count: 1,
+        perPage: 1,
+        links: {
+          previous: "",
+          next: "",
+        },
+        numberPages: 1,
+      },
+    });
+
+    expect(async () => {
+      await client.getUserTab();
+    }).toThrow(Error);
   });
 });
