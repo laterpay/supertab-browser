@@ -1,5 +1,6 @@
-import { test, expect, describe } from "bun:test";
+import { test, expect, describe, mock, spyOn } from "bun:test";
 import { server } from "@/mocks/server";
+import EventEmitter from "events";
 import Supertab from ".";
 import {
   Currency,
@@ -7,6 +8,41 @@ import {
   TabStatus,
   UserResponse,
 } from "@laterpay/tapper-sdk";
+
+const setup = ({ authenticated = true, authExpiresIn = 100000 }: { authenticated?: boolean, authExpiresIn?: number } = {}) => {
+  const emitter = new EventEmitter();
+
+  const checkoutWindow = {
+    close: () => {},
+    closed: false,
+  }
+  const windowOpen = mock((url: string, target: string) => {
+    if (target === "supertabCheckout") {
+      return checkoutWindow;
+    }
+  });
+  const client = new Supertab({ clientId: "test-client-id" });
+
+  window.addEventListener = emitter.addListener.bind(emitter) as any;
+  window.removeEventListener = emitter.removeListener.bind(emitter) as any;
+  window.open = windowOpen as any;
+
+  if (authenticated) {
+    localStorage.setItem(
+      "supertab-auth",
+      JSON.stringify({
+        expiresAt: Date.now() + authExpiresIn,
+      })
+    );
+  }
+
+  return {
+    client,
+    windowOpen,
+    checkoutWindow,
+    emitter,
+  }
+}
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -397,6 +433,67 @@ describe("Supertab", () => {
       expect(async () => {
         await client.getUserTab();
       }).toThrow(Error);
+    });
+  });
+
+  describe(".pay", () => {
+    test("opens checkout page", async () => {
+      const { client, windowOpen } = setup();
+      client.pay("test-tab-id")
+
+      expect(windowOpen.mock.calls[0]).toEqual([
+        "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
+        "supertabCheckout"
+      ]);
+    });
+
+    test("return success if checkout page succeeds", async () => {
+      const { client, checkoutWindow, emitter } = setup();
+      const payment = client.pay("test-tab-id")
+
+      emitter.emit("message", {
+        source: checkoutWindow,
+        origin: "https://checkout.sbx.supertab.co",
+        data: {
+          status: "payment_completed"
+        }
+      });
+
+      expect(async () => await payment).not.toThrow(Error);
+    });
+
+    test("throw an error if not authenticated", () => {
+      const { client } = setup({ authenticated: false });
+      expect(async () => await client.pay("test-tab-id")).toThrow(/Missing auth/);
+    });
+
+    test("throw an error if checkout page fails", async () => {
+      const { client, checkoutWindow, emitter } = setup();
+
+      expect(async () => {
+        const payment = client.pay("test-tab-id")
+
+        emitter.emit("message", {
+          source: checkoutWindow,
+          origin: "https://checkout.sbx.supertab.co",
+          data: {
+            status: "something else"
+          }
+        });
+
+        await payment;
+      }).toThrow(/Payment failed/);
+    });
+
+    test("throw an error if checkout page closes", async () => {
+      const { client, checkoutWindow } = setup();
+      checkoutWindow.closed = true;
+
+      expect(async () => {
+        const payment = client.pay("test-tab-id")
+
+        await payment;
+      }).toThrow(/window closed/);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { AUTH_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL } from "@/env";
+import { AUTH_BASE_URL, CHECKOUT_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL } from "@/env";
 import {
   Configuration,
   InternalApi,
@@ -11,9 +11,11 @@ import {
   TabStatus,
 } from "@laterpay/tapper-sdk";
 
-import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
+import { authFlow, getAuthStatus, getAccessToken, AuthStatus, authenticate } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
+import { handleCheckoutWindow } from "@/checkout";
+import { handleChildWindow } from "./window";
 
 function authenticated(
   target: Authenticable,
@@ -22,7 +24,7 @@ function authenticated(
 ) {
   const originalMethod = descriptor.value;
 
-  descriptor.value = function (...args: any[]) {
+  descriptor.value = function(...args: any[]) {
     if (target.authStatus === AuthStatus.MISSING) {
       throw new Error(`Missing auth: ${propertyKey}`);
     }
@@ -70,9 +72,9 @@ export class Supertab {
       state?: object;
       redirectUri: string;
     } = {
-      silently: false,
-      redirectUri: window.location.href,
-    }
+        silently: false,
+        redirectUri: window.location.href,
+      }
   ) {
     return authFlow({
       silently,
@@ -198,5 +200,23 @@ export class Supertab {
     } else {
       throw new Error("User has no open tabs.");
     }
+  }
+
+  @authenticated
+  async pay(id: string) {
+    const url = new URL(CHECKOUT_BASE_URL);
+    url.searchParams.append("tab_id", id);
+    url.searchParams.append("language", this.language);
+    url.searchParams.append("testmode", "false");
+
+    return handleChildWindow({
+      url,
+      target: "supertabCheckout",
+      onMessage: async (ev) => {
+        if (ev.data.status !== "payment_completed") {
+          throw new Error("Payment failed");
+        }
+      }
+    });
   }
 }
