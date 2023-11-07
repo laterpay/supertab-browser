@@ -77,6 +77,22 @@
       }
     }
 
+    async function payTab() {
+      log(`Paying tab`);
+
+      try {
+        await Supertab.pay(tab.id);
+        tab = await Supertab.getUserTab();
+        log(JSON.stringify({
+          tab
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
     function log(message) {
       document.querySelector("pre").innerHTML += `\n${message}\n`;
     }
@@ -117,6 +133,9 @@
     </li>
     <li>
       <button type="button" onClick="getUserTab()">Get User's Tab</button>
+    </li>
+    <li>
+      <button type="button" onClick="payTab()">Pay User's Tab</button>
     </li>
 
     <li>
