@@ -206,47 +206,6 @@ export async function refreshAuthentication({
   }
 }
 
-// Open sso window and wait for auth code
-export async function handleAuthWindow(url: URL) {
-  const state = url.searchParams.get("state");
-  const scope = url.searchParams.get("scope");
-  const authWindow = window.open(url.toString(), "ssoWindow");
-
-  let receivedPostMessage = false;
-
-  return new Promise<string>((resolve, reject) => {
-    function eventListener(ev: MessageEvent) {
-      if (ev.source === authWindow) {
-        window.removeEventListener("message", eventListener as EventListener);
-        authWindow?.close();
-        receivedPostMessage = true;
-        if (state !== ev.data.state) {
-          reject(new Error("State mismatch"));
-        } else if (scope !== ev.data.scope) {
-          reject(new Error("Scope mismatch"));
-        } else if (!ev.data.authCode) {
-          reject(new Error("Auth code is missing"));
-        } else {
-          const { authCode } = ev.data;
-          resolve(authCode);
-        }
-      }
-    }
-
-    const checkChildWindowState = setInterval(() => {
-      if (authWindow?.closed) {
-        clearInterval(checkChildWindowState);
-
-        if (!receivedPostMessage) {
-          reject(new Error("window closed"));
-        }
-      }
-    }, 500);
-
-    window.addEventListener("message", eventListener);
-  });
-}
-
 async function generateCodeChallenge(codeVerifier: string) {
   const digest = await crypto.subtle.digest(
     "SHA-256",
