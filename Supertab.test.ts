@@ -293,6 +293,7 @@ describe("Supertab", () => {
         });
 
         expect(await client.getUserTab()).toEqual({
+          id: "test-tab-id",
           status,
           total: 50,
           limit: 500,
