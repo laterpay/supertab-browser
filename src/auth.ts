@@ -1,3 +1,5 @@
+import { handleChildWindow } from "./window";
+
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
@@ -40,7 +42,24 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     return setAuthentication(authentication);
   } else if (!options.silently) {
     const { url, codeVerifier } = await authorize(options);
-    const authCode = await handleAuthWindow(url);
+
+    const authCode = await handleChildWindow({
+      url,
+      target: "ssoWindow",
+      onMessage: (ev) => {
+        if (url.searchParams.get("state") !== ev.data.state) {
+          throw new Error("State mismatch");
+        } else if (url.searchParams.get("scope") !== ev.data.scope) {
+          throw new Error("Scope mismatch");
+        } else if (!ev.data.authCode) {
+          throw new Error("Auth code is missing");
+        } else {
+          const { authCode } = ev.data;
+          return authCode;
+        }
+      },
+    });
+
     const authentication = await authenticate({
       ...options,
       codeVerifier,
