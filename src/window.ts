@@ -13,7 +13,7 @@ export const handleChildWindow = async <T>({
 
   return new Promise<T>((resolve, reject) => {
     function eventListener(ev: MessageEvent) {
-      if (ev.source === childWindow && ev.origin === url.origin) {
+      if (ev.source === childWindow) {
         window.removeEventListener("message", eventListener as EventListener);
         childWindow?.close();
         receivedPostMessage = true;

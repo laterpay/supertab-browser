@@ -21,11 +21,9 @@ import {
   getAuthStatus,
   getAccessToken,
   AuthStatus,
-  authenticate,
 } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
-import { handleCheckoutWindow } from "@/checkout";
 import { handleChildWindow } from "./window";
 
 function authenticated(
@@ -196,6 +194,7 @@ export class Supertab {
 
     if (filterStatuses.includes(tab.status)) {
       return {
+        id: tab.id,
         status: tab.status,
         total: tab.total,
         limit: tab.limit,
@@ -224,7 +223,7 @@ export class Supertab {
       url,
       target: "supertabCheckout",
       onMessage: async (ev) => {
-        if (ev.data.status !== "payment_completed") {
+        if (ev.data.status !== "payment_completed" || ev.origin !== url.origin) {
           throw new Error("Payment failed");
         }
       },
