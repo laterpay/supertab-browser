@@ -1,4 +1,9 @@
-import { AUTH_BASE_URL, CHECKOUT_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL } from "@/env";
+import {
+  AUTH_BASE_URL,
+  CHECKOUT_BASE_URL,
+  SSO_BASE_URL,
+  TAPI_BASE_URL,
+} from "@/env";
 import {
   Configuration,
   InternalApi,
@@ -11,7 +16,13 @@ import {
   TabStatus,
 } from "@laterpay/tapper-sdk";
 
-import { authFlow, getAuthStatus, getAccessToken, AuthStatus, authenticate } from "./auth";
+import {
+  authFlow,
+  getAuthStatus,
+  getAccessToken,
+  AuthStatus,
+  authenticate,
+} from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
 import { handleCheckoutWindow } from "@/checkout";
@@ -20,11 +31,11 @@ import { handleChildWindow } from "./window";
 function authenticated(
   target: Authenticable,
   propertyKey: string,
-  descriptor: PropertyDescriptor
+  descriptor: PropertyDescriptor,
 ) {
   const originalMethod = descriptor.value;
 
-  descriptor.value = function(...args: any[]) {
+  descriptor.value = function (...args: any[]) {
     if (target.authStatus === AuthStatus.MISSING) {
       throw new Error(`Missing auth: ${propertyKey}`);
     }
@@ -72,9 +83,9 @@ export class Supertab {
       state?: object;
       redirectUri: string;
     } = {
-        silently: false,
-        redirectUri: window.location.href,
-      }
+      silently: false,
+      redirectUri: window.location.href,
+    },
   ) {
     return authFlow({
       silently,
@@ -95,7 +106,7 @@ export class Supertab {
   @authenticated
   async getCurrentUser() {
     const user = await new UserIdentityApi(
-      this.tapperConfig
+      this.tapperConfig,
     ).getCurrentUserV1();
 
     return {
@@ -109,7 +120,7 @@ export class Supertab {
     }
 
     this._clientConfig = await new ItemsApi(
-      this.tapperConfig
+      this.tapperConfig,
     ).getClientConfigV1({
       clientId: this.clientId,
     });
@@ -126,7 +137,7 @@ export class Supertab {
           ...acc,
           [eachCurrency.isoCode]: eachCurrency,
         }),
-        {}
+        {},
       );
 
     const offerings = clientConfig.offerings.map((eachOffering) => {
@@ -154,7 +165,7 @@ export class Supertab {
   async checkAccess() {
     const clientConfig = await this.#getClientConfig();
     const contentKey = clientConfig.contentKeys.map(
-      (item) => item.contentKey
+      (item) => item.contentKey,
     )[0] as string;
 
     const access = await new AccessApi(this.tapperConfig).checkAccessV2({
@@ -216,7 +227,7 @@ export class Supertab {
         if (ev.data.status !== "payment_completed") {
           throw new Error("Payment failed");
         }
-      }
+      },
     });
   }
 }

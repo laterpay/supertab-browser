@@ -1,4 +1,12 @@
-export const handleChildWindow = async <T>({ url, target, onMessage }: { url: URL, target: string, onMessage: (ev: MessageEvent) => T }): Promise<T> => {
+export const handleChildWindow = async <T>({
+  url,
+  target,
+  onMessage,
+}: {
+  url: URL;
+  target: string;
+  onMessage: (ev: MessageEvent) => T;
+}): Promise<T> => {
   const childWindow = window.open(url.toString(), target);
 
   let receivedPostMessage = false;
@@ -25,4 +33,4 @@ export const handleChildWindow = async <T>({ url, target, onMessage }: { url: UR
 
     window.addEventListener("message", eventListener);
   });
-}
+};
