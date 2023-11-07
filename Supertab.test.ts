@@ -9,19 +9,27 @@ import {
   UserResponse,
 } from "@laterpay/tapper-sdk";
 
-const setup = ({ authenticated = true, authExpiresIn = 100000 }: { authenticated?: boolean, authExpiresIn?: number } = {}) => {
+const setup = ({
+  authenticated = true,
+  authExpiresIn = 100000,
+  language = "en-US",
+}: {
+  authenticated?: boolean;
+  authExpiresIn?: number;
+  language?: string;
+} = {}) => {
   const emitter = new EventEmitter();
 
   const checkoutWindow = {
     close: () => {},
     closed: false,
-  }
+  };
   const windowOpen = mock((url: string, target: string) => {
     if (target === "supertabCheckout") {
       return checkoutWindow;
     }
   });
-  const client = new Supertab({ clientId: "test-client-id" });
+  const client = new Supertab({ clientId: "test-client-id", language });
 
   window.addEventListener = emitter.addListener.bind(emitter) as any;
   window.removeEventListener = emitter.removeListener.bind(emitter) as any;
@@ -32,7 +40,7 @@ const setup = ({ authenticated = true, authExpiresIn = 100000 }: { authenticated
       "supertab-auth",
       JSON.stringify({
         expiresAt: Date.now() + authExpiresIn,
-      })
+      }),
     );
   }
 
@@ -41,8 +49,8 @@ const setup = ({ authenticated = true, authExpiresIn = 100000 }: { authenticated
     windowOpen,
     checkoutWindow,
     emitter,
-  }
-}
+  };
+};
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -54,25 +62,20 @@ describe("Supertab", () => {
 
   describe(".getApiVersion", () => {
     test("return api version from tapper", async () => {
-      const client = new Supertab({ clientId: "test-client-id" });
+      const { client } = setup();
+
       server.withHealth({
         status: "ok",
         version: "1.0.0",
       });
+
       expect(await client.getApiVersion()).toBe("1.0.0");
     });
   });
 
   describe(".getCurrentUser", () => {
     test("return logged user from tapper", async () => {
-      localStorage.setItem(
-        "supertab-auth",
-        JSON.stringify({
-          expiresAt: Date.now() + 100000,
-        })
-      );
-
-      const client = new Supertab({ clientId: "test-client-id" });
+      const { client } = setup();
 
       const user: UserResponse = {
         id: "test-user-id",
@@ -93,10 +96,7 @@ describe("Supertab", () => {
 
   describe(".getOfferings", () => {
     test("return offerings with default currency", async () => {
-      const client = new Supertab({
-        clientId: "test-client-id",
-        language: "en-US",
-      });
+      const { client } = setup();
 
       server.withClientConfig({
         contentKeys: [],
@@ -132,10 +132,7 @@ describe("Supertab", () => {
     });
 
     test("return offerings with given currency", async () => {
-      const client = new Supertab({
-        clientId: "test-client-id",
-        language: "pt-BR",
-      });
+      const { client } = setup({ language: "pt-BR" });
 
       server.withClientConfig({
         contentKeys: [],
@@ -207,14 +204,7 @@ describe("Supertab", () => {
     };
 
     test("return access granted", async () => {
-      localStorage.setItem(
-        "supertab-auth",
-        JSON.stringify({
-          expiresAt: Date.now() + 100000,
-        })
-      );
-
-      const client = new Supertab({ clientId: "test-client-id" });
+      const { client } = setup();
 
       server.withClientConfig(accessClientConfig);
 
@@ -236,14 +226,7 @@ describe("Supertab", () => {
     test.each([TabStatus.Open, TabStatus.Full])(
       "return user's %s tab",
       async (status) => {
-        localStorage.setItem(
-          "supertab-auth",
-          JSON.stringify({
-            expiresAt: Date.now() + 100000,
-          })
-        );
-
-        const client = new Supertab({ clientId: "test-client-id" });
+        const { client } = setup();
 
         server.withGetTab({
           data: [
@@ -325,18 +308,11 @@ describe("Supertab", () => {
             },
           ],
         });
-      }
+      },
     );
 
     test("throw an error if no tabs", async () => {
-      localStorage.setItem(
-        "supertab-auth",
-        JSON.stringify({
-          expiresAt: Date.now() + 100000,
-        })
-      );
-
-      const client = new Supertab({ clientId: "test-client-id" });
+      const { client } = setup();
 
       server.withGetTab({
         data: [],
@@ -357,14 +333,7 @@ describe("Supertab", () => {
     });
 
     test("throw an error if no open tab", async () => {
-      localStorage.setItem(
-        "supertab-auth",
-        JSON.stringify({
-          expiresAt: Date.now() + 100000,
-        })
-      );
-
-      const client = new Supertab({ clientId: "test-client-id" });
+      const { client } = setup();
 
       server.withGetTab({
         data: [
@@ -439,24 +408,24 @@ describe("Supertab", () => {
   describe(".pay", () => {
     test("opens checkout page", async () => {
       const { client, windowOpen } = setup();
-      client.pay("test-tab-id")
+      client.pay("test-tab-id");
 
       expect(windowOpen.mock.calls[0]).toEqual([
         "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
-        "supertabCheckout"
+        "supertabCheckout",
       ]);
     });
 
     test("return success if checkout page succeeds", async () => {
       const { client, checkoutWindow, emitter } = setup();
-      const payment = client.pay("test-tab-id")
+      const payment = client.pay("test-tab-id");
 
       emitter.emit("message", {
         source: checkoutWindow,
         origin: "https://checkout.sbx.supertab.co",
         data: {
-          status: "payment_completed"
-        }
+          status: "payment_completed",
+        },
       });
 
       expect(async () => await payment).not.toThrow(Error);
@@ -464,21 +433,23 @@ describe("Supertab", () => {
 
     test("throw an error if not authenticated", () => {
       const { client } = setup({ authenticated: false });
-      expect(async () => await client.pay("test-tab-id")).toThrow(/Missing auth/);
+      expect(async () => await client.pay("test-tab-id")).toThrow(
+        /Missing auth/,
+      );
     });
 
     test("throw an error if checkout page fails", async () => {
       const { client, checkoutWindow, emitter } = setup();
 
       expect(async () => {
-        const payment = client.pay("test-tab-id")
+        const payment = client.pay("test-tab-id");
 
         emitter.emit("message", {
           source: checkoutWindow,
           origin: "https://checkout.sbx.supertab.co",
           data: {
-            status: "something else"
-          }
+            status: "something else",
+          },
         });
 
         await payment;
@@ -490,7 +461,7 @@ describe("Supertab", () => {
       checkoutWindow.closed = true;
 
       expect(async () => {
-        const payment = client.pay("test-tab-id")
+        const payment = client.pay("test-tab-id");
 
         await payment;
       }).toThrow(/window closed/);
