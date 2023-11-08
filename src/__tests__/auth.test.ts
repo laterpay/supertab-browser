@@ -2,7 +2,6 @@ import { describe, it, expect, mock, beforeEach } from "bun:test";
 import {
   authorize,
   authenticate,
-  handleAuthWindow,
   getAuthStatus,
   AuthStatus,
 } from "../auth";
@@ -96,90 +95,6 @@ describe("auth", () => {
             authBaseUrl: "https://auth.sbx.laterpaytest.net",
           }),
       ).toThrow("Invalid code");
-    });
-  });
-
-  describe("handleAuthWindow", () => {
-    it("opens authentication URL in a new window", async () => {
-      const open = mock((_: string) => {});
-      Object.defineProperty(window, "open", {
-        value: open,
-        writable: true,
-      });
-
-      handleAuthWindow(new URL("https://auth.sbx.laterpaytest.net"));
-      expect(open.mock.lastCall).toEqual([
-        "https://auth.sbx.laterpaytest.net/",
-        "ssoWindow",
-      ]);
-    });
-
-    it("listens for 'message' event", async () => {
-      const addEventListener = mock(() => {});
-
-      Object.defineProperty(window, "addEventListener", {
-        value: addEventListener,
-        writable: true,
-      });
-
-      handleAuthWindow(new URL("https://auth.sbx.laterpaytest.net"));
-      expect(addEventListener.mock.lastCall).toEqual([
-        "message",
-        expect.any(Function),
-      ]);
-    });
-
-    it("success if receive message from auth window", async () => {
-      const authWindow = {
-        close: () => {},
-      } as MessageEventSource;
-      const open = mock((_: string) => authWindow);
-      const addEventListener = mock((_: string, listener: (evt: any) => void) =>
-        listener({
-          data: {
-            authCode: "test-auth-code",
-            state: "test-state",
-            scope: "test-scope",
-          },
-          source: authWindow,
-        }),
-      );
-
-      Object.defineProperties(window, {
-        open: {
-          value: open,
-          writable: true,
-        },
-        addEventListener: {
-          value: addEventListener,
-          writable: true,
-        },
-        removeEventListener: {
-          value: () => {},
-          writable: true,
-        },
-      });
-
-      const authentication = await handleAuthWindow(
-        new URL(
-          "https://auth.sbx.laterpaytest.net?state=test-state&scope=test-scope",
-        ),
-      );
-      expect(authentication).toEqual("test-auth-code");
-    });
-
-    it("fails if auth window is closed", async () => {
-      const open = mock((_: string) => ({ closed: true }));
-
-      Object.defineProperty(window, "open", {
-        value: open,
-        writable: true,
-      });
-
-      expect(
-        async () =>
-          await handleAuthWindow(new URL("https://auth.sbx.laterpaytest.net")),
-      ).toThrow("window closed");
     });
   });
 
