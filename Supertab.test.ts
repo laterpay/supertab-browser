@@ -1,4 +1,4 @@
-import { test, expect, describe, mock, spyOn } from "bun:test";
+import { test, expect, describe, mock, spyOn, beforeEach } from "bun:test";
 import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
@@ -407,9 +407,41 @@ describe("Supertab", () => {
   });
 
   describe(".pay", () => {
+    beforeEach(() => {
+      server.withGetTabById({
+        id: "test-tab-id",
+        createdAt: new Date("2023-11-03T15:34:44.852Z"),
+        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+        merchantId: "test-merchant-id",
+        userId: "test-user-id",
+        status: "full",
+        paidAt: null,
+        total: 50,
+        limit: 500,
+        currency: "USD",
+        paymentModel: "pay_later",
+        purchases: [],
+        testMode: false,
+        tabStatistics: {},
+      })
+    });
+
     test("opens checkout page", async () => {
-      const { client, windowOpen } = setup();
-      client.pay("test-tab-id");
+      const { client, windowOpen, emitter, checkoutWindow } = setup();
+      const payment = client.pay("test-tab-id");
+
+      //wait a tick to interact with the window
+      await nextTick();
+
+      emitter.emit("message", {
+        source: checkoutWindow,
+        origin: "https://checkout.sbx.supertab.co",
+        data: {
+          status: "payment_completed",
+        },
+      });
+
+      await payment;
 
       expect(windowOpen.mock.calls[0]).toEqual([
         "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
@@ -420,6 +452,9 @@ describe("Supertab", () => {
     test("return success if checkout page succeeds", async () => {
       const { client, checkoutWindow, emitter } = setup();
       const payment = client.pay("test-tab-id");
+
+      //wait a tick to interact with the window
+      await nextTick();
 
       emitter.emit("message", {
         source: checkoutWindow,
@@ -445,6 +480,9 @@ describe("Supertab", () => {
       expect(async () => {
         const payment = client.pay("test-tab-id");
 
+        //wait a tick to interact with the window
+        await nextTick();
+
         emitter.emit("message", {
           source: checkoutWindow,
           origin: "https://checkout.sbx.supertab.co",
@@ -466,6 +504,33 @@ describe("Supertab", () => {
 
         await payment;
       }).toThrow(/window closed/);
+    });
+
+    test.only("throw an error if tab is not 'full'", async () => {
+      const { client } = setup();
+
+      server.withGetTabById({
+        id: "test-tab-id",
+        createdAt: new Date("2023-11-03T15:34:44.852Z"),
+        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+        merchantId: "test-merchant-id",
+        userId: "test-user-id",
+        status: "open",
+        paidAt: null,
+        total: 50,
+        limit: 500,
+        currency: "USD",
+        paymentModel: "pay_later",
+        purchases: [],
+        testMode: false,
+        tabStatistics: {},
+      })
+
+      expect(async () => {
+        const payment = client.pay("test-tab-id");
+
+        await payment;
+      }).toThrow(/Tab is not full/);
     });
   });
 });

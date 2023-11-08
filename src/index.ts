@@ -214,6 +214,14 @@ export class Supertab {
 
   @authenticated
   async pay(id: string) {
+    const tab = await new TabsApi(this.tapperConfig).tabViewV1({
+      tabId: id,
+    });
+
+    if (tab.status !== TabStatus.Full) {
+      throw new Error("Tab is not full");
+    }
+
     const url = new URL(CHECKOUT_BASE_URL);
     url.searchParams.append("tab_id", id);
     url.searchParams.append("language", this.language);
