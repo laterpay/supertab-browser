@@ -2,7 +2,14 @@ import { beforeAll, beforeEach, afterEach, afterAll } from "bun:test";
 import { server } from "./mocks/server";
 import { GlobalWindow } from "happy-dom";
 
+declare global {
+  var timeout: (ms?: number) => Promise<void>;
+  var nextTick: () => Promise<void>;
+}
+
 global.window = new GlobalWindow() as any;
+global.timeout = (ms: number = 100) => new Promise((resolve) => setTimeout(resolve, ms));
+global.nextTick = () => timeout(1);
 
 beforeAll(() => {
   // Enable the mocking in tests.
