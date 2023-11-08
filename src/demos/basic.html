@@ -78,6 +78,8 @@
     }
 
     async function payTab() {
+      await getUserTab();
+
       log(`Paying tab`);
 
       try {
