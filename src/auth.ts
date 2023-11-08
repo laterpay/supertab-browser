@@ -1,3 +1,5 @@
+import { handleChildWindow } from "./window";
+
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
@@ -40,7 +42,24 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     return setAuthentication(authentication);
   } else if (!options.silently) {
     const { url, codeVerifier } = await authorize(options);
-    const authCode = await handleAuthWindow(url);
+
+    const authCode = await handleChildWindow({
+      url,
+      target: "ssoWindow",
+      onMessage: (ev) => {
+        if (url.searchParams.get("state") !== ev.data.state) {
+          throw new Error("State mismatch");
+        } else if (url.searchParams.get("scope") !== ev.data.scope) {
+          throw new Error("Scope mismatch");
+        } else if (!ev.data.authCode) {
+          throw new Error("Auth code is missing");
+        } else {
+          const { authCode } = ev.data;
+          return authCode;
+        }
+      },
+    });
+
     const authentication = await authenticate({
       ...options,
       codeVerifier,
@@ -185,47 +204,6 @@ export async function refreshAuthentication({
     const result = await res.json();
     throw new Error(result?.error?.message);
   }
-}
-
-// Open sso window and wait for auth code
-export async function handleAuthWindow(url: URL) {
-  const state = url.searchParams.get("state");
-  const scope = url.searchParams.get("scope");
-  const authWindow = window.open(url.toString(), "ssoWindow");
-
-  let receivedPostMessage = false;
-
-  return new Promise<string>((resolve, reject) => {
-    function eventListener(ev: MessageEvent) {
-      if (ev.source === authWindow) {
-        window.removeEventListener("message", eventListener as EventListener);
-        authWindow?.close();
-        receivedPostMessage = true;
-        if (state !== ev.data.state) {
-          reject(new Error("State mismatch"));
-        } else if (scope !== ev.data.scope) {
-          reject(new Error("Scope mismatch"));
-        } else if (!ev.data.authCode) {
-          reject(new Error("Auth code is missing"));
-        } else {
-          const { authCode } = ev.data;
-          resolve(authCode);
-        }
-      }
-    }
-
-    const checkChildWindowState = setInterval(() => {
-      if (authWindow?.closed) {
-        clearInterval(checkChildWindowState);
-
-        if (!receivedPostMessage) {
-          reject(new Error("window closed"));
-        }
-      }
-    }, 500);
-
-    window.addEventListener("message", eventListener);
-  });
 }
 
 async function generateCodeChallenge(codeVerifier: string) {
