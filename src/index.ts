@@ -16,12 +16,7 @@ import {
   TabStatus,
 } from "@laterpay/tapper-sdk";
 
-import {
-  authFlow,
-  getAuthStatus,
-  getAccessToken,
-  AuthStatus,
-} from "./auth";
+import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
 import { handleChildWindow } from "./window";
@@ -33,6 +28,7 @@ function authenticated(
 ) {
   const originalMethod = descriptor.value;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   descriptor.value = function (...args: any[]) {
     if (target.authStatus === AuthStatus.MISSING) {
       throw new Error(`Missing auth: ${propertyKey}`);
@@ -231,7 +227,10 @@ export class Supertab {
       url,
       target: "supertabCheckout",
       onMessage: async (ev) => {
-        if (ev.data.status !== "payment_completed" || ev.origin !== url.origin) {
+        if (
+          ev.data.status !== "payment_completed" ||
+          ev.origin !== url.origin
+        ) {
           throw new Error("Payment failed");
         }
       },

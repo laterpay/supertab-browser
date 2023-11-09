@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import { beforeAll, beforeEach, afterEach, afterAll } from "bun:test";
 import { server } from "./mocks/server";
 import { GlobalWindow } from "happy-dom";
@@ -7,8 +8,10 @@ declare global {
   var nextTick: () => Promise<void>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 global.window = new GlobalWindow() as any;
-global.timeout = (ms: number = 100) => new Promise((resolve) => setTimeout(resolve, ms));
+global.timeout = (ms = 100) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 global.nextTick = () => timeout(1);
 
 beforeAll(() => {

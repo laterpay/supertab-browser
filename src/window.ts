@@ -1,11 +1,11 @@
 export const handleChildWindow = async <T>({
   url,
   target,
-  onMessage,
+  onMessage = (ev: MessageEvent) => ev.data as T,
 }: {
   url: URL;
   target: string;
-  onMessage: (ev: MessageEvent) => T;
+  onMessage?: (ev: MessageEvent) => T;
 }): Promise<T> => {
   const childWindow = window.open(url.toString(), target);
 
