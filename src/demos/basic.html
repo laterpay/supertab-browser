@@ -95,6 +95,27 @@
       }
     }
 
+    async function purchase() {
+      const offeringId = "item_offering.2106fb07-c210-428a-83fd-b149889916ad";
+      const preferredCurrency = "USD";
+
+      log(`Purchasing offering (${offeringId}) in ${preferredCurrency}`);
+
+      try {
+        const purchase = await Supertab.purchase({
+          offeringId,
+          preferredCurrency
+        });
+        log(JSON.stringify({
+          purchase
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
+      }
+    }
+
     function log(message) {
       document.querySelector("pre").innerHTML += `\n${message}\n`;
     }
@@ -135,6 +156,9 @@
     </li>
     <li>
       <button type="button" onClick="getUserTab()">Get User's Tab</button>
+    </li>
+    <li>
+      <button type="button" onClick="purchase()">Purchase</button>
     </li>
     <li>
       <button type="button" onClick="payTab()">Pay User's Tab</button>
