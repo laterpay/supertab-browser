@@ -263,20 +263,16 @@ export class Supertab {
         },
       });
 
-      if (tab) {
-        return {
-          itemAdded: detail?.itemAdded,
-          tab: {
-            id: tab.id,
-            status: tab.status,
-            total: tab.total,
-            limit: tab.limit,
-            currency: tab.currency,
-          },
-        };
-      } else {
-        throw new Error("Purchase failed");
-      }
+      return {
+        itemAdded: detail?.itemAdded,
+        tab: {
+          id: tab.id,
+          status: tab.status,
+          total: tab.total,
+          limit: tab.limit,
+          currency: tab.currency,
+        },
+      };
     } catch (e) {
       if (e instanceof ResponseError) {
         const responseError = await e.response.json();
@@ -285,7 +281,7 @@ export class Supertab {
           throw new Error("Tab is full. Call pay() to settle tab.");
         }
 
-        throw new Error(responseError.error?.message);
+        throw new Error("Purchase failed.");
       }
     }
   }

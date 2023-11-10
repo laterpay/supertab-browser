@@ -4,10 +4,13 @@ import EventEmitter from "events";
 import Supertab from ".";
 import {
   Currency,
+  ResponseError,
   SiteOffering,
+  TabResponse,
   TabStatus,
   UserResponse,
 } from "@laterpay/tapper-sdk";
+import { response } from "msw";
 
 const setup = ({
   authenticated = true,
@@ -40,7 +43,7 @@ const setup = ({
       "supertab-auth",
       JSON.stringify({
         expiresAt: Date.now() + authExpiresIn,
-      }),
+      })
     );
   }
 
@@ -309,7 +312,7 @@ describe("Supertab", () => {
             },
           ],
         });
-      },
+      }
     );
 
     test("throw an error if no tabs", async () => {
@@ -406,131 +409,187 @@ describe("Supertab", () => {
     });
   });
 
-  describe(".pay", () => {
-    beforeEach(() => {
-      server.withGetTabById({
-        id: "test-tab-id",
-        createdAt: new Date("2023-11-03T15:34:44.852Z"),
-        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        merchantId: "test-merchant-id",
-        userId: "test-user-id",
-        status: "full",
-        paidAt: null,
-        total: 50,
-        limit: 500,
-        currency: "USD",
-        paymentModel: "pay_later",
-        purchases: [],
-        testMode: false,
-        tabStatistics: {},
-      })
-    });
-
-    test("opens checkout page", async () => {
-      const { client, windowOpen, emitter, checkoutWindow } = setup();
-      const payment = client.pay("test-tab-id");
-
-      //wait a tick to interact with the window
-      await nextTick();
-
-      emitter.emit("message", {
-        source: checkoutWindow,
-        origin: "https://checkout.sbx.supertab.co",
-        data: {
-          status: "payment_completed",
-        },
-      });
-
-      await payment;
-
-      expect(windowOpen.mock.calls[0]).toEqual([
-        "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
-        "supertabCheckout",
-      ]);
-    });
-
-    test("return success if checkout page succeeds", async () => {
-      const { client, checkoutWindow, emitter } = setup();
-      const payment = client.pay("test-tab-id");
-
-      //wait a tick to interact with the window
-      await nextTick();
-
-      emitter.emit("message", {
-        source: checkoutWindow,
-        origin: "https://checkout.sbx.supertab.co",
-        data: {
-          status: "payment_completed",
-        },
-      });
-
-      expect(async () => await payment).not.toThrow(Error);
-    });
-
-    test("throw an error if not authenticated", () => {
-      const { client } = setup({ authenticated: false });
-      expect(async () => await client.pay("test-tab-id")).toThrow(
-        /Missing auth/,
-      );
-    });
-
-    test("throw an error if checkout page fails", async () => {
-      const { client, checkoutWindow, emitter } = setup();
-
-      expect(async () => {
-        const payment = client.pay("test-tab-id");
-
-        //wait a tick to interact with the window
-        await nextTick();
-
-        emitter.emit("message", {
-          source: checkoutWindow,
-          origin: "https://checkout.sbx.supertab.co",
-          data: {
-            status: "something else",
+  describe("purchase", () => {
+    const tabData: TabResponse = {
+      id: "test-tab-id",
+      createdAt: new Date("2023-11-03T15:34:44.852Z"),
+      updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+      merchantId: "test-merchant-id",
+      userId: "test-user-id",
+      status: "open",
+      paidAt: null,
+      total: 50,
+      limit: 500,
+      currency: "USD",
+      paymentModel: "pay_later",
+      purchases: [
+        {
+          id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+          createdAt: new Date("2023-11-03T15:34:44.852Z"),
+          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+          purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+          merchantId: "test-merchant-id",
+          summary: "test-summary",
+          price: {
+            amount: 50,
+            currency: "USD",
           },
-        });
+          salesModel: "time_pass",
+          paymentModel: "pay_later",
+          metadata: {
+            additionalProp1: {},
+            additionalProp2: {},
+            additionalProp3: {},
+          },
+          attributedTo: "test-id",
+          offeringId: "test-offering-id",
+          contentKey: "test-content-key",
+          testMode: false,
+        },
+      ],
+      metadata: {
+        additionalProp1: {},
+        additionalProp2: {},
+        additionalProp3: {},
+      },
+      testMode: false,
+      tabStatistics: {
+        purchasesCount: 0,
+        obfuscatedPurchasesCount: 0,
+        obfuscatedPurchasesTotal: 0,
+      },
+    };
 
-        await payment;
-      }).toThrow(/Payment failed/);
-    });
-
-    test("throw an error if checkout page closes", async () => {
-      const { client, checkoutWindow } = setup();
-      checkoutWindow.closed = true;
-
-      expect(async () => {
-        const payment = client.pay("test-tab-id");
-
-        await payment;
-      }).toThrow(/window closed/);
-    });
-
-    test.only("throw an error if tab is not 'full'", async () => {
+    test("creates a purchase", async () => {
       const { client } = setup();
 
-      server.withGetTabById({
-        id: "test-tab-id",
-        createdAt: new Date("2023-11-03T15:34:44.852Z"),
-        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        merchantId: "test-merchant-id",
-        userId: "test-user-id",
-        status: "open",
-        paidAt: null,
-        total: 50,
-        limit: 500,
-        currency: "USD",
-        paymentModel: "pay_later",
-        purchases: [],
-        testMode: false,
-        tabStatistics: {},
-      })
+      server.withGetTab({
+        data: [tabData],
+        metadata: {
+          count: 1,
+          perPage: 1,
+          links: {
+            previous: "",
+            next: "",
+          },
+          numberPages: 1,
+        },
+      });
 
-      expect(async () => {
-        const payment = client.pay("test-tab-id");
+      server.withPurchase({
+        detail: {
+          itemAdded: true,
+        },
+        tab: tabData,
+      });
 
-        await payment;
-      }).toThrow(/Tab is not full/);
+      expect(
+        await client.purchase({
+          offeringId: "test-offering-id",
+          preferredCurrency: "USD",
+        })
+      ).toEqual({
+        itemAdded: true,
+        tab: {
+          currency: "USD",
+          id: "test-tab-id",
+          limit: 500,
+          status: "open",
+          total: 50,
+        },
+      });
+    });
+
+    test("creates a purchase in tab currency if found no matter what is preferred currency", async () => {
+      const { client } = setup();
+
+      const euroTabData = tabData;
+      euroTabData.currency = "EUR";
+
+      server.withGetTab({
+        data: [euroTabData],
+        metadata: {
+          count: 1,
+          perPage: 1,
+          links: {
+            previous: "",
+            next: "",
+          },
+          numberPages: 1,
+        },
+      });
+
+      server.withPurchase({
+        detail: {
+          itemAdded: true,
+        },
+        tab: euroTabData,
+      });
+
+      expect(
+        await client.purchase({
+          offeringId: "test-offering-id",
+          preferredCurrency: "USD",
+        })
+      ).toEqual({
+        itemAdded: true,
+        tab: {
+          currency: "EUR",
+          id: "test-tab-id",
+          limit: 500,
+          status: "open",
+          total: 50,
+        },
+      });
+    });
+
+    test("throws an error when tab is full", () => {
+      const { client } = setup();
+
+      server.withGetTab({
+        data: [tabData],
+        metadata: {
+          count: 1,
+          perPage: 1,
+          links: {
+            previous: "",
+            next: "",
+          },
+          numberPages: 1,
+        },
+      });
+
+      server.withPurchaseResponseError({
+        tab: {
+          status: TabStatus.Full,
+        },
+      });
+
+      expect(
+        async () =>
+          await client.purchase({
+            offeringId: "test-offering-id",
+            preferredCurrency: "USD",
+          })
+      ).toThrow("Tab is full. Call pay() to settle tab.");
+    });
+
+    test("throws an error in case of other response errors", () => {
+      const { client } = setup();
+
+      server.withPurchaseResponseError({
+        error: {
+          message: "test-error-message",
+        },
+      });
+
+      expect(
+        async () =>
+          await client.purchase({
+            offeringId: "test-offering-id",
+            preferredCurrency: "USD",
+          })
+      ).toThrow("Purchase failed.");
     });
   });
 });
