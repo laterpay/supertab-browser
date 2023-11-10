@@ -7,23 +7,28 @@
     "npm": ">=10.0.0"
   },
   "devDependencies": {
-    "bun-types": "latest",
-    "happy-dom": "^12.1.6",
-    "msw": "^1.3.1",
-    "@docusaurus/module-type-aliases": "2.4.3",
-    "@tsconfig/docusaurus": "^1.0.5",
     "@docusaurus/core": "2.4.3",
+    "@docusaurus/module-type-aliases": "2.4.3",
     "@docusaurus/preset-classic": "2.4.3",
     "@mdx-js/react": "^1.6.22",
+    "@tsconfig/docusaurus": "^1.0.5",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "bun-types": "latest",
     "clsx": "^1.2.1",
+    "docusaurus-plugin-typedoc": "^0.20.2",
+    "eslint-config-prettier": "^9.0.0",
+    "happy-dom": "^12.1.6",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "msw": "^1.3.1",
     "prism-react-renderer": "^1.3.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "docusaurus-plugin-typedoc": "^0.20.2",
     "typedoc": "^0.25.2",
     "typedoc-plugin-markdown": "^3.16.0"
   },
   "scripts": {
+    "prepare": "husky install",
     "bundle": "bun build ./index.ts --outdir ./dist --minify",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
@@ -34,7 +39,11 @@
     "doc:clear": "docusaurus clear website",
     "doc:serve": "docusaurus serve website",
     "doc:write-translations": "docusaurus write-translations website",
-    "doc:write-heading-ids": "docusaurus write-heading-ids website"
+    "doc:write-heading-ids": "docusaurus write-heading-ids website",
+    "style:check": "prettier --check .",
+    "style:fix": "prettier --write .",
+    "lint:check": "eslint --ext .ts .",
+    "lint:fix": "eslint --fix --ext .ts ."
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -49,5 +58,32 @@
   },
   "alias": {
     "process": false
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write",
+    "*.ts": "eslint --fix"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "ignorePatterns": [
+      "dist"
+    ],
+    "rules": {}
   }
 }

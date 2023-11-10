@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { type SetupServer, setupServer } from "msw/node";
+import * as node from "msw/node";
 import { handlers } from "./handlers";
 import {
   AccessResponse,
@@ -74,13 +74,13 @@ const withGetTabById = (tab: TabResponse) => {
 };
 
 // Setup requests interception using the given handlers.
-const server = Object.assign(setupServer(...handlers), {
+const server = Object.assign(node.setupServer(...handlers), {
   withClientConfig,
   withCurrentUser,
   withHealth,
   withAccessCheck,
   withGetTab,
-  withGetTabById
+  withGetTabById,
 });
 
 export { server, rest };

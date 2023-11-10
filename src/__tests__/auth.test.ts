@@ -1,10 +1,5 @@
-import { describe, it, expect, mock, beforeEach } from "bun:test";
-import {
-  authorize,
-  authenticate,
-  getAuthStatus,
-  AuthStatus,
-} from "../auth";
+import { describe, it, expect } from "bun:test";
+import { authorize, authenticate, getAuthStatus, AuthStatus } from "../auth";
 import { rest, server } from "@/mocks/server";
 
 describe("auth", () => {

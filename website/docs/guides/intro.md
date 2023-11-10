@@ -21,9 +21,8 @@ Welcome to the SDK Library Guides! This section provides detailed walkthroughs o
 Before you can tap into the power of our SDK, you need to initialize it properly. Here's how:
 
 ```javascript
-import { SDKLibrary } from 'sdk-package-name';
+import { SDKLibrary } from "sdk-package-name";
 
 // Initialize the SDK
-const sdk = new SDKLibrary('<YOUR_API_KEY>');
-
-
+const sdk = new SDKLibrary("<YOUR_API_KEY>");
+```

@@ -10,21 +10,35 @@ custom_edit_url: null
 
 ### constructor
 
-• **new Supertab**(`options`)
+• **new Supertab**(`options`): [`Supertab`](Supertab.md)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `options` | `Object` |
-| `options.clientId` | `string` |
+| Name                | Type     |
+| :------------------ | :------- |
+| `options`           | `Object` |
+| `options.clientId`  | `string` |
 | `options.language?` | `string` |
+
+#### Returns
+
+[`Supertab`](Supertab.md)
 
 #### Defined in
 
-[index.ts:47](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L47)
+[index.ts:55](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L55)
 
 ## Properties
+
+### \_clientConfig
+
+• `Private` `Optional` **\_clientConfig**: `ClientConfig`
+
+#### Defined in
+
+[index.ts:53](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L53)
+
+---
 
 ### clientId
 
@@ -32,9 +46,9 @@ custom_edit_url: null
 
 #### Defined in
 
-[index.ts:43](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L43)
+[index.ts:50](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L50)
 
-___
+---
 
 ### language
 
@@ -42,9 +56,9 @@ ___
 
 #### Defined in
 
-[index.ts:45](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L45)
+[index.ts:52](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L52)
 
-___
+---
 
 ### tapperConfig
 
@@ -52,7 +66,7 @@ ___
 
 #### Defined in
 
-[index.ts:44](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L44)
+[index.ts:51](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L51)
 
 ## Accessors
 
@@ -66,9 +80,23 @@ ___
 
 #### Defined in
 
-[index.ts:56](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L56)
+[index.ts:64](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L64)
 
 ## Methods
+
+### #getClientConfig
+
+▸ **#getClientConfig**(): `Promise`<`ClientConfig`\>
+
+#### Returns
+
+`Promise`<`ClientConfig`\>
+
+#### Defined in
+
+[index.ts:111](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L111)
+
+---
 
 ### auth
 
@@ -76,13 +104,13 @@ ___
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `redirectUri` | `string` |
-| › `screenHint?` | `string` |
-| › `silently` | `boolean` |
-| › `state?` | `object` |
+| Name             | Type      |
+| :--------------- | :-------- |
+| `«destructured»` | `Object`  |
+| › `redirectUri`  | `string`  |
+| › `screenHint?`  | `string`  |
+| › `silently`     | `boolean` |
+| › `state?`       | `object`  |
 
 #### Returns
 
@@ -90,9 +118,23 @@ ___
 
 #### Defined in
 
-[index.ts:60](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L60)
+[index.ts:68](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L68)
 
-___
+---
+
+### checkAccess
+
+▸ **checkAccess**(): `Promise`<{ `validTo`: `undefined` \| `Date` }\>
+
+#### Returns
+
+`Promise`<{ `validTo`: `undefined` \| `Date` }\>
+
+#### Defined in
+
+[index.ts:159](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L159)
+
+---
 
 ### getApiVersion
 
@@ -104,9 +146,9 @@ ___
 
 #### Defined in
 
-[index.ts:86](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L86)
+[index.ts:94](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L94)
 
-___
+---
 
 ### getCurrentUser
 
@@ -118,26 +160,59 @@ ___
 
 #### Defined in
 
-[index.ts:93](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L93)
+[index.ts:101](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L101)
 
-___
+---
 
 ### getOfferings
 
-▸ **getOfferings**(`«destructured»?`): `Promise`<{ `description`: `undefined` \| ``null`` \| `string` = eachOffering.description; `id`: `undefined` \| `string` = eachOffering.id; `price`: `string`  }[]\>
+▸ **getOfferings**(`«destructured»?`): `Promise`<{ `description`: `undefined` \| `null` \| `string` = eachOffering.description; `id`: `undefined` \| `string` = eachOffering.id; `price`: `string` }[]\>
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name             | Type     |
+| :--------------- | :------- |
 | `«destructured»` | `Object` |
-| › `currency?` | `string` |
-| › `language?` | `string` |
+| › `language?`    | `string` |
 
 #### Returns
 
-`Promise`<{ `description`: `undefined` \| ``null`` \| `string` = eachOffering.description; `id`: `undefined` \| `string` = eachOffering.id; `price`: `string`  }[]\>
+`Promise`<{ `description`: `undefined` \| `null` \| `string` = eachOffering.description; `id`: `undefined` \| `string` = eachOffering.id; `price`: `string` }[]\>
 
 #### Defined in
 
-[index.ts:103](https://github.com/laterpay/supertab-browser/blob/1b7b6ad/src/index.ts#L103)
+[index.ts:125](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L125)
+
+---
+
+### getUserTab
+
+▸ **getUserTab**(): `Promise`<{ `currency`: `string` = tab.currency; `id`: `string` = tab.id; `limit`: `number` = tab.limit; `purchases`: { `price`: `Price` = purchase.price; `purchaseDate`: `undefined` \| `Date` = purchase.purchaseDate; `summary`: `string` = purchase.summary }[] ; `status`: `TabStatus` = tab.status; `total`: `number` = tab.total }\>
+
+#### Returns
+
+`Promise`<{ `currency`: `string` = tab.currency; `id`: `string` = tab.id; `limit`: `number` = tab.limit; `purchases`: { `price`: `Price` = purchase.price; `purchaseDate`: `undefined` \| `Date` = purchase.purchaseDate; `summary`: `string` = purchase.summary }[] ; `status`: `TabStatus` = tab.status; `total`: `number` = tab.total }\>
+
+#### Defined in
+
+[index.ts:181](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L181)
+
+---
+
+### pay
+
+▸ **pay**(`id`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type     |
+| :--- | :------- |
+| `id` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[index.ts:212](https://github.com/laterpay/supertab-browser/blob/151c5b3/src/index.ts#L212)
