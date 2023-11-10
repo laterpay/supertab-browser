@@ -14,14 +14,10 @@ import {
   ClientConfig,
   TabsApi,
   TabStatus,
+  ResponseError,
 } from "@laterpay/tapper-sdk";
 
-import {
-  authFlow,
-  getAuthStatus,
-  getAccessToken,
-  AuthStatus,
-} from "./auth";
+import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
 import { handleChildWindow } from "./window";
@@ -29,7 +25,7 @@ import { handleChildWindow } from "./window";
 function authenticated(
   target: Authenticable,
   propertyKey: string,
-  descriptor: PropertyDescriptor,
+  descriptor: PropertyDescriptor
 ) {
   const originalMethod = descriptor.value;
 
@@ -83,7 +79,7 @@ export class Supertab {
     } = {
       silently: false,
       redirectUri: window.location.href,
-    },
+    }
   ) {
     return authFlow({
       silently,
@@ -104,7 +100,7 @@ export class Supertab {
   @authenticated
   async getCurrentUser() {
     const user = await new UserIdentityApi(
-      this.tapperConfig,
+      this.tapperConfig
     ).getCurrentUserV1();
 
     return {
@@ -118,7 +114,7 @@ export class Supertab {
     }
 
     this._clientConfig = await new ItemsApi(
-      this.tapperConfig,
+      this.tapperConfig
     ).getClientConfigV1({
       clientId: this.clientId,
     });
@@ -135,7 +131,7 @@ export class Supertab {
           ...acc,
           [eachCurrency.isoCode]: eachCurrency,
         }),
-        {},
+        {}
       );
 
     const offerings = clientConfig.offerings.map((eachOffering) => {
@@ -163,7 +159,7 @@ export class Supertab {
   async checkAccess() {
     const clientConfig = await this.#getClientConfig();
     const contentKey = clientConfig.contentKeys.map(
-      (item) => item.contentKey,
+      (item) => item.contentKey
     )[0] as string;
 
     const access = await new AccessApi(this.tapperConfig).checkAccessV2({
@@ -231,10 +227,66 @@ export class Supertab {
       url,
       target: "supertabCheckout",
       onMessage: async (ev) => {
-        if (ev.data.status !== "payment_completed" || ev.origin !== url.origin) {
+        if (
+          ev.data.status !== "payment_completed" ||
+          ev.origin !== url.origin
+        ) {
           throw new Error("Payment failed");
         }
       },
     });
+  }
+
+  @authenticated
+  async purchase({
+    offeringId,
+    preferredCurrency,
+  }: {
+    offeringId: string;
+    preferredCurrency: string;
+  }) {
+    let currency = preferredCurrency;
+
+    try {
+      const tab = await this.getUserTab();
+      currency = tab.currency;
+    } catch (e) {}
+
+    try {
+      const { tab, detail } = await new TabsApi(
+        this.tapperConfig
+      ).purchaseOfferingV1({
+        offeringId,
+        currency,
+        purchaseOfferingRequest: {
+          metadata: {},
+        },
+      });
+
+      if (tab) {
+        return {
+          itemAdded: detail?.itemAdded,
+          tab: {
+            id: tab.id,
+            status: tab.status,
+            total: tab.total,
+            limit: tab.limit,
+            currency: tab.currency,
+          },
+        };
+      } else {
+        throw new Error("Purchase failed");
+      }
+    } catch (e) {
+      if (e instanceof ResponseError) {
+        const responseError = await e.response.json();
+
+        if (responseError.tab && responseError.tab.status === TabStatus.Full) {
+          throw new Error("Tab is full. Call pay() to settle tab.");
+        }
+
+        throw new Error(responseError.error?.message);
+      }
+    }
   }
 }
