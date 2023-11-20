@@ -29,6 +29,7 @@ function authenticated(
 ) {
   const originalMethod = descriptor.value;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   descriptor.value = function (...args: any[]) {
     if (target.authStatus === AuthStatus.MISSING) {
       throw new Error(`Missing auth: ${propertyKey}`);

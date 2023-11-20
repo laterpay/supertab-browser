@@ -8,8 +8,8 @@
 
     window.addEventListener("load", async () => {
       window.SupertabInit({
-        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e"
-      })
+        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
+      });
     });
 
     async function getCurrentUser() {
@@ -17,33 +17,59 @@
 
       try {
         user = await Supertab.getCurrentUser(authentication);
-        log(JSON.stringify({
-          user
-        }, null, 2));
+        log(
+          JSON.stringify({
+              user,
+            },
+            null,
+            2,
+          ),
+        );
       } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
     }
 
     async function startAuthFlow(options) {
-      log(`Starting auth flow with options: ${JSON.stringify({...options}, null, 2)}`);
+      log(
+        `Starting auth flow with options: ${JSON.stringify(
+            { ...options },
+            null,
+            2,
+          )}`,
+      );
 
       try {
-        authentication = await Supertab.auth(options)
+        authentication = await Supertab.auth(options);
 
         if (authentication) {
-          log(JSON.stringify({
-            authentication
-          }, null, 2));
+          log(
+            JSON.stringify({
+                authentication,
+              },
+              null,
+              2,
+            ),
+          );
         } else {
           log("No authentication object returned");
         }
       } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
     }
 
@@ -52,13 +78,23 @@
 
       try {
         access = await Supertab.checkAccess();
-        log(JSON.stringify({
-          access
-        }, null, 2));
+        log(
+          JSON.stringify({
+              access,
+            },
+            null,
+            2,
+          ),
+        );
       } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
     }
 
@@ -67,13 +103,23 @@
 
       try {
         tab = await Supertab.getUserTab();
-        log(JSON.stringify({
-          tab
-        }, null, 2));
+        log(
+          JSON.stringify({
+              tab,
+            },
+            null,
+            2,
+          ),
+        );
       } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
     }
 
@@ -85,18 +131,29 @@
       try {
         await Supertab.pay(tab.id);
         tab = await Supertab.getUserTab();
-        log(JSON.stringify({
-          tab
-        }, null, 2));
+        log(
+          JSON.stringify({
+              tab,
+            },
+            null,
+            2,
+          ),
+        );
       } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
     }
 
     async function purchase() {
-      const offeringId = "item_offering.2106fb07-c210-428a-83fd-b149889916ad";
+      const offerings = await Supertab.getOfferings();
+      const offeringId = offerings[0].id;
       const preferredCurrency = "USD";
 
       log(`Purchasing offering (${offeringId}) in ${preferredCurrency}`);
@@ -132,18 +189,17 @@
 </head>
 
 <body>
-
   <h1>Basic demo</h1>
-  <p>
-    This demo shows how to use the SDK functions.
-  </p>
+  <p>This demo shows how to use the SDK functions.</p>
 
   <ul>
     <li>
       <button type="button" onClick="clearLog()">Clear</button>
     </li>
     <li>
-      <button type="button" onClick="startAuthFlow({ silently: true })">Auth (silently)</button>
+      <button type="button" onClick="startAuthFlow({ silently: true })">
+        Auth (silently)
+      </button>
     </li>
     <li>
       <button type="button" onClick="startAuthFlow()">Auth</button>
@@ -170,9 +226,12 @@
     </li>
   </ul>
 
-
   <h2>console</h2>
-  <pre style="min-height:300px;background-color:#eee;white-space:break-spaces;">
-  </pre>
+  <pre style="
+        min-height: 300px;
+        background-color: #eee;
+        white-space: break-spaces;
+      "></pre>
+</body>
 
 </html>

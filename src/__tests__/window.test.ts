@@ -4,13 +4,18 @@ import { describe, it, expect, mock } from "bun:test";
 describe("window", () => {
   describe("handleChildWindow", () => {
     it("opens authentication URL in a new window", async () => {
-      const open = mock((url: string, target: string) => {});
+      const open = mock<(url: string, target: string) => void>(() => {
+        return;
+      });
       Object.defineProperty(window, "open", {
         value: open,
         writable: true,
       });
 
-      handleChildWindow({ url: new URL("https://auth.sbx.laterpaytest.net"), target: "ssoWindow", onMessage: () => {} });
+      handleChildWindow({
+        url: new URL("https://auth.sbx.laterpaytest.net"),
+        target: "ssoWindow",
+      });
       expect(open.mock.lastCall).toEqual([
         "https://auth.sbx.laterpaytest.net/",
         "ssoWindow",
@@ -18,7 +23,11 @@ describe("window", () => {
     });
 
     it("listens for 'message' event", async () => {
-      const addEventListener = mock((type: string, callback: any) => {});
+      const addEventListener = mock<
+        (type: string, callback: () => void) => void
+      >(() => {
+        return;
+      });
 
       Object.defineProperty(window, "addEventListener", {
         value: addEventListener,
@@ -28,7 +37,6 @@ describe("window", () => {
       handleChildWindow({
         url: new URL("https://auth.sbx.laterpaytest.net"),
         target: "ssoWindow",
-        onMessage: () => {},
       });
       expect(addEventListener.mock.lastCall).toEqual([
         "message",
@@ -38,9 +46,14 @@ describe("window", () => {
 
     it("success if receive correct message", async () => {
       const authWindow = {
-        close: () => {},
+        close: () => {
+          return;
+        },
       } as MessageEventSource;
-      const open = mock((_: string) => authWindow);
+      const open = mock<(url: string, target: string) => void>(() => {
+        return authWindow;
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const addEventListener = mock((_: string, listener: (evt: any) => void) =>
         listener({
           data: {
@@ -60,24 +73,26 @@ describe("window", () => {
           writable: true,
         },
         removeEventListener: {
-          value: () => {},
+          value: () => {
+            return;
+          },
           writable: true,
         },
       });
 
       const authentication = await handleChildWindow({
-        url: new URL("https://auth.sbx.laterpaytest.net?state=test-state&scope=test-scope"),
+        url: new URL(
+          "https://auth.sbx.laterpaytest.net?state=test-state&scope=test-scope",
+        ),
         target: "ssoWindow",
-        onMessage: (ev:MessageEvent) => {
-          return ev.data.authCode;
-        },
+        onMessage: (ev: MessageEvent) => ev.data.authCode,
       });
 
       expect(authentication).toEqual("test-auth-code");
     });
 
     it("fails if auth window is closed", async () => {
-      const open = mock((_: string) => ({ closed: true }));
+      const open = mock(() => ({ closed: true }));
 
       Object.defineProperty(window, "open", {
         value: open,
@@ -89,7 +104,6 @@ describe("window", () => {
           await handleChildWindow({
             url: new URL("https://auth.sbx.laterpaytest.net"),
             target: "ssoWindow",
-            onMessage: () => {},
           }),
       ).toThrow("window closed");
     });

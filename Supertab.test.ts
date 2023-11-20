@@ -1,4 +1,4 @@
-import { test, expect, describe, mock, spyOn, beforeEach } from "bun:test";
+import { test, expect, describe, mock, beforeEach } from "bun:test";
 import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
@@ -24,19 +24,24 @@ const setup = ({
   const emitter = new EventEmitter();
 
   const checkoutWindow = {
-    close: () => {},
+    close: () => {
+      return;
+    },
     closed: false,
   };
-  const windowOpen = mock((url: string, target: string) => {
+  const windowOpen = mock<typeof window.open>((_, target) => {
     if (target === "supertabCheckout") {
-      return checkoutWindow;
+      return checkoutWindow as Window;
     }
+    return null;
   });
   const client = new Supertab({ clientId: "test-client-id", language });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   window.addEventListener = emitter.addListener.bind(emitter) as any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   window.removeEventListener = emitter.removeListener.bind(emitter) as any;
-  window.open = windowOpen as any;
+  window.open = windowOpen;
 
   if (authenticated) {
     localStorage.setItem(
@@ -165,7 +170,7 @@ describe("Supertab", () => {
         suggestedCurrency: "USD",
       });
 
-      expect(await client.getOfferings({ currency: "BRL" })).toEqual([
+      expect(await client.getOfferings()).toEqual([
         {
           id: "test-offering-id",
           description: "Test Offering Description",
