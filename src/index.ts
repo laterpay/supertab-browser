@@ -280,8 +280,6 @@ export class Supertab {
         if (responseError.tab && responseError.tab.status === TabStatus.Full) {
           throw new Error("Tab is full. Call pay() to settle tab.");
         }
-
-        throw new Error("Purchase failed.");
       }
     }
   }

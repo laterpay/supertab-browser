@@ -588,20 +588,22 @@ describe("Supertab", () => {
       },
     };
 
+    const tabMetaData = {
+      count: 1,
+      perPage: 1,
+      links: {
+        previous: "",
+        next: "",
+      },
+      numberPages: 1,
+    };
+
     test("creates a purchase", async () => {
       const { client } = setup();
 
       server.withGetTab({
         data: [tabData],
-        metadata: {
-          count: 1,
-          perPage: 1,
-          links: {
-            previous: "",
-            next: "",
-          },
-          numberPages: 1,
-        },
+        metadata: tabMetaData,
       });
 
       server.withPurchase({
@@ -636,15 +638,7 @@ describe("Supertab", () => {
 
       server.withGetTab({
         data: [euroTabData],
-        metadata: {
-          count: 1,
-          perPage: 1,
-          links: {
-            previous: "",
-            next: "",
-          },
-          numberPages: 1,
-        },
+        metadata: tabMetaData,
       });
 
       server.withPurchase({
@@ -676,15 +670,7 @@ describe("Supertab", () => {
 
       server.withGetTab({
         data: [tabData],
-        metadata: {
-          count: 1,
-          perPage: 1,
-          links: {
-            previous: "",
-            next: "",
-          },
-          numberPages: 1,
-        },
+        metadata: tabMetaData,
       });
 
       server.withPurchaseResponseError({
@@ -700,24 +686,6 @@ describe("Supertab", () => {
             preferredCurrency: "USD",
           })
       ).toThrow("Tab is full. Call pay() to settle tab.");
-    });
-
-    test("throws an error in case of other response errors", () => {
-      const { client } = setup();
-
-      server.withPurchaseResponseError({
-        error: {
-          message: "test-error-message",
-        },
-      });
-
-      expect(
-        async () =>
-          await client.purchase({
-            offeringId: "test-offering-id",
-            preferredCurrency: "USD",
-          })
-      ).toThrow("Purchase failed.");
     });
   });
 });
