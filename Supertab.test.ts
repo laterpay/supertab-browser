@@ -4,13 +4,11 @@ import EventEmitter from "events";
 import Supertab from ".";
 import {
   Currency,
-  ResponseError,
   SiteOffering,
   TabResponse,
   TabStatus,
   UserResponse,
 } from "@laterpay/tapper-sdk";
-import { response } from "msw";
 
 const setup = ({
   authenticated = true,
