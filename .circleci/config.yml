@@ -1,0 +1,48 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.1.0
+  bun-orb: cmgriffing/bun-orb@0.0.28
+
+jobs:
+  release:
+    executor: node/default
+    steps:
+      - checkout
+      - bun-orb/setup
+      - run: npx semantic-release --dry-run
+
+  build:
+    executor: node/default
+    steps:
+      - checkout
+      - bun-orb/setup
+      - run: bun install
+      - run: bun build
+
+  test:
+    executor: node/default
+    steps:
+      - checkout
+      - bun-orb/setup
+      - run: bun install
+      - run: bun test
+
+workflows:
+  build_test:
+    when:
+      not:
+        equal: [main, << pipeline.git.branch >>]
+    jobs:
+      - build
+      - test
+
+  build_test_and_release:
+    when:
+      equal: [main, << pipeline.git.branch >>]
+    jobs:
+      - build
+      - test
+      - release:
+          requires:
+            - test
