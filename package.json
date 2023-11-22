@@ -6,6 +6,7 @@
     "node": ">=21.0.0",
     "npm": ">=10.0.0"
   },
+  "repository": "https://github.com/laterpay/supertab-browser.git",
   "devDependencies": {
     "@docusaurus/core": "2.4.3",
     "@docusaurus/module-type-aliases": "2.4.3",
