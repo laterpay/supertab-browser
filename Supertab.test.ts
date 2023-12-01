@@ -636,8 +636,7 @@ describe("Supertab", () => {
     test("creates a purchase in tab currency if found no matter what is preferred currency", async () => {
       const { client } = setup();
 
-      const euroTabData = tabData;
-      euroTabData.currency = "EUR";
+      const euroTabData = { ...tabData, currency: "EUR" };
 
       server.withGetTab({
         data: [euroTabData],
