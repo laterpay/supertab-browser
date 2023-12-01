@@ -5,6 +5,7 @@ import Supertab from ".";
 import {
   Currency,
   SiteOffering,
+  TabResponse,
   TabStatus,
   UserResponse,
 } from "@laterpay/tapper-sdk";
@@ -511,7 +512,7 @@ describe("Supertab", () => {
       }).toThrow(/window closed/);
     });
 
-    test.only("throw an error if tab is not 'full'", async () => {
+    test("throw an error if tab is not 'full'", async () => {
       const { client } = setup();
 
       server.withGetTabById({
@@ -536,6 +537,149 @@ describe("Supertab", () => {
 
         await payment;
       }).toThrow(/Tab is not full/);
+    });
+  });
+
+  describe("purchase", () => {
+    const tabData: TabResponse = {
+      id: "test-tab-id",
+      createdAt: new Date("2023-11-03T15:34:44.852Z"),
+      updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+      merchantId: "test-merchant-id",
+      userId: "test-user-id",
+      status: "open",
+      paidAt: null,
+      total: 50,
+      limit: 500,
+      currency: "USD",
+      paymentModel: "pay_later",
+      purchases: [
+        {
+          id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+          createdAt: new Date("2023-11-03T15:34:44.852Z"),
+          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+          purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+          merchantId: "test-merchant-id",
+          summary: "test-summary",
+          price: {
+            amount: 50,
+            currency: "USD",
+          },
+          salesModel: "time_pass",
+          paymentModel: "pay_later",
+          metadata: {
+            additionalProp1: {},
+            additionalProp2: {},
+            additionalProp3: {},
+          },
+          attributedTo: "test-id",
+          offeringId: "test-offering-id",
+          contentKey: "test-content-key",
+          testMode: false,
+        },
+      ],
+      metadata: {
+        additionalProp1: {},
+        additionalProp2: {},
+        additionalProp3: {},
+      },
+      testMode: false,
+      tabStatistics: {
+        purchasesCount: 0,
+        obfuscatedPurchasesCount: 0,
+        obfuscatedPurchasesTotal: 0,
+      },
+    };
+
+    const tabMetaData = {
+      count: 1,
+      perPage: 1,
+      links: {
+        previous: "",
+        next: "",
+      },
+      numberPages: 1,
+    };
+
+    test("creates a purchase", async () => {
+      const { client } = setup();
+
+      server.withGetTab({
+        data: [tabData],
+        metadata: tabMetaData,
+      });
+
+      server.withPurchase({
+        tab: tabData,
+      });
+
+      expect(
+        await client.purchase({
+          offeringId: "test-offering-id",
+          preferredCurrency: "USD",
+        }),
+      ).toEqual({
+        tab: {
+          currency: "USD",
+          id: "test-tab-id",
+          limit: 500,
+          status: "open",
+          total: 50,
+        },
+      });
+    });
+
+    test("creates a purchase in tab currency if found no matter what is preferred currency", async () => {
+      const { client } = setup();
+
+      const euroTabData = { ...tabData, currency: "EUR" };
+
+      server.withGetTab({
+        data: [euroTabData],
+        metadata: tabMetaData,
+      });
+
+      server.withPurchase({
+        tab: euroTabData,
+      });
+
+      expect(
+        await client.purchase({
+          offeringId: "test-offering-id",
+          preferredCurrency: "USD",
+        }),
+      ).toEqual({
+        tab: {
+          currency: "EUR",
+          id: "test-tab-id",
+          limit: 500,
+          status: "open",
+          total: 50,
+        },
+      });
+    });
+
+    test("throws an error when tab is full", () => {
+      const { client } = setup();
+
+      server.withGetTab({
+        data: [tabData],
+        metadata: tabMetaData,
+      });
+
+      server.withPurchaseResponseError({
+        tab: {
+          status: TabStatus.Full,
+        },
+      });
+
+      expect(
+        async () =>
+          await client.purchase({
+            offeringId: "test-offering-id",
+            preferredCurrency: "USD",
+          }),
+      ).toThrow("Tab is full. Call pay() to settle tab.");
     });
   });
 });

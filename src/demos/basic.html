@@ -1,222 +1,237 @@
 <html>
-  <head>
-    <script type="module" src="../../index.ts"></script>
-    <script type="text/javascript">
-      let authentication;
-      let user;
 
-      window.addEventListener("load", async () => {
-        window.SupertabInit({
-          clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
-        });
+<head>
+  <script type="module" src="../../index.ts"></script>
+  <script type="text/javascript">
+    let authentication;
+    let user;
+
+    window.addEventListener("load", async () => {
+      window.SupertabInit({
+        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
       });
+    });
 
-      async function getCurrentUser() {
-        log(`Getting current user`);
+    async function getCurrentUser() {
+      log(`Getting current user`);
 
-        try {
-          user = await Supertab.getCurrentUser(authentication);
-          log(
-            JSON.stringify(
-              {
-                user,
-              },
-              null,
-              2,
-            ),
-          );
-        } catch (e) {
-          log(
-            JSON.stringify(
-              {
-                error: e.toString(),
-              },
-              null,
-              2,
-            ),
-          );
-        }
-      }
-
-      async function startAuthFlow(options) {
+      try {
+        user = await Supertab.getCurrentUser(authentication);
         log(
-          `Starting auth flow with options: ${JSON.stringify(
+          JSON.stringify({
+              user,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (e) {
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
+      }
+    }
+
+    async function startAuthFlow(options) {
+      log(
+        `Starting auth flow with options: ${JSON.stringify(
             { ...options },
             null,
             2,
           )}`,
+      );
+
+      try {
+        authentication = await Supertab.auth(options);
+
+        if (authentication) {
+          log(
+            JSON.stringify({
+                authentication,
+              },
+              null,
+              2,
+            ),
+          );
+        } else {
+          log("No authentication object returned");
+        }
+      } catch (e) {
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
         );
-
-        try {
-          authentication = await Supertab.auth(options);
-
-          if (authentication) {
-            log(
-              JSON.stringify(
-                {
-                  authentication,
-                },
-                null,
-                2,
-              ),
-            );
-          } else {
-            log("No authentication object returned");
-          }
-        } catch (e) {
-          log(
-            JSON.stringify(
-              {
-                error: e.toString(),
-              },
-              null,
-              2,
-            ),
-          );
-        }
       }
+    }
 
-      async function checkAccess() {
-        log(`Checking access`);
+    async function checkAccess() {
+      log(`Checking access`);
 
-        try {
-          access = await Supertab.checkAccess();
-          log(
-            JSON.stringify(
-              {
-                access,
-              },
-              null,
-              2,
-            ),
-          );
-        } catch (e) {
-          log(
-            JSON.stringify(
-              {
-                error: e.toString(),
-              },
-              null,
-              2,
-            ),
-          );
-        }
+      try {
+        access = await Supertab.checkAccess();
+        log(
+          JSON.stringify({
+              access,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (e) {
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
+    }
 
-      async function getUserTab() {
-        log(`Fetching tab`);
+    async function getUserTab() {
+      log(`Fetching tab`);
 
-        try {
-          tab = await Supertab.getUserTab();
-          log(
-            JSON.stringify(
-              {
-                tab,
-              },
-              null,
-              2,
-            ),
-          );
-        } catch (e) {
-          log(
-            JSON.stringify(
-              {
-                error: e.toString(),
-              },
-              null,
-              2,
-            ),
-          );
-        }
+      try {
+        tab = await Supertab.getUserTab();
+        log(
+          JSON.stringify({
+              tab,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (e) {
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
+    }
 
-      async function payTab() {
-        await getUserTab();
+    async function payTab() {
+      await getUserTab();
 
-        log(`Paying tab`);
+      log(`Paying tab`);
 
-        try {
-          await Supertab.pay(tab.id);
-          tab = await Supertab.getUserTab();
-          log(
-            JSON.stringify(
-              {
-                tab,
-              },
-              null,
-              2,
-            ),
-          );
-        } catch (e) {
-          log(
-            JSON.stringify(
-              {
-                error: e.toString(),
-              },
-              null,
-              2,
-            ),
-          );
-        }
+      try {
+        await Supertab.pay(tab.id);
+        tab = await Supertab.getUserTab();
+        log(
+          JSON.stringify({
+              tab,
+            },
+            null,
+            2,
+          ),
+        );
+      } catch (e) {
+        log(
+          JSON.stringify({
+              error: e.toString(),
+            },
+            null,
+            2,
+          ),
+        );
       }
+    }
 
-      function log(message) {
-        document.querySelector("pre").innerHTML += `\n${message}\n`;
+    async function purchase() {
+      const offerings = await Supertab.getOfferings();
+      const offeringId = offerings[0].id;
+      const preferredCurrency = "USD";
+
+      log(`Purchasing offering (${offeringId}) in ${preferredCurrency}`);
+
+      try {
+        const purchase = await Supertab.purchase({
+          offeringId,
+          preferredCurrency
+        });
+        log(JSON.stringify({
+          purchase
+        }, null, 2));
+      } catch (e) {
+        log(JSON.stringify({
+          error: e.toString()
+        }, null, 2));
       }
+    }
 
-      function clearLog() {
-        localStorage.clear();
-        document.querySelector("pre").innerHTML = "";
-      }
+    function log(message) {
+      document.querySelector("pre").innerHTML += `\n${message}\n`;
+    }
 
-      window.setInterval(() => {
-        document.getElementById("auth-status").innerHTML = Supertab.authStatus;
-      }, 1000);
-    </script>
-  </head>
+    function clearLog() {
+      localStorage.clear();
+      document.querySelector("pre").innerHTML = "";
+    }
 
-  <body>
-    <h1>Basic demo</h1>
-    <p>This demo shows how to use the SDK functions.</p>
+    window.setInterval(() => {
+      document.getElementById("auth-status").innerHTML = Supertab.authStatus;
+    }, 1000);
+  </script>
+</head>
 
-    <ul>
-      <li>
-        <button type="button" onClick="clearLog()">Clear</button>
-      </li>
-      <li>
-        <button type="button" onClick="startAuthFlow({ silently: true })">
-          Auth (silently)
-        </button>
-      </li>
-      <li>
-        <button type="button" onClick="startAuthFlow()">Auth</button>
-      </li>
-      <li>
-        <button type="button" onClick="getCurrentUser()">Get User</button>
-      </li>
-      <li>
-        <button type="button" onClick="checkAccess()">Check Access</button>
-      </li>
-      <li>
-        <button type="button" onClick="getUserTab()">Get User's Tab</button>
-      </li>
-      <li>
-        <button type="button" onClick="payTab()">Pay User's Tab</button>
-      </li>
+<body>
+  <h1>Basic demo</h1>
+  <p>This demo shows how to use the SDK functions.</p>
 
-      <li>
-        Auth Status:
-        <span id="auth-status">---</span>
-      </li>
-    </ul>
+  <ul>
+    <li>
+      <button type="button" onClick="clearLog()">Clear</button>
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow({ silently: true })">
+        Auth (silently)
+      </button>
+    </li>
+    <li>
+      <button type="button" onClick="startAuthFlow()">Auth</button>
+    </li>
+    <li>
+      <button type="button" onClick="getCurrentUser()">Get User</button>
+    </li>
+    <li>
+      <button type="button" onClick="checkAccess()">Check Access</button>
+    </li>
+    <li>
+      <button type="button" onClick="getUserTab()">Get User's Tab</button>
+    </li>
+    <li>
+      <button type="button" onClick="purchase()">Purchase</button>
+    </li>
+    <li>
+      <button type="button" onClick="payTab()">Pay User's Tab</button>
+    </li>
 
-    <h2>console</h2>
-    <pre
-      style="
+    <li>
+      Auth Status:
+      <span id="auth-status">---</span>
+    </li>
+  </ul>
+
+  <h2>console</h2>
+  <pre style="
         min-height: 300px;
         background-color: #eee;
         white-space: break-spaces;
-      "
-    ></pre>
-  </body>
+      "></pre>
+</body>
+
 </html>
