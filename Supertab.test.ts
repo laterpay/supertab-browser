@@ -46,7 +46,7 @@ const setup = ({
       "supertab-auth",
       JSON.stringify({
         expiresAt: Date.now() + authExpiresIn,
-      })
+      }),
     );
   }
 
@@ -315,7 +315,7 @@ describe("Supertab", () => {
             },
           ],
         });
-      }
+      },
     );
 
     test("throw an error if no tabs", async () => {
@@ -476,7 +476,7 @@ describe("Supertab", () => {
     test("throw an error if not authenticated", () => {
       const { client } = setup({ authenticated: false });
       expect(async () => await client.pay("test-tab-id")).toThrow(
-        /Missing auth/
+        /Missing auth/,
       );
     });
 
@@ -610,9 +610,6 @@ describe("Supertab", () => {
       });
 
       server.withPurchase({
-        detail: {
-          itemAdded: true,
-        },
         tab: tabData,
       });
 
@@ -620,9 +617,8 @@ describe("Supertab", () => {
         await client.purchase({
           offeringId: "test-offering-id",
           preferredCurrency: "USD",
-        })
+        }),
       ).toEqual({
-        itemAdded: true,
         tab: {
           currency: "USD",
           id: "test-tab-id",
@@ -644,9 +640,6 @@ describe("Supertab", () => {
       });
 
       server.withPurchase({
-        detail: {
-          itemAdded: true,
-        },
         tab: euroTabData,
       });
 
@@ -654,9 +647,8 @@ describe("Supertab", () => {
         await client.purchase({
           offeringId: "test-offering-id",
           preferredCurrency: "USD",
-        })
+        }),
       ).toEqual({
-        itemAdded: true,
         tab: {
           currency: "EUR",
           id: "test-tab-id",
@@ -686,7 +678,7 @@ describe("Supertab", () => {
           await client.purchase({
             offeringId: "test-offering-id",
             preferredCurrency: "USD",
-          })
+          }),
       ).toThrow("Tab is full. Call pay() to settle tab.");
     });
   });
