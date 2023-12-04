@@ -1,3 +1,9 @@
+## [1.1.4](https://github.com/laterpay/supertab-browser/compare/v1.1.3...v1.1.4) (2023-12-04)
+
+### Bug Fixes
+
+- use target es5 and tsup to compile ([13d703c](https://github.com/laterpay/supertab-browser/commit/13d703cd0fbb688f943e6b6dfe8037baca9de77b))
+
 ## [1.1.3](https://github.com/laterpay/supertab-browser/compare/v1.1.2...v1.1.3) (2023-12-04)
 
 ### Bug Fixes
