@@ -1,3 +1,13 @@
+# [1.1.0](https://github.com/laterpay/supertab-browser/compare/v1.0.0...v1.1.0) (2023-12-04)
+
+### Bug Fixes
+
+- replace bunx by bun x ([b16c1bb](https://github.com/laterpay/supertab-browser/commit/b16c1bbd82ab96c8a59605b7818f359877afbdff))
+
+### Features
+
+- semantic release ([8dc111a](https://github.com/laterpay/supertab-browser/commit/8dc111a1ba3bd0d686ed6ae8fdfdd1f291cdf273))
+
 # 1.0.0 (2023-12-01)
 
 ### Bug Fixes
