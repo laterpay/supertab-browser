@@ -1,5 +1,5 @@
 {
-  "name": "supertab-browser",
+  "name": "@laterpay/supertab-browser",
   "module": "index.ts",
   "sideEffects": false,
   "engines": {
@@ -8,7 +8,7 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "access": "restricted"
   },
   "repository": "https://github.com/laterpay/supertab-browser.git",
   "devDependencies": {
