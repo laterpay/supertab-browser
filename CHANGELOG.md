@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/laterpay/supertab-browser/compare/v1.1.0...v1.1.1) (2023-12-04)
+
+### Bug Fixes
+
+- add registry information ([ea8cff6](https://github.com/laterpay/supertab-browser/commit/ea8cff685e24614bc639abe6ce0db7e64e3c1c43))
+- enable npm publish ([27631c5](https://github.com/laterpay/supertab-browser/commit/27631c597b68f87bf3c692b716d9e4e490971b32))
+
 # [1.1.0](https://github.com/laterpay/supertab-browser/compare/v1.0.0...v1.1.0) (2023-12-04)
 
 ### Bug Fixes
