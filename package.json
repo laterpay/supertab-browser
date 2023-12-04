@@ -38,7 +38,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "bundle": "bun build ./index.ts --outdir ./dist --minify",
+    "bundle": "bun x tsup index.ts -d ./dist --minify",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
