@@ -1,3 +1,9 @@
+## [1.1.3](https://github.com/laterpay/supertab-browser/compare/v1.1.2...v1.1.3) (2023-12-04)
+
+### Bug Fixes
+
+- make package restricted and scoped ([a544fd2](https://github.com/laterpay/supertab-browser/commit/a544fd2033552247f3011426e26ec9f7ece8bee0))
+
 ## [1.1.2](https://github.com/laterpay/supertab-browser/compare/v1.1.1...v1.1.2) (2023-12-04)
 
 ### Bug Fixes
