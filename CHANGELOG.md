@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/laterpay/supertab-browser/compare/v1.1.1...v1.1.2) (2023-12-04)
+
+### Bug Fixes
+
+- make package public ([ccc924c](https://github.com/laterpay/supertab-browser/commit/ccc924ce0a413fab56170f77d2facbb06407f4c4))
+
 ## [1.1.1](https://github.com/laterpay/supertab-browser/compare/v1.1.0...v1.1.1) (2023-12-04)
 
 ### Bug Fixes
