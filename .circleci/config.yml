@@ -11,7 +11,7 @@ jobs:
       - checkout
       - bun-orb/setup
       - run: bun install
-      - run: npx semantic-release --dry-run
+      - run: npx semantic-release
 
   build:
     executor: node/default
