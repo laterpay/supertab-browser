@@ -1,8 +1,8 @@
 {
   "name": "@laterpay/supertab-browser",
-  "module": "dist/index.mjs",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "module": "dist/prod/index.mjs",
+  "main": "dist/prod/index.js",
+  "types": "dist/prod/index.d.ts",
   "files": [
     "dist"
   ],
@@ -44,7 +44,9 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "bundle": "bun x tsup index.ts --tsconfig tsconfig.tsup.json --sourcemap --clean --dts --format esm,cjs --minify --out-dir dist",
+    "bundle": "bun bundle:prod && bun bundle:sbx",
+    "bundle:prod": "tsup --config tsup.prod.config.ts",
+    "bundle:sbx": "tsup --config tsup.sbx.config.ts",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
