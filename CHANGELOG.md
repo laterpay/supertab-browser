@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/laterpay/supertab-browser/compare/v1.2.0...v1.2.1) (2023-12-05)
+
+### Bug Fixes
+
+- split sbx/prod build folder ([f4a6354](https://github.com/laterpay/supertab-browser/commit/f4a6354b61199e8479908d499d72f5b028d05dba))
+
 # [1.2.0](https://github.com/laterpay/supertab-browser/compare/v1.1.4...v1.2.0) (2023-12-05)
 
 ### Features
