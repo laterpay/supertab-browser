@@ -1,3 +1,9 @@
+## [1.2.2](https://github.com/laterpay/supertab-browser/compare/v1.2.1...v1.2.2) (2023-12-05)
+
+### Bug Fixes
+
+- loose typescript peer dependency ([5b54b80](https://github.com/laterpay/supertab-browser/commit/5b54b80a62e81ae9bd799182e54743f63d7acee2))
+
 ## [1.2.1](https://github.com/laterpay/supertab-browser/compare/v1.2.0...v1.2.1) (2023-12-05)
 
 ### Bug Fixes
