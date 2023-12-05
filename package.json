@@ -1,6 +1,11 @@
 {
   "name": "@laterpay/supertab-browser",
-  "module": "index.ts",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "engines": {
     "node": ">=21.0.0",
@@ -33,12 +38,13 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "semantic-release": "^22.0.8",
+    "tsup": "^8.0.1",
     "typedoc": "^0.25.2",
     "typedoc-plugin-markdown": "^3.16.0"
   },
   "scripts": {
     "prepare": "husky install",
-    "bundle": "bun x tsup index.ts -d ./dist --minify",
+    "bundle": "bun x tsup index.ts --tsconfig tsconfig.tsup.json --sourcemap --clean --dts --format esm,cjs --minify --out-dir dist",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
