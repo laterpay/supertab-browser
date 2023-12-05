@@ -63,7 +63,7 @@
     "lint:fix": "eslint --fix --ext .ts ."
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "@laterpay/auth": "^1.1.3",
