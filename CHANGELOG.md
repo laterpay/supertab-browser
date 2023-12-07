@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/laterpay/supertab-browser/compare/v1.1.3...v1.2.0) (2023-12-07)
+
+### Bug Fixes
+
+- Bundle with tsup ([d87e730](https://github.com/laterpay/supertab-browser/commit/d87e730da598a21353856845578f497699279c54))
+
+### Features
+
+- bundle with `tsup` ([2813f22](https://github.com/laterpay/supertab-browser/commit/2813f22c8ee440ddd9a4c9524b8dde51c20ea774))
+
 ## [1.1.4](https://github.com/laterpay/supertab-browser/compare/v1.1.3...v1.1.4) (2023-12-07)
 
 ### Bug Fixes
