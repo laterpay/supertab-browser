@@ -1,3 +1,9 @@
+## [1.3.1](https://github.com/laterpay/supertab-browser/compare/v1.3.0...v1.3.1) (2023-12-07)
+
+### Bug Fixes
+
+- Correct semver syntax error in peer dependency ([#26](https://github.com/laterpay/supertab-browser/issues/26)) ([4b88d45](https://github.com/laterpay/supertab-browser/commit/4b88d456da5c8b1c9fd09a82d1a7f58178adcefe))
+
 # [1.3.0](https://github.com/laterpay/supertab-browser/compare/v1.2.0...v1.3.0) (2023-12-07)
 
 ### Features
