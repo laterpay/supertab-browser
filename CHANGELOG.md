@@ -1,3 +1,9 @@
+# [1.3.0](https://github.com/laterpay/supertab-browser/compare/v1.2.0...v1.3.0) (2023-12-07)
+
+### Features
+
+- bump version to avoid conflict ([5a7a354](https://github.com/laterpay/supertab-browser/commit/5a7a354c7d5c9196828f26003064f47ec700b60c))
+
 # [1.2.0](https://github.com/laterpay/supertab-browser/compare/v1.1.3...v1.2.0) (2023-12-07)
 
 ### Bug Fixes
