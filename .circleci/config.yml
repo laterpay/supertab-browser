@@ -20,6 +20,9 @@ jobs:
       - bun-orb/setup
       - run: bun install
       - run: bun run bundle
+      - persist_to_workspace:
+          root: ./
+          paths: dist/
 
   test:
     executor: node/default
