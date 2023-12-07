@@ -16,4 +16,3 @@ export default defineConfig({
     CHECKOUT_BASE_URL: "https://checkout.sbx.supertab.co",
   },
 });
-
