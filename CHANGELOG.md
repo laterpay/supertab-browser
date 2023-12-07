@@ -1,3 +1,9 @@
+## [1.3.4](https://github.com/laterpay/supertab-browser/compare/v1.3.3...v1.3.4) (2023-12-07)
+
+### Bug Fixes
+
+- persist to workspace ([be196f2](https://github.com/laterpay/supertab-browser/commit/be196f29af89963170248109ca81cec4648397df))
+
 ## [1.3.3](https://github.com/laterpay/supertab-browser/compare/v1.3.2...v1.3.3) (2023-12-07)
 
 ### Bug Fixes
