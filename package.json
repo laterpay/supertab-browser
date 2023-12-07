@@ -1,6 +1,11 @@
 {
   "name": "@laterpay/supertab-browser",
-  "module": "index.ts",
+  "module": "dist/prod/index.mjs",
+  "main": "dist/prod/index.js",
+  "types": "dist/prod/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "engines": {
     "node": ">=21.0.0",
@@ -18,6 +23,7 @@
     "@mdx-js/react": "^1.6.22",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
+    "@swc/core": "^1.3.100",
     "@tsconfig/docusaurus": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "bun-types": "latest",
@@ -33,12 +39,15 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "semantic-release": "^22.0.8",
+    "tsup": "^8.0.1",
     "typedoc": "^0.25.2",
     "typedoc-plugin-markdown": "^3.16.0"
   },
   "scripts": {
     "prepare": "husky install",
-    "bundle": "bun build ./index.ts --outdir ./dist --minify",
+    "bundle": "bun bundle:prod && bun bundle:sbx",
+    "bundle:prod": "tsup --config tsup.prod.config.ts",
+    "bundle:sbx": "tsup --config tsup.sbx.config.ts",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
@@ -55,7 +64,7 @@
     "lint:fix": "eslint --fix --ext .ts ."
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^4.0.0 | ^5.0.0"
   },
   "dependencies": {
     "@laterpay/auth": "^1.1.3",
@@ -95,5 +104,5 @@
     ],
     "rules": {}
   },
-  "version": "1.1.3"
+  "version": "1.2.2"
 }

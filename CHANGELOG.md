@@ -1,3 +1,27 @@
+## [1.2.2](https://github.com/laterpay/supertab-browser/compare/v1.2.1...v1.2.2) (2023-12-05)
+
+### Bug Fixes
+
+- loose typescript peer dependency ([5b54b80](https://github.com/laterpay/supertab-browser/commit/5b54b80a62e81ae9bd799182e54743f63d7acee2))
+
+## [1.2.1](https://github.com/laterpay/supertab-browser/compare/v1.2.0...v1.2.1) (2023-12-05)
+
+### Bug Fixes
+
+- split sbx/prod build folder ([f4a6354](https://github.com/laterpay/supertab-browser/commit/f4a6354b61199e8479908d499d72f5b028d05dba))
+
+# [1.2.0](https://github.com/laterpay/supertab-browser/compare/v1.1.4...v1.2.0) (2023-12-05)
+
+### Features
+
+- bundling with tsup ([cdf127e](https://github.com/laterpay/supertab-browser/commit/cdf127e7bda5e8cc244939fba651b6e5a9a103c9))
+
+## [1.1.4](https://github.com/laterpay/supertab-browser/compare/v1.1.3...v1.1.4) (2023-12-04)
+
+### Bug Fixes
+
+- use target es5 and tsup to compile ([13d703c](https://github.com/laterpay/supertab-browser/commit/13d703cd0fbb688f943e6b6dfe8037baca9de77b))
+
 ## [1.1.3](https://github.com/laterpay/supertab-browser/compare/v1.1.2...v1.1.3) (2023-12-04)
 
 ### Bug Fixes
