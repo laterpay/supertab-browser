@@ -1,3 +1,9 @@
+## [1.3.2](https://github.com/laterpay/supertab-browser/compare/v1.3.1...v1.3.2) (2023-12-07)
+
+### Bug Fixes
+
+- persist `dist/` to the workspace ([031ddc6](https://github.com/laterpay/supertab-browser/commit/031ddc6b10e8f937f5f8b241e8ad7fafc8d04c66))
+
 ## [1.3.1](https://github.com/laterpay/supertab-browser/compare/v1.3.0...v1.3.1) (2023-12-07)
 
 ### Bug Fixes
