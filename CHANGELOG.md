@@ -1,3 +1,9 @@
+## [1.3.3](https://github.com/laterpay/supertab-browser/compare/v1.3.2...v1.3.3) (2023-12-07)
+
+### Bug Fixes
+
+- attach workspace in release job ([0ed7a12](https://github.com/laterpay/supertab-browser/commit/0ed7a127d85bd49863d83853f3d245dd9cad0d54))
+
 ## [1.3.2](https://github.com/laterpay/supertab-browser/compare/v1.3.1...v1.3.2) (2023-12-07)
 
 ### Bug Fixes
