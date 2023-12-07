@@ -9,9 +9,9 @@ jobs:
     executor: node/default
     steps:
       - checkout
-      - bun-orb/setup
       - attach_workspace:
           at: ./
+      - bun-orb/setup
       - run: bun install
       - run: npx semantic-release
 
@@ -24,7 +24,8 @@ jobs:
       - run: bun run bundle
       - persist_to_workspace:
           root: ./
-          paths: dist
+          paths:
+            - dist
 
   test:
     executor: node/default
