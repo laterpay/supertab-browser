@@ -1,3 +1,9 @@
+## [1.3.5](https://github.com/laterpay/supertab-browser/compare/v1.3.4...v1.3.5) (2023-12-07)
+
+### Bug Fixes
+
+- require `build` and `test` before `release` ([9c02202](https://github.com/laterpay/supertab-browser/commit/9c02202ec1a1e941a5cc77fe6e43f56406bc0ad7))
+
 ## [1.3.4](https://github.com/laterpay/supertab-browser/compare/v1.3.3...v1.3.4) (2023-12-07)
 
 ### Bug Fixes
