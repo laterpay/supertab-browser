@@ -1,3 +1,9 @@
+## [1.3.6](https://github.com/laterpay/supertab-browser/compare/v1.3.5...v1.3.6) (2023-12-08)
+
+### Bug Fixes
+
+- add OAuth2 scopes ([#27](https://github.com/laterpay/supertab-browser/issues/27)) ([61d28d6](https://github.com/laterpay/supertab-browser/commit/61d28d642851cdab3e017b951d7fdb05baaae1d2))
+
 ## [1.3.5](https://github.com/laterpay/supertab-browser/compare/v1.3.4...v1.3.5) (2023-12-07)
 
 ### Bug Fixes
