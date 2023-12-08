@@ -17,7 +17,7 @@ describe("auth", () => {
       expect(params).toMatchObject({
         code_challenge: expect.stringMatching(/^.{43}$/),
         code_challenge_method: "S256",
-        scope: "read write offline_access",
+        scope: "tab:tab:read tab:purchase:write auth:user:read offline_access",
         response_type: "code",
         state: "eyJvcmlnaW4iOiJudWxsIn0=",
         client_id: "clientId",
