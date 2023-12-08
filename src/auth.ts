@@ -110,7 +110,7 @@ export async function authorize({
   const url = new URL("/oauth2/auth", authBaseUrl);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
-  url.searchParams.set("scope", "read write offline_access");
+  url.searchParams.set("scope", "tab:tab:read tab:purchase:write auth:user:read offline_access");
   url.searchParams.set("response_type", "code");
   url.searchParams.set("state", state);
   url.searchParams.set("client_id", clientId);
