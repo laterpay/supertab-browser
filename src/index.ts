@@ -15,6 +15,7 @@ import {
   TabsApi,
   TabStatus,
   ResponseError,
+  PurchaseOfferingResponseFromJSON,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -255,7 +256,9 @@ export class Supertab {
     } catch (e) {}
 
     try {
-      const { tab } = await new TabsApi(this.tapperConfig).purchaseOfferingV1({
+      const { tab, detail } = await new TabsApi(
+        this.tapperConfig,
+      ).purchaseOfferingV1({
         offeringId,
         currency,
         purchaseOfferingRequest: {
@@ -264,6 +267,7 @@ export class Supertab {
       });
 
       return {
+        itemAdded: detail?.itemAdded,
         tab: {
           id: tab.id,
           status: tab.status,
@@ -273,13 +277,23 @@ export class Supertab {
         },
       };
     } catch (e) {
-      if (e instanceof ResponseError) {
-        const responseError = await e.response.json();
-
-        if (responseError.tab && responseError.tab.status === TabStatus.Full) {
-          throw new Error("Tab is full. Call pay() to settle tab.");
-        }
+      if (e instanceof ResponseError && e.response.status === 402) {
+        const { tab, detail } = PurchaseOfferingResponseFromJSON(
+          await e.response.json(),
+        );
+        return {
+          itemAdded: detail?.itemAdded,
+          tab: {
+            id: tab.id,
+            status: tab.status,
+            total: tab.total,
+            limit: tab.limit,
+            currency: tab.currency,
+          },
+        };
       }
+
+      throw e;
     }
   }
 }

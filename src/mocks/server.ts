@@ -12,7 +12,6 @@ import {
   PaginatedTabResponseToJSON,
   PurchaseOfferingResponse,
   PurchaseOfferingResponseToJSON,
-  ResponseError,
   TabResponse,
   TabResponseToJSON,
   UserResponse,
@@ -25,8 +24,8 @@ const withClientConfig = (clientConfig: ClientConfig) => {
     rest.get(
       "https://tapi.sbx.laterpay.net/v1/public/items/client/:id/config",
       (_, res, ctx) =>
-        res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig)))
-    )
+        res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig))),
+    ),
   );
 
   return server;
@@ -35,8 +34,8 @@ const withClientConfig = (clientConfig: ClientConfig) => {
 const withCurrentUser = (user: UserResponse) => {
   server.use(
     rest.get("https://tapi.sbx.laterpay.net/v1/identity/me", (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(UserResponseToJSON(user)))
-    )
+      res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
+    ),
   );
 
   return server;
@@ -45,8 +44,8 @@ const withCurrentUser = (user: UserResponse) => {
 const withHealth = (health: HealthResponse) => {
   server.use(
     rest.get("https://tapi.sbx.laterpay.net/health", (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(HealthResponseToJSON(health)))
-    )
+      res(ctx.status(200), ctx.json(HealthResponseToJSON(health))),
+    ),
   );
 
   return server;
@@ -55,43 +54,37 @@ const withHealth = (health: HealthResponse) => {
 const withAccessCheck = (accessCheck: AccessResponse) => {
   server.use(
     rest.get("https://tapi.sbx.laterpay.net/v2/access/check", (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(AccessResponseToJSON(accessCheck)))
-    )
+      res(ctx.status(200), ctx.json(AccessResponseToJSON(accessCheck))),
+    ),
   );
 };
 
 const withGetTab = (tab: PaginatedTabResponse) => {
   server.use(
     rest.get("https://tapi.sbx.laterpay.net/v1/tabs", (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(PaginatedTabResponseToJSON(tab)))
-    )
+      res(ctx.status(200), ctx.json(PaginatedTabResponseToJSON(tab))),
+    ),
   );
 };
 
 const withGetTabById = (tab: TabResponse) => {
   server.use(
     rest.get(`https://tapi.sbx.laterpay.net/v1/tabs/${tab.id}`, (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(TabResponseToJSON(tab)))
-    )
+      res(ctx.status(200), ctx.json(TabResponseToJSON(tab))),
+    ),
   );
 };
 
-const withPurchase = (purchase: PurchaseOfferingResponse) => {
+const withPurchase = (purchase: PurchaseOfferingResponse, status = 200) => {
   server.use(
     rest.post(
       "https://tapi.sbx.laterpay.net/v1/purchase/test-offering-id",
       (_, res, ctx) =>
-        res(ctx.status(200), ctx.json(PurchaseOfferingResponseToJSON(purchase)))
-    )
-  );
-};
-
-const withPurchaseResponseError = (error: any) => {
-  server.use(
-    rest.post(
-      "https://tapi.sbx.laterpay.net/v1/purchase/test-offering-id",
-      (_, res, ctx) => res(ctx.status(402), ctx.json(error as ResponseError))
-    )
+        res(
+          ctx.status(status),
+          ctx.json(PurchaseOfferingResponseToJSON(purchase)),
+        ),
+    ),
   );
 };
 
@@ -104,7 +97,6 @@ const server = Object.assign(node.setupServer(...handlers), {
   withGetTab,
   withGetTabById,
   withPurchase,
-  withPurchaseResponseError,
 });
 
 export { server, rest };

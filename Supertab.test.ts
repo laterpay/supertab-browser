@@ -540,7 +540,7 @@ describe("Supertab", () => {
     });
   });
 
-  describe("purchase", () => {
+  describe(".purchase", () => {
     const tabData: TabResponse = {
       id: "test-tab-id",
       createdAt: new Date("2023-11-03T15:34:44.852Z"),
@@ -610,6 +610,9 @@ describe("Supertab", () => {
       });
 
       server.withPurchase({
+        detail: {
+          itemAdded: true,
+        },
         tab: tabData,
       });
 
@@ -619,6 +622,7 @@ describe("Supertab", () => {
           preferredCurrency: "USD",
         }),
       ).toEqual({
+        itemAdded: true,
         tab: {
           currency: "USD",
           id: "test-tab-id",
@@ -640,6 +644,9 @@ describe("Supertab", () => {
       });
 
       server.withPurchase({
+        detail: {
+          itemAdded: true,
+        },
         tab: euroTabData,
       });
 
@@ -649,11 +656,50 @@ describe("Supertab", () => {
           preferredCurrency: "USD",
         }),
       ).toEqual({
+        itemAdded: true,
         tab: {
           currency: "EUR",
           id: "test-tab-id",
           limit: 500,
           status: "open",
+          total: 50,
+        },
+      });
+    });
+
+    test("handle tab being full", async () => {
+      const { client } = setup();
+
+      server.withGetTab({
+        data: [tabData],
+        metadata: tabMetaData,
+      });
+
+      server.withPurchase(
+        {
+          detail: {
+            itemAdded: false,
+          },
+          tab: {
+            ...tabData,
+            status: TabStatus.Full,
+          },
+        },
+        402,
+      );
+
+      expect(
+        await client.purchase({
+          offeringId: "test-offering-id",
+          preferredCurrency: "USD",
+        }),
+      ).toEqual({
+        itemAdded: false,
+        tab: {
+          currency: "USD",
+          id: "test-tab-id",
+          limit: 500,
+          status: "full",
           total: 50,
         },
       });
@@ -667,11 +713,7 @@ describe("Supertab", () => {
         metadata: tabMetaData,
       });
 
-      server.withPurchaseResponseError({
-        tab: {
-          status: TabStatus.Full,
-        },
-      });
+      server.withPurchase({} as never, 500);
 
       expect(
         async () =>
@@ -679,7 +721,7 @@ describe("Supertab", () => {
             offeringId: "test-offering-id",
             preferredCurrency: "USD",
           }),
-      ).toThrow("Tab is full. Call pay() to settle tab.");
+      ).toThrow();
     });
   });
 });
