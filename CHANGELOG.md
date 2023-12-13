@@ -1,3 +1,9 @@
+# [1.4.0](https://github.com/laterpay/supertab-browser/compare/v1.3.6...v1.4.0) (2023-12-13)
+
+### Features
+
+- handle 402 for .purchase ([#28](https://github.com/laterpay/supertab-browser/issues/28)) ([b548a6b](https://github.com/laterpay/supertab-browser/commit/b548a6b9be694ec9bb5a57c87634f848346d2369))
+
 ## [1.3.6](https://github.com/laterpay/supertab-browser/compare/v1.3.5...v1.3.6) (2023-12-08)
 
 ### Bug Fixes
