@@ -46,6 +46,8 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     const authCode = await handleChildWindow({
       url,
       target: "ssoWindow",
+      width: 400,
+      height: 800,
       onMessage: (ev) => {
         if (url.searchParams.get("state") !== ev.data.state) {
           throw new Error("State mismatch");
@@ -110,7 +112,10 @@ export async function authorize({
   const url = new URL("/oauth2/auth", authBaseUrl);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
-  url.searchParams.set("scope", "tab:tab:read tab:purchase:write auth:user:read offline_access");
+  url.searchParams.set(
+    "scope",
+    "tab:tab:read tab:purchase:write auth:user:read offline_access",
+  );
   url.searchParams.set("response_type", "code");
   url.searchParams.set("state", state);
   url.searchParams.set("client_id", clientId);

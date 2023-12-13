@@ -227,6 +227,8 @@ export class Supertab {
     return handleChildWindow({
       url,
       target: "supertabCheckout",
+      width: 400,
+      height: 800,
       onMessage: async (ev) => {
         if (
           ev.data.status !== "payment_completed" ||
