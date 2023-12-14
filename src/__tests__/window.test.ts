@@ -1,25 +1,52 @@
 import { handleChildWindow } from "@/window";
 import { describe, it, expect, mock } from "bun:test";
 
+const setup = () => {
+  const windowOpen = mock<
+    (url: string, target: string, features: string) => void
+  >(() => {
+    return;
+  });
+  Object.defineProperty(window, "open", {
+    value: windowOpen,
+    writable: true,
+  });
+
+  return {
+    windowOpen,
+  };
+};
+
 describe("window", () => {
   describe("handleChildWindow", () => {
     it("opens authentication URL in a new window", async () => {
-      const open = mock<(url: string, target: string) => void>(() => {
-        return;
-      });
-      Object.defineProperty(window, "open", {
-        value: open,
-        writable: true,
-      });
+      const { windowOpen } = setup();
 
       handleChildWindow({
         url: new URL("https://auth.sbx.laterpaytest.net"),
         target: "ssoWindow",
       });
-      expect(open.mock.lastCall).toEqual([
+      expect(windowOpen.mock.lastCall?.[0]).toEqual(
         "https://auth.sbx.laterpaytest.net/",
-        "ssoWindow",
-      ]);
+      );
+      expect(windowOpen.mock.lastCall?.[1]).toEqual("ssoWindow");
+      expect(windowOpen.mock.lastCall?.[2]).toEqual("");
+    });
+
+    it("opens authentication URL in a popup", async () => {
+      const { windowOpen } = setup();
+
+      handleChildWindow({
+        url: new URL("https://auth.sbx.laterpaytest.net"),
+        target: "ssoWindow",
+        width: 400,
+        height: 800,
+      });
+      expect(windowOpen.mock.lastCall?.[0]).toEqual(
+        "https://auth.sbx.laterpaytest.net/",
+      );
+      expect(windowOpen.mock.lastCall?.[1]).toEqual("ssoWindow");
+      expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
     });
 
     it("listens for 'message' event", async () => {
