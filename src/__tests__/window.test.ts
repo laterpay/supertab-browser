@@ -19,7 +19,7 @@ const setup = () => {
 
 describe("window", () => {
   describe("handleChildWindow", () => {
-    it("opens authentication URL in a new window", async () => {
+    it("opens authentication URL in a new tab", async () => {
       const { windowOpen } = setup();
 
       handleChildWindow({
@@ -44,9 +44,9 @@ describe("window", () => {
       });
       expect(windowOpen.mock.lastCall?.[0]).toEqual(
         "https://auth.sbx.laterpaytest.net/",
-      );
-      expect(windowOpen.mock.lastCall?.[1]).toEqual("ssoWindow");
-      expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
+      ); // window URL
+      expect(windowOpen.mock.lastCall?.[1]).toEqual("ssoWindow"); // window name
+      expect(windowOpen.mock.lastCall?.[2]).toInclude("popup"); // window features
     });
 
     it("listens for 'message' event", async () => {
