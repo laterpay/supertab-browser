@@ -74,17 +74,16 @@ export class Supertab {
       state,
       redirectUri,
     }: {
-      silently: boolean;
+      silently?: boolean;
       screenHint?: string;
       state?: object;
       redirectUri: string;
     } = {
-      silently: false,
       redirectUri: window.location.href,
     },
   ) {
     return authFlow({
-      silently,
+      silently: silently ?? false,
       screenHint,
       state,
       authBaseUrl: AUTH_BASE_URL,
