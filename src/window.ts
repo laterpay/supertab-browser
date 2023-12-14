@@ -17,10 +17,7 @@ export const handleChildWindow = async <T>({
     const topOffset = window.outerHeight / 2 - height / 2;
     const leftOffset = window.outerWidth / 2 - width / 2;
 
-    windowFeatures =
-      width && height
-        ? `popup=true&width=${width},height=${height},top=${topOffset},left=${leftOffset}`
-        : undefined;
+    windowFeatures = `popup=true&width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
   }
 
   const childWindow = window.open(url.toString(), target, windowFeatures);
