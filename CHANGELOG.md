@@ -1,3 +1,9 @@
+# [1.5.0](https://github.com/laterpay/supertab-browser/compare/v1.4.0...v1.5.0) (2023-12-14)
+
+### Features
+
+- open SSO and Checkout in popup ([#29](https://github.com/laterpay/supertab-browser/issues/29)) ([fb04a12](https://github.com/laterpay/supertab-browser/commit/fb04a127c9449a6d810624be9da0b51fa7ba2301))
+
 # [1.4.0](https://github.com/laterpay/supertab-browser/compare/v1.3.6...v1.4.0) (2023-12-13)
 
 ### Features
