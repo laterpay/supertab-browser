@@ -83,7 +83,7 @@ export class Supertab {
     },
   ) {
     return authFlow({
-      silently: silently ?? false,
+      silently: !!silently,
       screenHint,
       state,
       authBaseUrl: AUTH_BASE_URL,
