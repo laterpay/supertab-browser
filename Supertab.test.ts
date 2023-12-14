@@ -432,7 +432,7 @@ describe("Supertab", () => {
       });
     });
 
-    test("opens checkout page", async () => {
+    test("opens checkout popup", async () => {
       const { client, windowOpen, emitter, checkoutWindow } = setup();
       const payment = client.pay("test-tab-id");
 
@@ -449,10 +449,11 @@ describe("Supertab", () => {
 
       await payment;
 
-      expect(windowOpen.mock.calls[0]).toEqual([
+      expect(windowOpen.mock.lastCall?.[0]).toEqual(
         "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
-        "supertabCheckout",
-      ]);
+      );
+      expect(windowOpen.mock.lastCall?.[1]).toEqual("supertabCheckout");
+      expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
     });
 
     test("return success if checkout page succeeds", async () => {
