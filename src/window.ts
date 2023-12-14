@@ -11,17 +11,19 @@ export const handleChildWindow = async <T>({
   height?: number;
   onMessage?: (ev: MessageEvent) => T;
 }): Promise<T> => {
-  const windowWidth = width ?? 400;
-  const windowHeight = height ?? 800;
-  const topOffset = window.outerHeight / 2 - windowHeight / 2;
-  const leftOffset = window.outerWidth / 2 - windowWidth / 2;
+  let windowFeatures;
 
-  const features =
-    width && height
-      ? `popup=true&width=${windowWidth},height=${windowHeight},top=${topOffset},left=${leftOffset}`
-      : "";
+  if (width && height) {
+    const topOffset = window.outerHeight / 2 - height / 2;
+    const leftOffset = window.outerWidth / 2 - width / 2;
 
-  const childWindow = window.open(url.toString(), target, features);
+    windowFeatures =
+      width && height
+        ? `popup=true&width=${width},height=${height},top=${topOffset},left=${leftOffset}`
+        : undefined;
+  }
+
+  const childWindow = window.open(url.toString(), target, windowFeatures);
 
   let receivedPostMessage = false;
 

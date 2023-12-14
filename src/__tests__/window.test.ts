@@ -26,11 +26,10 @@ describe("window", () => {
         url: new URL("https://auth.sbx.laterpaytest.net"),
         target: "ssoWindow",
       });
-      expect(windowOpen.mock.lastCall?.[0]).toEqual(
+      expect(windowOpen.mock.lastCall).toEqual([
         "https://auth.sbx.laterpaytest.net/",
-      );
-      expect(windowOpen.mock.lastCall?.[1]).toEqual("ssoWindow");
-      expect(windowOpen.mock.lastCall?.[2]).toEqual("");
+        "ssoWindow",
+      ]);
     });
 
     it("opens authentication URL in a popup", async () => {
