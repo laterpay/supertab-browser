@@ -21,7 +21,7 @@ import {
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
-import { handleChildWindow } from "./window";
+import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
   target: Authenticable,
@@ -211,11 +211,18 @@ export class Supertab {
 
   @authenticated
   async pay(id: string) {
+    const checkoutWindow = openBlankChildWindow({
+      width: 400,
+      height: 800,
+      target: "supertabCheckout",
+    });
+
     const tab = await new TabsApi(this.tapperConfig).tabViewV1({
       tabId: id,
     });
 
     if (tab.status !== TabStatus.Full) {
+      checkoutWindow?.close();
       throw new Error("Tab is not full");
     }
 
@@ -226,9 +233,7 @@ export class Supertab {
 
     return handleChildWindow({
       url,
-      target: "supertabCheckout",
-      width: 400,
-      height: 800,
+      childWindow: checkoutWindow,
       onMessage: async (ev) => {
         if (
           ev.data.status !== "payment_completed" ||

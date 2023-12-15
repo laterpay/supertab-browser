@@ -1,41 +1,34 @@
 export const handleChildWindow = async <T>({
   url,
-  target,
-  width,
-  height,
+  childWindow,
   onMessage = (ev: MessageEvent) => ev.data as T,
 }: {
   url: URL;
-  target: string;
-  width?: number;
-  height?: number;
+  childWindow: Window | null;
   onMessage?: (ev: MessageEvent) => T;
 }): Promise<T> => {
-  let windowFeatures;
+  const openedWindow = childWindow ?? window.open("", "_blank");
 
-  if (width && height) {
-    const topOffset = window.outerHeight / 2 - height / 2;
-    const leftOffset = window.outerWidth / 2 - width / 2;
-
-    windowFeatures = `popup=true&width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
+  if (!openedWindow) {
+    throw new Error("Window is null");
   }
 
-  const childWindow = window.open(url.toString(), target, windowFeatures);
+  openedWindow.location.href = url.toString();
 
   let receivedPostMessage = false;
 
   return new Promise<T>((resolve, reject) => {
     function eventListener(ev: MessageEvent) {
-      if (ev.source === childWindow) {
+      if (ev.source === openedWindow) {
         window.removeEventListener("message", eventListener as EventListener);
-        childWindow?.close();
+        openedWindow?.close();
         receivedPostMessage = true;
         Promise.resolve(onMessage(ev)).then(resolve).catch(reject);
       }
     }
 
     const checkChildWindowState = setInterval(() => {
-      if (childWindow?.closed) {
+      if (openedWindow?.closed) {
         clearInterval(checkChildWindowState);
 
         if (!receivedPostMessage) {
@@ -46,4 +39,25 @@ export const handleChildWindow = async <T>({
 
     window.addEventListener("message", eventListener);
   });
+};
+
+export const openBlankChildWindow = ({
+  width,
+  height,
+  target,
+}: {
+  width?: number;
+  height?: number;
+  target?: string;
+}) => {
+  let windowFeatures;
+
+  if (width && height) {
+    const topOffset = window.outerHeight / 2 - height / 2 + window.screenTop;
+    const leftOffset = window.outerWidth / 2 - width / 2 + window.screenLeft;
+
+    windowFeatures = `popup=true,width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
+  }
+
+  return window.open("", target ?? "_blank", windowFeatures);
 };

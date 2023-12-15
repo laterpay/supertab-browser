@@ -25,6 +25,9 @@ const setup = ({
     close: () => {
       return;
     },
+    location: {
+      href: "",
+    },
     closed: false,
   };
   const windowOpen = mock<typeof window.open>((_, target) => {
@@ -449,11 +452,11 @@ describe("Supertab", () => {
 
       await payment;
 
-      expect(windowOpen.mock.lastCall?.[0]).toEqual(
-        "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
-      );
       expect(windowOpen.mock.lastCall?.[1]).toEqual("supertabCheckout");
       expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
+      expect(checkoutWindow.location.href).toEqual(
+        "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
+      );
     });
 
     test("return success if checkout page succeeds", async () => {
