@@ -1,3 +1,9 @@
+# [1.7.0](https://github.com/laterpay/supertab-browser/compare/v1.6.0...v1.7.0) (2023-12-15)
+
+### Features
+
+- improved window handling ([#31](https://github.com/laterpay/supertab-browser/issues/31)) ([1bf2eaf](https://github.com/laterpay/supertab-browser/commit/1bf2eaf26b347eeb85956fa55a84c5dd7ffcf1af))
+
 # [1.6.0](https://github.com/laterpay/supertab-browser/compare/v1.5.0...v1.6.0) (2023-12-15)
 
 ### Features
