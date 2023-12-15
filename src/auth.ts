@@ -1,4 +1,4 @@
-import { handleChildWindow } from "./window";
+import { handleChildWindow, openChildWindow } from "./window";
 
 export type AuthOptions = {
   clientId: string;
@@ -41,13 +41,17 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     });
     return setAuthentication(authentication);
   } else if (!options.silently) {
+    const ssoWindow = openChildWindow({
+      width: 400,
+      height: 800,
+      target: "ssoWindow",
+    });
+
     const { url, codeVerifier } = await authorize(options);
 
     const authCode = await handleChildWindow({
       url,
-      target: "ssoWindow",
-      width: 400,
-      height: 800,
+      childWindow: ssoWindow,
       onMessage: (ev) => {
         if (url.searchParams.get("state") !== ev.data.state) {
           throw new Error("State mismatch");
