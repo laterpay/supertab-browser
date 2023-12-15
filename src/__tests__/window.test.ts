@@ -55,6 +55,18 @@ describe("window", () => {
   });
 
   describe("handleChildWindow", () => {
+    it("throws if window is null", async () => {
+      const childWindow = null;
+
+      expect(
+        async () =>
+          await handleChildWindow({
+            url: new URL("https://auth.sbx.laterpaytest.net"),
+            childWindow,
+          }),
+      ).toThrow("Window is null");
+    });
+
     it("opens authentication URL", async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const childWindow = new Window() as any;

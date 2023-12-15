@@ -10,7 +10,7 @@ export const handleChildWindow = async <T>({
   const openedWindow = childWindow ?? window.open("", "_blank");
 
   if (!openedWindow) {
-    throw new Error("window is null");
+    throw new Error("Window is null");
   }
 
   openedWindow.location.href = url.toString();
