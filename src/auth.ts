@@ -1,4 +1,4 @@
-import { handleChildWindow, openChildWindow } from "./window";
+import { handleChildWindow, openBlankChildWindow } from "./window";
 
 export type AuthOptions = {
   clientId: string;
@@ -41,7 +41,7 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
     });
     return setAuthentication(authentication);
   } else if (!options.silently) {
-    const ssoWindow = openChildWindow({
+    const ssoWindow = openBlankChildWindow({
       width: 400,
       height: 800,
       target: "ssoWindow",

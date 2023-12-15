@@ -1,4 +1,4 @@
-import { handleChildWindow, openChildWindow } from "@/window";
+import { handleChildWindow, openBlankChildWindow } from "@/window";
 import { describe, it, expect, mock } from "bun:test";
 import { Window } from "happy-dom";
 
@@ -26,11 +26,11 @@ const setup = () => {
 };
 
 describe("window", () => {
-  describe("openChildWindow", () => {
+  describe("openBlankChildWindow", () => {
     it("opens a new blank window", async () => {
       const { windowOpen } = setup();
 
-      openChildWindow({
+      openBlankChildWindow({
         target: "testTarget",
       });
 
@@ -42,7 +42,7 @@ describe("window", () => {
     it("opens a new blank window as a popup", async () => {
       const { windowOpen } = setup();
 
-      openChildWindow({
+      openBlankChildWindow({
         width: 400,
         height: 800,
         target: "testTarget",

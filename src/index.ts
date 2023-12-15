@@ -21,7 +21,7 @@ import {
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
 import { Authenticable } from "./types";
-import { handleChildWindow, openChildWindow } from "./window";
+import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
   target: Authenticable,
@@ -211,7 +211,7 @@ export class Supertab {
 
   @authenticated
   async pay(id: string) {
-    const checkoutWindow = openChildWindow({
+    const checkoutWindow = openBlankChildWindow({
       width: 400,
       height: 800,
       target: "supertabCheckout",

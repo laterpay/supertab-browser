@@ -7,28 +7,28 @@ export const handleChildWindow = async <T>({
   childWindow: Window | null;
   onMessage?: (ev: MessageEvent) => T;
 }): Promise<T> => {
-  const theWindow = childWindow ?? window.open("", "_blank");
+  const openedWindow = childWindow ?? window.open("", "_blank");
 
-  if (!theWindow) {
+  if (!openedWindow) {
     throw new Error("window is null");
   }
 
-  theWindow.location.href = url.toString();
+  openedWindow.location.href = url.toString();
 
   let receivedPostMessage = false;
 
   return new Promise<T>((resolve, reject) => {
     function eventListener(ev: MessageEvent) {
-      if (ev.source === theWindow) {
+      if (ev.source === openedWindow) {
         window.removeEventListener("message", eventListener as EventListener);
-        theWindow?.close();
+        openedWindow?.close();
         receivedPostMessage = true;
         Promise.resolve(onMessage(ev)).then(resolve).catch(reject);
       }
     }
 
     const checkChildWindowState = setInterval(() => {
-      if (theWindow?.closed) {
+      if (openedWindow?.closed) {
         clearInterval(checkChildWindowState);
 
         if (!receivedPostMessage) {
@@ -41,7 +41,7 @@ export const handleChildWindow = async <T>({
   });
 };
 
-export const openChildWindow = ({
+export const openBlankChildWindow = ({
   width,
   height,
   target,
