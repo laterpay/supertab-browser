@@ -1,3 +1,9 @@
+# [1.6.0](https://github.com/laterpay/supertab-browser/compare/v1.5.0...v1.6.0) (2023-12-15)
+
+### Features
+
+- make `silently` optional in `auth` function ([#30](https://github.com/laterpay/supertab-browser/issues/30)) ([a314866](https://github.com/laterpay/supertab-browser/commit/a314866badc9a56031025808fe3bed7ed715d08d))
+
 # [1.5.0](https://github.com/laterpay/supertab-browser/compare/v1.4.0...v1.5.0) (2023-12-14)
 
 ### Features
