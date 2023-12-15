@@ -436,7 +436,7 @@ describe("Supertab", () => {
     });
 
     test("opens checkout popup", async () => {
-      const { client, emitter, windowOpen, checkoutWindow } = setup();
+      const { client, windowOpen, emitter, checkoutWindow } = setup();
       const payment = client.pay("test-tab-id");
 
       //wait a tick to interact with the window
