@@ -1,3 +1,9 @@
+# [1.8.0](https://github.com/laterpay/supertab-browser/compare/v1.7.0...v1.8.0) (2023-12-18)
+
+### Features
+
+- include offerings.prices ([#33](https://github.com/laterpay/supertab-browser/issues/33)) ([6ef5d82](https://github.com/laterpay/supertab-browser/commit/6ef5d826e35ece6ab196948469aad71fefd7889c))
+
 # [1.7.0](https://github.com/laterpay/supertab-browser/compare/v1.6.0...v1.7.0) (2023-12-15)
 
 ### Features
