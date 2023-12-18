@@ -251,13 +251,8 @@ export class Supertab {
     offeringId: string;
     preferredCurrency: string;
   }) {
-    let currency = preferredCurrency;
-
-    try {
-      const tab = await this.getUserTab();
-      currency = tab.currency;
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    const tab = await this.getUserTab();
+    const currency = tab?.currency || preferredCurrency;
 
     try {
       const { tab, detail } = await new TabsApi(
