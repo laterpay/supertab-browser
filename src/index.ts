@@ -16,6 +16,8 @@ import {
   TabStatus,
   ResponseError,
   PurchaseOfferingResponseFromJSON,
+  Price,
+  SiteOffering,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -135,11 +137,11 @@ export class Supertab {
         {},
       );
 
-    const offerings = clientConfig.offerings.map((eachOffering) => {
-      const currency = currenciesByCode[eachOffering.price.currency];
+    const getPrice = (offering: SiteOffering, price: Price) => {
+      const currency = currenciesByCode[price.currency];
 
-      const price = formatPrice({
-        amount: eachOffering.price.amount,
+      const text = formatPrice({
+        amount: offering.price.amount,
         currency: currency.isoCode,
         baseUnit: currency.baseUnit,
         localeCode: language,
@@ -147,11 +149,25 @@ export class Supertab {
       });
 
       return {
-        id: eachOffering.id,
-        description: eachOffering.description,
-        price,
+        amount: offering.price.amount,
+        currency: price.currency,
+        text,
       };
-    });
+    };
+
+    const offerings = clientConfig.offerings
+      .filter((eachOffering) => !!currenciesByCode[eachOffering.price.currency])
+      .map((eachOffering) => {
+        const prices = eachOffering.prices?.map((eachPrice) =>
+          getPrice(eachOffering, eachPrice),
+        );
+        return {
+          id: eachOffering.id,
+          description: eachOffering.description,
+          price: getPrice(eachOffering, eachOffering.price).text,
+          prices,
+        };
+      });
 
     return offerings;
   }

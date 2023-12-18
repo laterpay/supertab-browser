@@ -120,6 +120,16 @@ describe("Supertab", () => {
               amount: 100,
               currency: "USD",
             },
+            prices: [
+              {
+                amount: 100,
+                currency: "USD",
+              },
+              {
+                amount: 110,
+                currency: "EUR",
+              },
+            ],
           } as SiteOffering,
         ],
         currencies: [
@@ -127,17 +137,15 @@ describe("Supertab", () => {
             isoCode: "USD",
             baseUnit: 100,
           },
+          {
+            isoCode: "EUR",
+            baseUnit: 100,
+          },
         ] as Currency[],
         suggestedCurrency: "USD",
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          price: "$1.00",
-        },
-      ]);
+      expect(await client.getOfferings()).toMatchSnapshot();
     });
 
     test("return offerings with given currency", async () => {
