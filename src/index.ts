@@ -189,7 +189,7 @@ export class Supertab {
 
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
-    if (filterStatuses.includes(tab.status)) {
+    if (filterStatuses.includes(tab?.status)) {
       return {
         id: tab.id,
         status: tab.status,
@@ -204,8 +204,6 @@ export class Supertab {
           };
         }),
       };
-    } else {
-      throw new Error("User has no open tabs.");
     }
   }
 
