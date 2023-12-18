@@ -321,7 +321,7 @@ describe("Supertab", () => {
       },
     );
 
-    test("throw an error if no tabs", async () => {
+    test("return undefined if no tabs", async () => {
       const { client } = setup();
 
       server.withGetTab({
@@ -337,12 +337,10 @@ describe("Supertab", () => {
         },
       });
 
-      expect(async () => {
-        await client.getUserTab();
-      }).toThrow(Error);
+      expect(await client.getUserTab()).toBeUndefined();
     });
 
-    test("throw an error if no open tab", async () => {
+    test("return undefined if no open tab", async () => {
       const { client } = setup();
 
       server.withGetTab({
@@ -409,9 +407,7 @@ describe("Supertab", () => {
         },
       });
 
-      expect(async () => {
-        await client.getUserTab();
-      }).toThrow(Error);
+      expect(await client.getUserTab()).toBeUndefined();
     });
   });
 
@@ -709,7 +705,7 @@ describe("Supertab", () => {
       });
     });
 
-    test("throws an error when tab is full", () => {
+    test("throws an error when there is an error", () => {
       const { client } = setup();
 
       server.withGetTab({
