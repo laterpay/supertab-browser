@@ -127,7 +127,7 @@ describe("Supertab", () => {
               },
               {
                 amount: 110,
-                currency: "EUD",
+                currency: "EUR",
               },
             ],
           } as SiteOffering,
@@ -138,7 +138,7 @@ describe("Supertab", () => {
             baseUnit: 100,
           },
           {
-            isoCode: "EUD",
+            isoCode: "EUR",
             baseUnit: 100,
           },
         ] as Currency[],

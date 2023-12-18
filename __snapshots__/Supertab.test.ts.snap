@@ -14,8 +14,8 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
       },
       {
         "amount": 100,
-        "currency": "EUD",
-        "text": "1.00",
+        "currency": "EUR",
+        "text": "€1.00",
       },
     ],
   },
