@@ -116,6 +116,7 @@ describe("Supertab", () => {
           {
             id: "test-offering-id",
             description: "Test Offering Description",
+            salesModel: "time_pass",
             price: {
               amount: 100,
               currency: "USD",
@@ -160,6 +161,7 @@ describe("Supertab", () => {
           {
             id: "test-offering-id",
             description: "Test Offering Description",
+            salesModel: "time_pass",
             price: {
               amount: 100,
               currency: "BRL",
@@ -183,6 +185,7 @@ describe("Supertab", () => {
         {
           id: "test-offering-id",
           description: "Test Offering Description",
+          salesModel: "time_pass",
           price: "R$ 1,00",
         },
       ]);

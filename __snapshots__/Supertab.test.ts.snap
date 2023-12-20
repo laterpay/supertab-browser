@@ -18,6 +18,7 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
         "text": "€1.00",
       },
     ],
+    "salesModel": "time_pass",
   },
 ]
 `;

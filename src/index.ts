@@ -164,6 +164,7 @@ export class Supertab {
         return {
           id: eachOffering.id,
           description: eachOffering.description,
+          salesModel: eachOffering.salesModel,
           price: getPrice(eachOffering, eachOffering.price).text,
           prices,
         };
