@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/laterpay/supertab-browser/compare/v1.8.0...v1.9.0) (2023-12-20)
+
+### Features
+
+- pass `usd` for currency param in config ([#34](https://github.com/laterpay/supertab-browser/issues/34)) ([4794d85](https://github.com/laterpay/supertab-browser/commit/4794d85616bfe1c75f9c78cdebc319f751b61d67))
+- return `salesModel` for offerings ([#35](https://github.com/laterpay/supertab-browser/issues/35)) ([2bff6da](https://github.com/laterpay/supertab-browser/commit/2bff6daee307f5291bd5168e2e1e47e4e17dfd1b))
+
 # [1.8.0](https://github.com/laterpay/supertab-browser/compare/v1.7.0...v1.8.0) (2023-12-18)
 
 ### Features
