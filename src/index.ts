@@ -120,6 +120,7 @@ export class Supertab {
       this.tapperConfig,
     ).getClientConfigV1({
       clientId: this.clientId,
+      currency: "USD",
     });
 
     return this._clientConfig;
