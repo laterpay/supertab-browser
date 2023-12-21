@@ -81,7 +81,7 @@ export class Supertab {
       state?: object;
       redirectUri: string;
     } = {
-      redirectUri: window.location.href,
+      redirectUri: window.location.origin,
     },
   ) {
     return authFlow({
