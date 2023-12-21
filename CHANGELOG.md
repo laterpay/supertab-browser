@@ -1,3 +1,9 @@
+# [1.10.0](https://github.com/laterpay/supertab-browser/compare/v1.9.0...v1.10.0) (2023-12-21)
+
+### Features
+
+- Add suppport for testmode: true to pay method ([#36](https://github.com/laterpay/supertab-browser/issues/36)) ([ba7436f](https://github.com/laterpay/supertab-browser/commit/ba7436f50d29a5c8dca724113e04bd0d36154d39))
+
 # [1.9.0](https://github.com/laterpay/supertab-browser/compare/v1.8.0...v1.9.0) (2023-12-20)
 
 ### Features
