@@ -245,7 +245,7 @@ export class Supertab {
     const url = new URL(CHECKOUT_BASE_URL);
     url.searchParams.append("tab_id", id);
     url.searchParams.append("language", this.language);
-    url.searchParams.append("testmode", "false");
+    url.searchParams.append("testmode", tab.testMode ? "true" : "false");
 
     return handleChildWindow({
       url,
