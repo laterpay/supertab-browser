@@ -1,3 +1,9 @@
+## [1.10.1](https://github.com/laterpay/supertab-browser/compare/v1.10.0...v1.10.1) (2023-12-21)
+
+### Bug Fixes
+
+- Use origin instead of href when creating the redirect uri ([#37](https://github.com/laterpay/supertab-browser/issues/37)) ([d10cd39](https://github.com/laterpay/supertab-browser/commit/d10cd391dca11a2ca3ae8e4ecee217e7c0ba2428))
+
 # [1.10.0](https://github.com/laterpay/supertab-browser/compare/v1.9.0...v1.10.0) (2023-12-21)
 
 ### Features
