@@ -22,7 +22,7 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
-import { Authenticable } from "./types";
+import { Authenticable, ScreenHint } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
@@ -76,7 +76,7 @@ export class Supertab {
     redirectUri,
   }: {
     silently?: boolean;
-    screenHint?: string;
+    screenHint?: ScreenHint;
     state?: object;
     redirectUri?: string;
   } = {}) {

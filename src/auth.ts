@@ -1,10 +1,11 @@
+import { ScreenHint } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
   authBaseUrl: string;
-  screenHint?: string;
+  screenHint?: ScreenHint;
   loginAction?: string;
   state?: object;
 };
