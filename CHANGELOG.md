@@ -1,3 +1,9 @@
+# [1.11.0](https://github.com/laterpay/supertab-browser/compare/v1.10.1...v1.11.0) (2023-12-22)
+
+### Features
+
+- Improve and fix argument types of method `auth` ([#38](https://github.com/laterpay/supertab-browser/issues/38)) ([5b002e7](https://github.com/laterpay/supertab-browser/commit/5b002e775a36f37173735baee91a160a44d5be7d))
+
 ## [1.10.1](https://github.com/laterpay/supertab-browser/compare/v1.10.0...v1.10.1) (2023-12-21)
 
 ### Bug Fixes
