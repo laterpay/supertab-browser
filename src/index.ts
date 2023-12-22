@@ -22,7 +22,7 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { formatPrice } from "./price";
-import { Authenticable } from "./types";
+import { Authenticable, ScreenHint } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
@@ -69,27 +69,25 @@ export class Supertab {
     return getAuthStatus();
   }
 
-  async auth(
-    {
-      silently,
-      screenHint,
-      state,
-      redirectUri,
-    }: {
-      silently?: boolean;
-      screenHint?: string;
-      state?: object;
-      redirectUri: string;
-    } = {
-      redirectUri: window.location.origin,
-    },
-  ) {
+  async auth({
+    silently,
+    screenHint,
+    state,
+    redirectUri,
+  }: {
+    silently?: boolean;
+    screenHint?: ScreenHint;
+    state?: object;
+    redirectUri?: string;
+  } = {}) {
     return authFlow({
       silently: !!silently,
       screenHint,
       state,
       authBaseUrl: AUTH_BASE_URL,
-      redirectUri: `${SSO_BASE_URL}/oauth2/auth-proxy?origin=${redirectUri}`,
+      redirectUri: `${SSO_BASE_URL}/oauth2/auth-proxy?origin=${
+        redirectUri ?? window.location.origin
+      }`,
       clientId: this.clientId,
     });
   }
