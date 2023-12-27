@@ -87,13 +87,6 @@ export const openBlankChildWindow = ({
 </defs>
 </svg></div>Loading your Supertab...</body></html>`,
     );
-    // Simulate some loading time (you can replace this with actual loading logic)
-    setTimeout(() => {
-      newWindowDoc.body.innerHTML =
-        "<html><head><title>New Window</title></head><body>Hello World</body></html>";
-      // Close the document for writing
-      newWindowDoc.close();
-    }, 2000); // Simulate a 2-second loading time (adjust as needed)
   } else {
     alert("Pop-up blocked! Please allow pop-ups for this website.");
   }
