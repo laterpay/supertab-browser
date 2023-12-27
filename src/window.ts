@@ -59,5 +59,36 @@ export const openBlankChildWindow = ({
     windowFeatures = `popup=true,width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
   }
 
-  return window.open("", target ?? "_blank", windowFeatures);
+  const newWindow = window.open("", target ?? "_blank", windowFeatures);
+
+  if (newWindow) {
+    const newWindowDoc = newWindow.document;
+
+    newWindowDoc.write("<html><head><title>Loading...</title>");
+    newWindowDoc.write("<style>");
+    newWindowDoc.write(
+      ".loading { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 12px; }",
+    );
+    newWindowDoc.write(
+      '.loading-img {background-image: url("./assets/loading.png"); width: 128px; height: 106px;}',
+    );
+
+    // *** Commented for adding loading animation later on ***
+    // newWindowDoc.write(
+    //   "@keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }"
+    // );
+    newWindowDoc.write("</style>");
+    newWindowDoc.write(
+      '<body class="loading"><div class="loading-img"></div>Loading your Supertab...</body></html>',
+    );
+    // Simulate some loading time (you can replace this with actual loading logic)
+    setTimeout(() => {
+      newWindowDoc.body.innerHTML =
+        "<html><head><title>New Window</title></head><body>Hello World</body></html>";
+      // Close the document for writing
+      newWindowDoc.close();
+    }, 2000); // Simulate a 2-second loading time (adjust as needed)
+  } else {
+    alert("Pop-up blocked! Please allow pop-ups for this website.");
+  }
 };
