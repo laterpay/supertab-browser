@@ -311,4 +311,9 @@ export class Supertab {
       throw e;
     }
   }
+
+  async openPersonalMarketingPage() {
+    const url = new URL("https://supertab.co/personal");
+    window.open(url, "_blank");
+  }
 }

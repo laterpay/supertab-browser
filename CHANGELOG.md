@@ -1,3 +1,9 @@
+# [1.12.0](https://github.com/laterpay/supertab-browser/compare/v1.11.0...v1.12.0) (2024-01-09)
+
+### Features
+
+- `openPersonalMarketingPage()` ([#40](https://github.com/laterpay/supertab-browser/issues/40)) ([369d0b5](https://github.com/laterpay/supertab-browser/commit/369d0b5bfe15fc7286df432e608188ca2ab831aa))
+
 # [1.11.0](https://github.com/laterpay/supertab-browser/compare/v1.10.1...v1.11.0) (2023-12-22)
 
 ### Features
