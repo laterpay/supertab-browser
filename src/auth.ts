@@ -1,6 +1,8 @@
 import { ScreenHint } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
+const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
+
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
@@ -119,7 +121,7 @@ export async function authorize({
   url.searchParams.set("code_challenge_method", "S256");
   url.searchParams.set(
     "scope",
-    "tab:tab:read tab:purchase:write auth:user:read offline_access",
+    scope
   );
   url.searchParams.set("response_type", "code");
   url.searchParams.set("state", state);
@@ -193,6 +195,7 @@ export async function refreshAuthentication({
   params.append("grant_type", "refresh_token");
   params.append("refresh_token", refreshToken);
   params.append("client_id", clientId);
+  params.append("scope", scope);
 
   const res = await fetch(url.toString(), {
     method: "POST",
