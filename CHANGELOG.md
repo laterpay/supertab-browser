@@ -1,3 +1,9 @@
+## [1.12.1](https://github.com/laterpay/supertab-browser/compare/v1.12.0...v1.12.1) (2024-01-19)
+
+### Bug Fixes
+
+- send scope in the refresh token flow ([#41](https://github.com/laterpay/supertab-browser/issues/41)) ([e4e13d2](https://github.com/laterpay/supertab-browser/commit/e4e13d2c8c5a174b84260d957fc22830aa68455c))
+
 # [1.12.0](https://github.com/laterpay/supertab-browser/compare/v1.11.0...v1.12.0) (2024-01-09)
 
 ### Features
