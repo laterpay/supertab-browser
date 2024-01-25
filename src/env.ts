@@ -7,6 +7,8 @@ const envSchema = z.object({
   CHECKOUT_BASE_URL: z.string(),
 });
 
+console.log(z);
+
 export const { AUTH_BASE_URL, SSO_BASE_URL, TAPI_BASE_URL, CHECKOUT_BASE_URL } =
   envSchema.parse({
     AUTH_BASE_URL: process.env.AUTH_BASE_URL,
