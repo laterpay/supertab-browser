@@ -174,7 +174,7 @@ describe("window", () => {
             url: new URL("https://auth.sbx.laterpaytest.net"),
             childWindow,
           }),
-      ).toThrow("window closed");
+      ).toEqual({ error: "Window closed" });
     });
   });
 });

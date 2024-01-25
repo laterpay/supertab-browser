@@ -520,7 +520,7 @@ describe("Supertab", () => {
         const payment = client.pay("test-tab-id");
 
         await payment;
-      }).toThrow(/window closed/);
+      }).toEqual({ error: "Window closed" });
     });
 
     test("throw an error if tab is not 'full'", async () => {
