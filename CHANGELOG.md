@@ -1,3 +1,9 @@
+# [1.13.0](https://github.com/laterpay/supertab-browser/compare/v1.12.1...v1.13.0) (2024-01-25)
+
+### Features
+
+- add build for stg tapper environment ([#43](https://github.com/laterpay/supertab-browser/issues/43)) ([57d6d7b](https://github.com/laterpay/supertab-browser/commit/57d6d7befc36cc7bd82d809d94ac0385c5a3f850))
+
 ## [1.12.1](https://github.com/laterpay/supertab-browser/compare/v1.12.0...v1.12.1) (2024-01-19)
 
 ### Bug Fixes
