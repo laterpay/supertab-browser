@@ -153,7 +153,7 @@ describe("window", () => {
       expect(authentication).toEqual("test-auth-code");
     });
 
-    it("fails if auth window is closed", async () => {
+    it("returns error object if window is closed", async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const childWindow = new Window() as any;
 
@@ -168,14 +168,15 @@ describe("window", () => {
         value: true,
       });
 
-      expect(
-        async () =>
-          await handleChildWindow({
-            url: new URL("https://auth.sbx.laterpaytest.net"),
-            childWindow,
-          }),
-      ).toEqual(() => {
-        return { error: "Window closed" };
+      const windowHandle = new Promise((resolve) => {
+        handleChildWindow({
+          url: new URL("https://auth.sbx.laterpaytest.net"),
+          childWindow,
+        }).then(resolve);
+      });
+
+      windowHandle.then((res) => {
+        expect(res).toEqual({ error: "Window closed" });
       });
     });
   });
