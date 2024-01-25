@@ -1,240 +1,277 @@
 <html>
+  <head>
+    <script type="module" src="../../index.ts"></script>
+    <script type="text/javascript">
+      let authentication;
+      let user;
 
-<head>
-  <script type="module" src="../../index.ts"></script>
-  <script type="text/javascript">
-    let authentication;
-    let user;
-
-    window.addEventListener("load", async () => {
-      window.SupertabInit({
-        clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
+      window.addEventListener("load", async () => {
+        window.SupertabInit({
+          clientId: "client.34a4e22d-1e6c-481e-b917-fd8c82ef3466",
+        });
       });
-    });
 
-    async function getCurrentUser() {
-      log(`Getting current user`);
+      async function getCurrentUser() {
+        log(`Getting current user`);
 
-      try {
-        user = await Supertab.getCurrentUser(authentication);
-        log(
-          JSON.stringify({
-              user,
-            },
-            null,
-            2,
-          ),
-        );
-      } catch (e) {
-        log(
-          JSON.stringify({
-              error: e.toString(),
-            },
-            null,
-            2,
-          ),
-        );
-      }
-    }
-
-    async function startAuthFlow(options) {
-      log(
-        `Starting auth flow with options: ${JSON.stringify(
-            { ...options },
-            null,
-            2,
-          )}`,
-      );
-
-      try {
-        authentication = await Supertab.auth(options);
-
-        if (authentication) {
+        try {
+          user = await Supertab.getCurrentUser(authentication);
           log(
-            JSON.stringify({
-                authentication,
+            JSON.stringify(
+              {
+                user,
               },
               null,
               2,
             ),
           );
-        } else {
-          log("No authentication object returned");
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
         }
-      } catch (e) {
-        log(
-          JSON.stringify({
-              error: e.toString(),
-            },
-            null,
-            2,
-          ),
-        );
       }
-    }
 
-    async function checkAccess() {
-      log(`Checking access`);
-
-      try {
-        access = await Supertab.checkAccess();
+      async function startAuthFlow(options) {
         log(
-          JSON.stringify({
-              access,
-            },
+          `Starting auth flow with options: ${JSON.stringify(
+            { ...options },
             null,
             2,
-          ),
+          )}`,
         );
-      } catch (e) {
-        log(
-          JSON.stringify({
-              error: e.toString(),
-            },
-            null,
-            2,
-          ),
-        );
+
+        try {
+          authentication = await Supertab.auth(options);
+
+          if (authentication) {
+            log(
+              JSON.stringify(
+                {
+                  authentication,
+                },
+                null,
+                2,
+              ),
+            );
+          } else {
+            log("No authentication object returned");
+          }
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
       }
-    }
 
-    async function getUserTab() {
-      log(`Fetching tab`);
+      async function checkAccess() {
+        log(`Checking access`);
 
-      try {
-        tab = await Supertab.getUserTab();
-        log(
-          JSON.stringify({
-              tab,
-            },
-            null,
-            2,
-          ),
-        );
-      } catch (e) {
-        log(
-          JSON.stringify({
-              error: e.toString(),
-            },
-            null,
-            2,
-          ),
-        );
+        try {
+          access = await Supertab.checkAccess();
+          log(
+            JSON.stringify(
+              {
+                access,
+              },
+              null,
+              2,
+            ),
+          );
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
       }
-    }
 
-    async function payTab() {
-      await getUserTab();
+      async function getUserTab() {
+        log(`Fetching tab`);
 
-      log(`Paying tab`);
-
-      try {
-        await Supertab.pay(tab.id);
-        tab = await Supertab.getUserTab();
-        log(
-          JSON.stringify({
-              tab,
-            },
-            null,
-            2,
-          ),
-        );
-      } catch (e) {
-        log(
-          JSON.stringify({
-              error: e.toString(),
-            },
-            null,
-            2,
-          ),
-        );
+        try {
+          tab = await Supertab.getUserTab();
+          log(
+            JSON.stringify(
+              {
+                tab,
+              },
+              null,
+              2,
+            ),
+          );
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
       }
-    }
 
-    async function purchase() {
-      const offerings = await Supertab.getOfferings();
-      const offeringId = offerings[0].id;
-      const preferredCurrency = "USD";
+      async function payTab() {
+        await getUserTab();
 
-      log(`Purchasing offering (${offeringId}) in ${preferredCurrency}`);
+        log(`Paying tab`);
 
-      try {
-        const purchase = await Supertab.purchase({
-          offeringId,
-          preferredCurrency
-        });
-        log(JSON.stringify({
-          purchase
-        }, null, 2));
-      } catch (e) {
-        log(JSON.stringify({
-          error: e.toString()
-        }, null, 2));
+        try {
+          const pay = await Supertab.pay(tab.id);
+
+          log(
+            JSON.stringify(
+              {
+                pay,
+              },
+              null,
+              2,
+            ),
+          );
+
+          if (!pay.error) {
+            tab = await Supertab.getUserTab();
+            log(
+              JSON.stringify(
+                {
+                  tab,
+                },
+                null,
+                2,
+              ),
+            );
+          }
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
       }
-    }
 
-    function log(message) {
-      document.querySelector("pre").innerHTML += `\n${message}\n`;
-    }
+      async function purchase() {
+        const offerings = await Supertab.getOfferings();
+        const offeringId = offerings[0].id;
+        const preferredCurrency = "USD";
 
-    function clearLog() {
-      localStorage.clear();
-      document.querySelector("pre").innerHTML = "";
-    }
+        log(`Purchasing offering (${offeringId}) in ${preferredCurrency}`);
 
-    window.setInterval(() => {
-      document.getElementById("auth-status").innerHTML = Supertab.authStatus;
-    }, 1000);
-  </script>
-</head>
+        try {
+          const purchase = await Supertab.purchase({
+            offeringId,
+            preferredCurrency,
+          });
+          log(
+            JSON.stringify(
+              {
+                purchase,
+              },
+              null,
+              2,
+            ),
+          );
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
+      }
 
-<body>
-  <h1>Basic demo</h1>
-  <p>This demo shows how to use the SDK functions.</p>
+      function log(message) {
+        document.querySelector("pre").innerHTML += `\n${message}\n`;
+      }
 
-  <ul>
-    <li>
-      <button type="button" onClick="clearLog()">Clear</button>
-    </li>
-    <li>
-      <button type="button" onClick="Supertab.openPersonalMarketingPage();">Open personal marketing page</button>
-    </li>
-    <li>
-      <button type="button" onClick="startAuthFlow({ silently: true })">
-        Auth (silently)
-      </button>
-    </li>
-    <li>
-      <button type="button" onClick="startAuthFlow()">Auth</button>
-    </li>
-    <li>
-      <button type="button" onClick="getCurrentUser()">Get User</button>
-    </li>
-    <li>
-      <button type="button" onClick="checkAccess()">Check Access</button>
-    </li>
-    <li>
-      <button type="button" onClick="getUserTab()">Get User's Tab</button>
-    </li>
-    <li>
-      <button type="button" onClick="purchase()">Purchase</button>
-    </li>
-    <li>
-      <button type="button" onClick="payTab()">Pay User's Tab</button>
-    </li>
+      function clearLog() {
+        localStorage.clear();
+        document.querySelector("pre").innerHTML = "";
+      }
 
-    <li>
-      Auth Status:
-      <span id="auth-status">---</span>
-    </li>
-  </ul>
+      window.setInterval(() => {
+        document.getElementById("auth-status").innerHTML = Supertab.authStatus;
+      }, 1000);
+    </script>
+  </head>
 
-  <h2>console</h2>
-  <pre style="
+  <body>
+    <h1>Basic demo</h1>
+    <p>This demo shows how to use the SDK functions.</p>
+
+    <ul>
+      <li>
+        <button type="button" onClick="clearLog()">Clear</button>
+      </li>
+      <li>
+        <button type="button" onClick="Supertab.openPersonalMarketingPage();">
+          Open personal marketing page
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick="startAuthFlow({ silently: true })">
+          Auth (silently)
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick="startAuthFlow()">Auth</button>
+      </li>
+      <li>
+        <button type="button" onClick="getCurrentUser()">Get User</button>
+      </li>
+      <li>
+        <button type="button" onClick="checkAccess()">Check Access</button>
+      </li>
+      <li>
+        <button type="button" onClick="getUserTab()">Get User's Tab</button>
+      </li>
+      <li>
+        <button type="button" onClick="purchase()">Purchase</button>
+      </li>
+      <li>
+        <button type="button" onClick="payTab()">Pay User's Tab</button>
+      </li>
+
+      <li>
+        Auth Status:
+        <span id="auth-status">---</span>
+      </li>
+    </ul>
+
+    <h2>console</h2>
+    <pre
+      style="
         min-height: 300px;
         background-color: #eee;
         white-space: break-spaces;
-      "></pre>
-</body>
-
+      "
+    ></pre>
+  </body>
 </html>
