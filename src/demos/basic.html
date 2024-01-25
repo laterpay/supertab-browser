@@ -7,7 +7,7 @@
 
       window.addEventListener("load", async () => {
         window.SupertabInit({
-          clientId: "client.34a4e22d-1e6c-481e-b917-fd8c82ef3466",
+          clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
         });
       });
 
@@ -136,19 +136,19 @@
         log(`Paying tab`);
 
         try {
-          const pay = await Supertab.pay(tab.id);
+          const payment = await Supertab.pay(tab.id);
 
-          log(
-            JSON.stringify(
-              {
-                pay,
-              },
-              null,
-              2,
-            ),
-          );
-
-          if (!pay.error) {
+          if (payment.error) {
+            log(
+              JSON.stringify(
+                {
+                  payment,
+                },
+                null,
+                2,
+              ),
+            );
+          } else {
             tab = await Supertab.getUserTab();
             log(
               JSON.stringify(
