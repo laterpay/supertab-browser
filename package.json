@@ -45,9 +45,10 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "bundle": "bun bundle:prod && bun bundle:sbx",
+    "bundle": "bun bundle:prod && bun bundle:sbx && bun bundle:stg",
     "bundle:prod": "tsup --config tsup.prod.config.ts",
     "bundle:sbx": "tsup --config tsup.sbx.config.ts",
+    "bundle:stg": "tsup --config tsup.stg.config.ts",
     "dev": "bun build ./index.ts --outdir ./dist --watch --sourcemap=external",
     "demo": "bunx parcel serve --port 3000 --open --no-cache src/demos/basic.html",
     "doc:start": "docusaurus start website",
