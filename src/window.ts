@@ -37,7 +37,7 @@ export const handleChildWindow = async <T>({
           reject(new Error("window closed"));
         }
       }
-    }, 5000);
+    }, 500);
 
     window.addEventListener("message", eventListener);
   });
@@ -67,14 +67,9 @@ export const openBlankChildWindow = ({
     const newWindowDoc = newWindow.document;
 
     if (newWindowDoc) {
-      newWindowDoc.write("<html><head><title>Loading...</title>");
-      newWindowDoc.write("<style>");
+      newWindowDoc.write("<html><head><title>Supertab...</title>");
       newWindowDoc.write(
-        ".loading { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100% }",
-      );
-      newWindowDoc.write("</style>");
-      newWindowDoc.write(
-        `<body class="loading">
+        `<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%" >
         <img style="width: 180px; height: auto" src="${omegaAnimation}" />
         <p style="margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica">Loading your Supertab...</p></body></html>`,
       );
