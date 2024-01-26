@@ -15,7 +15,9 @@ export const handleChildWindow = async <T>({
     throw new Error("Window is null");
   }
 
-  openedWindow.location.href = url.toString();
+  setTimeout(() => {
+    openedWindow.location.href = url.toString();
+  }, 3000);
 
   let receivedPostMessage = false;
 
