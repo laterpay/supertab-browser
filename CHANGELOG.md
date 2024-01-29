@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/laterpay/supertab-browser/compare/v1.13.0...v2.0.0) (2024-01-29)
+
+### Features
+
+- resolve promise on window close ([#42](https://github.com/laterpay/supertab-browser/issues/42)) ([594dc23](https://github.com/laterpay/supertab-browser/commit/594dc23502e27a1818ace803ab43dd043a96398d))
+
+### BREAKING CHANGES
+
+- Closed windows no longer throw errors but resolve the promise with `{ error: "Window closed" }` instead.
+
 # [1.13.0](https://github.com/laterpay/supertab-browser/compare/v1.12.1...v1.13.0) (2024-01-25)
 
 ### Features
