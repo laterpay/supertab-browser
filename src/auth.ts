@@ -69,8 +69,6 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
       },
     });
 
-    console.log(authCode);
-
     if (authCode.error) {
       return authCode;
     }
