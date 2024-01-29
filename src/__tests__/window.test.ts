@@ -168,14 +168,10 @@ describe("window", () => {
         value: true,
       });
 
-      const windowHandle = new Promise((resolve) => {
-        handleChildWindow({
-          url: new URL("https://auth.sbx.laterpaytest.net"),
-          childWindow,
-        }).then(resolve);
-      });
-
-      windowHandle.then((res) => {
+      handleChildWindow({
+        url: new URL("https://auth.sbx.laterpaytest.net"),
+        childWindow,
+      }).then((res) => {
         expect(res).toEqual({ error: "Window closed" });
       });
     });
