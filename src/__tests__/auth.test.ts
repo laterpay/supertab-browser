@@ -8,7 +8,7 @@ describe("auth", () => {
       const { url, codeVerifier } = await authorize({
         clientId: "clientId",
         redirectUri: "redirectUri",
-        screenHint: "screenHint",
+        screenHint: "register",
         authBaseUrl: "https://auth.sbx.laterpaytest.net",
       });
 
@@ -23,7 +23,7 @@ describe("auth", () => {
         client_id: "clientId",
         redirect_uri: "redirectUri",
         audience_hint: "consumer",
-        screen_hint: "screenHint",
+        screen_hint: "register",
       });
 
       expect(codeVerifier).toBeDefined();

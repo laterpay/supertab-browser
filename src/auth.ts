@@ -69,6 +69,10 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
       },
     });
 
+    if (authCode.error) {
+      return authCode;
+    }
+
     const authentication = await authenticate({
       ...options,
       codeVerifier,
@@ -119,10 +123,7 @@ export async function authorize({
   const url = new URL("/oauth2/auth", authBaseUrl);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
-  url.searchParams.set(
-    "scope",
-    scope
-  );
+  url.searchParams.set("scope", scope);
   url.searchParams.set("response_type", "code");
   url.searchParams.set("state", state);
   url.searchParams.set("client_id", clientId);
