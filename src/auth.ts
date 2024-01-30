@@ -3,8 +3,6 @@ import { handleChildWindow, openBlankChildWindow } from "./window";
 
 const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
 
-const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
-
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
