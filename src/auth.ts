@@ -197,6 +197,7 @@ export async function refreshAuthentication({
   params.append("refresh_token", refreshToken);
   params.append("client_id", clientId);
   params.append("scope", scope);
+  params.append("scope", scope);
 
   const res = await fetch(url.toString(), {
     method: "POST",

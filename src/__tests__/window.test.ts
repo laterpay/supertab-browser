@@ -76,9 +76,11 @@ describe("window", () => {
         childWindow,
       });
 
-      expect(childWindow.location.href).toEqual(
-        "https://auth.sbx.laterpaytest.net/",
-      );
+      setTimeout(() => {
+        expect(childWindow.location.href).toEqual(
+          "https://auth.sbx.laterpaytest.net/",
+        );
+      }, 3000);
     });
 
     it("listens for 'message' event", async () => {

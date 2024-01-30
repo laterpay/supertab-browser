@@ -1,3 +1,5 @@
+import { omegaAnimation } from "./omegaAnimation";
+
 export const handleChildWindow = async <T>({
   url,
   childWindow,
@@ -13,7 +15,9 @@ export const handleChildWindow = async <T>({
     throw new Error("Window is null");
   }
 
-  openedWindow.location.href = url.toString();
+  setTimeout(() => {
+    openedWindow.location.href = url.toString();
+  }, 3000);
 
   let receivedPostMessage = false;
 
@@ -59,5 +63,19 @@ export const openBlankChildWindow = ({
     windowFeatures = `popup=true,width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
   }
 
-  return window.open("", target ?? "_blank", windowFeatures);
+  const newWindow = window.open("", target ?? "_blank", windowFeatures);
+
+  if (newWindow) {
+    const newWindowDoc = newWindow.document;
+
+    if (newWindowDoc) {
+      newWindowDoc.write("<html><head><title>Supertab...</title>");
+      newWindowDoc.write(
+        `<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%" >
+        <img style="width: 180px; height: auto" src="${omegaAnimation}" />
+        <p style="margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica">Loading your Supertab...</p></body></html>`,
+      );
+    }
+  }
+  return newWindow;
 };

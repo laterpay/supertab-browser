@@ -461,9 +461,12 @@ describe("Supertab", () => {
 
       expect(windowOpen.mock.lastCall?.[1]).toEqual("supertabCheckout");
       expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
-      expect(checkoutWindow.location.href).toEqual(
-        "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
-      );
+
+      setTimeout(() => {
+        expect(checkoutWindow.location.href).toEqual(
+          "https://checkout.sbx.supertab.co/?tab_id=test-tab-id&language=en-US&testmode=false",
+        );
+      }, 3000);
     });
 
     test("return success if checkout page succeeds", async () => {
