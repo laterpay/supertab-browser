@@ -1,3 +1,9 @@
+# [2.1.0](https://github.com/laterpay/supertab-browser/compare/v2.0.0...v2.1.0) (2024-01-30)
+
+### Features
+
+- create static loading state ([#39](https://github.com/laterpay/supertab-browser/issues/39)) ([0b8c0fb](https://github.com/laterpay/supertab-browser/commit/0b8c0fbe22ec1ad06c90b678341c55e37b43bdd7))
+
 # [2.0.0](https://github.com/laterpay/supertab-browser/compare/v1.13.0...v2.0.0) (2024-01-29)
 
 ### Features
