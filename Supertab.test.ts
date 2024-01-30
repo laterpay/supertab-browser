@@ -519,11 +519,13 @@ describe("Supertab", () => {
       const { client, checkoutWindow } = setup();
       checkoutWindow.closed = true;
 
-      expect(async () => {
-        const payment = client.pay("test-tab-id");
+      const payment = new Promise((resolve) => {
+        return client.pay("test-tab-id").then(resolve);
+      });
 
-        await payment;
-      }).toThrow(/window closed/);
+      payment.then((res) => {
+        expect(res).toEqual({ error: "Window closed" });
+      });
     });
 
     test("throw an error if tab is not 'full'", async () => {

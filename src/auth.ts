@@ -3,6 +3,8 @@ import { handleChildWindow, openBlankChildWindow } from "./window";
 
 const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
 
+const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
+
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
@@ -69,6 +71,10 @@ export async function authFlow(options: AuthOptions & { silently: boolean }) {
       },
     });
 
+    if (authCode.error) {
+      return authCode;
+    }
+
     const authentication = await authenticate({
       ...options,
       codeVerifier,
@@ -119,10 +125,7 @@ export async function authorize({
   const url = new URL("/oauth2/auth", authBaseUrl);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
-  url.searchParams.set(
-    "scope",
-    scope
-  );
+  url.searchParams.set("scope", scope);
   url.searchParams.set("response_type", "code");
   url.searchParams.set("state", state);
   url.searchParams.set("client_id", clientId);
@@ -195,6 +198,7 @@ export async function refreshAuthentication({
   params.append("grant_type", "refresh_token");
   params.append("refresh_token", refreshToken);
   params.append("client_id", clientId);
+  params.append("scope", scope);
   params.append("scope", scope);
 
   const res = await fetch(url.toString(), {
