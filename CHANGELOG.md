@@ -1,3 +1,9 @@
+# [2.2.0](https://github.com/laterpay/supertab-browser/compare/v2.1.0...v2.2.0) (2024-01-31)
+
+### Features
+
+- preload popup url using fetch ([#44](https://github.com/laterpay/supertab-browser/issues/44)) ([a865605](https://github.com/laterpay/supertab-browser/commit/a865605de6204decec08bc7152cf0a2cbf0c5ef7))
+
 # [2.1.0](https://github.com/laterpay/supertab-browser/compare/v2.0.0...v2.1.0) (2024-01-30)
 
 ### Features
