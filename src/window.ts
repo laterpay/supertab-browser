@@ -17,7 +17,7 @@ export const handleChildWindow = async <T>({
 
   fetch(url.toString())
     .then
-    //() => (openedWindow.location.href = url.toString())
+      () => (openedWindow.location.href = url.toString())
     ();
 
   let receivedPostMessage = false;
