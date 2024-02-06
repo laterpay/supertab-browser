@@ -82,7 +82,7 @@ describe("Supertab", () => {
     });
   });
 
-  describe(".getCurrentUser", () => {
+  describe(".getUser", () => {
     test("return logged user from tapper", async () => {
       const { client } = setup();
 
@@ -99,7 +99,7 @@ describe("Supertab", () => {
 
       server.withCurrentUser(user);
 
-      expect(await client.getCurrentUser()).toEqual({ id: user.id });
+      expect(await client.getUser()).toEqual({ id: user.id });
     });
   });
 
@@ -242,7 +242,7 @@ describe("Supertab", () => {
     });
   });
 
-  describe(".getUserTab", () => {
+  describe(".getTab", () => {
     test.each([TabStatus.Open, TabStatus.Full])(
       "return user's %s tab",
       async (status) => {
@@ -312,7 +312,7 @@ describe("Supertab", () => {
           },
         });
 
-        expect(await client.getUserTab()).toEqual({
+        expect(await client.getTab()).toEqual({
           id: "test-tab-id",
           status,
           total: 50,
@@ -348,7 +348,7 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.getUserTab()).toBeUndefined();
+      expect(await client.getTab()).toBeUndefined();
     });
 
     test("return undefined if no open tab", async () => {
@@ -418,11 +418,11 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.getUserTab()).toBeUndefined();
+      expect(await client.getTab()).toBeUndefined();
     });
   });
 
-  describe(".pay", () => {
+  describe(".payTab", () => {
     beforeEach(() => {
       server.withGetTabById({
         id: "test-tab-id",
@@ -444,7 +444,7 @@ describe("Supertab", () => {
 
     test("opens checkout popup", async () => {
       const { client, windowOpen, emitter, checkoutWindow } = setup();
-      const payment = client.pay("test-tab-id");
+      const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
       await nextTick();
@@ -471,7 +471,7 @@ describe("Supertab", () => {
 
     test("return success if checkout page succeeds", async () => {
       const { client, checkoutWindow, emitter } = setup();
-      const payment = client.pay("test-tab-id");
+      const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
       await nextTick();
@@ -489,7 +489,7 @@ describe("Supertab", () => {
 
     test("throw an error if not authenticated", () => {
       const { client } = setup({ authenticated: false });
-      expect(async () => await client.pay("test-tab-id")).toThrow(
+      expect(async () => await client.payTab("test-tab-id")).toThrow(
         /Missing auth/,
       );
     });
@@ -498,7 +498,7 @@ describe("Supertab", () => {
       const { client, checkoutWindow, emitter } = setup();
 
       expect(async () => {
-        const payment = client.pay("test-tab-id");
+        const payment = client.payTab("test-tab-id");
 
         //wait a tick to interact with the window
         await nextTick();
@@ -520,7 +520,7 @@ describe("Supertab", () => {
       checkoutWindow.closed = true;
 
       const payment = new Promise((resolve) => {
-        return client.pay("test-tab-id").then(resolve);
+        return client.payTab("test-tab-id").then(resolve);
       });
 
       payment.then((res) => {
@@ -549,7 +549,7 @@ describe("Supertab", () => {
       });
 
       expect(async () => {
-        const payment = client.pay("test-tab-id");
+        const payment = client.payTab("test-tab-id");
 
         await payment;
       }).toThrow(/Tab is not full/);

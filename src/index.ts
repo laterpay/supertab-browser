@@ -69,7 +69,7 @@ export class Supertab {
     return getAuthStatus();
   }
 
-  async auth({
+  async authorize({
     silently,
     screenHint,
     state,
@@ -99,7 +99,7 @@ export class Supertab {
   }
 
   @authenticated
-  async getCurrentUser() {
+  async getUser() {
     const user = await new UserIdentityApi(
       this.tapperConfig,
     ).getCurrentUserV1();
@@ -195,7 +195,7 @@ export class Supertab {
   }
 
   @authenticated
-  async getUserTab() {
+  async getTab() {
     const {
       data: [tab],
     } = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
@@ -224,7 +224,7 @@ export class Supertab {
   }
 
   @authenticated
-  async pay(id: string) {
+  async payTab(id: string) {
     const checkoutWindow = openBlankChildWindow({
       width: 400,
       height: 800,
@@ -267,7 +267,7 @@ export class Supertab {
     offeringId: string;
     preferredCurrency: string;
   }) {
-    const tab = await this.getUserTab();
+    const tab = await this.getTab();
     const currency = tab?.currency || preferredCurrency;
 
     try {
@@ -312,7 +312,7 @@ export class Supertab {
     }
   }
 
-  async openPersonalMarketingPage() {
+  async openAboutSupertab() {
     const url = new URL("https://supertab.co/personal");
     window.open(url, "_blank");
   }
