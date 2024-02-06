@@ -1,3 +1,19 @@
+# [3.0.0](https://github.com/laterpay/supertab-browser/compare/v2.2.0...v3.0.0) (2024-02-06)
+
+### Features
+
+- new function names ([#46](https://github.com/laterpay/supertab-browser/issues/46)) ([fd11a60](https://github.com/laterpay/supertab-browser/commit/fd11a607098a96cd19427eb05314c951723e4448))
+
+### BREAKING CHANGES
+
+- Function names have been updated.
+
+- `auth` is now `authorize`.
+- `getCurrentUser` is now `getUser`.
+- `getUserTab` is now `getTab`.
+- `pay` is now `payTab`.
+- `openPersonalMarketingPage` is now `openAboutSupertab`.
+
 # [2.2.0](https://github.com/laterpay/supertab-browser/compare/v2.1.0...v2.2.0) (2024-01-31)
 
 ### Features
