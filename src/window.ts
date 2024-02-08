@@ -69,7 +69,9 @@ export const openBlankChildWindow = ({
     const newWindowDoc = newWindow.document;
 
     if (newWindowDoc) {
-      newWindowDoc.write("<html><head><title>Supertab...</title>");
+      newWindowDoc.write(
+        '<html><head><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Supertab</title></head>',
+      );
       newWindowDoc.write(
         `<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%" >
         <img style="width: 180px; height: auto" src="${omegaAnimation}" />
