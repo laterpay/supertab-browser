@@ -1,3 +1,9 @@
+## [3.0.1](https://github.com/laterpay/supertab-browser/compare/v3.0.0...v3.0.1) (2024-02-08)
+
+### Bug Fixes
+
+- add viewport tag to opened windows to fix scaling ([#45](https://github.com/laterpay/supertab-browser/issues/45)) ([7567e4a](https://github.com/laterpay/supertab-browser/commit/7567e4a5db1e04d73941b9a7f73922ca7bfcc8a6))
+
 # [3.0.0](https://github.com/laterpay/supertab-browser/compare/v2.2.0...v3.0.0) (2024-02-06)
 
 ### Features
