@@ -1,3 +1,9 @@
+## [3.0.2](https://github.com/laterpay/supertab-browser/compare/v3.0.1...v3.0.2) (2024-02-21)
+
+### Bug Fixes
+
+- catch errors in promise when pre-fetching URLs and let it fail silently ([2b7396b](https://github.com/laterpay/supertab-browser/commit/2b7396b87469a147ede0831c3508bf3f5fc9d926))
+
 ## [3.0.1](https://github.com/laterpay/supertab-browser/compare/v3.0.0...v3.0.1) (2024-02-08)
 
 ### Bug Fixes
