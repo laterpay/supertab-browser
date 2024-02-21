@@ -7,7 +7,7 @@
 
       window.addEventListener("load", async () => {
         window.SupertabInit({
-          clientId: "client.8bcf8b09-420c-4c5e-9e4a-4b8e1321a29e",
+          clientId: "client.bec657ac-9178-4d49-9f3c-dc3f26248c0f",
         });
       });
 
@@ -48,7 +48,7 @@
         );
 
         try {
-          authentication = await Supertab.auth(options);
+          authentication = await Supertab.authorize(options);
 
           if (authentication) {
             log(
@@ -103,11 +103,11 @@
         }
       }
 
-      async function getUserTab() {
+      async function getTab() {
         log(`Fetching tab`);
 
         try {
-          tab = await Supertab.getUserTab();
+          const tab = await Supertab.getTab();
           log(
             JSON.stringify(
               {
@@ -131,12 +131,12 @@
       }
 
       async function payTab() {
-        await getUserTab();
+        const tab = await Supertab.getTab();
 
         log(`Paying tab`);
 
         try {
-          const payment = await Supertab.pay(tab.id);
+          const payment = await Supertab.payTab(tab.id);
 
           if (payment.error) {
             log(
@@ -149,7 +149,7 @@
               ),
             );
           } else {
-            tab = await Supertab.getUserTab();
+            tab = await Supertab.getTab();
             log(
               JSON.stringify(
                 {
@@ -250,13 +250,13 @@
         <button type="button" onClick="checkAccess()">Check Access</button>
       </li>
       <li>
-        <button type="button" onClick="getUserTab()">Get User's Tab</button>
+        <button type="button" onClick="getTab()">Get Tab</button>
       </li>
       <li>
         <button type="button" onClick="purchase()">Purchase</button>
       </li>
       <li>
-        <button type="button" onClick="payTab()">Pay User's Tab</button>
+        <button type="button" onClick="payTab()">Pay Tab</button>
       </li>
 
       <li>
