@@ -1,3 +1,9 @@
+## [3.0.3](https://github.com/laterpay/supertab-browser/compare/v3.0.2...v3.0.3) (2024-02-22)
+
+### Bug Fixes
+
+- safer dom manipulation for loading animation ([#47](https://github.com/laterpay/supertab-browser/issues/47)) ([da2c5cb](https://github.com/laterpay/supertab-browser/commit/da2c5cbfe0bfd038b6d62d3463e27e4070fb442e))
+
 ## [3.0.2](https://github.com/laterpay/supertab-browser/compare/v3.0.1...v3.0.2) (2024-02-21)
 
 ### Bug Fixes
