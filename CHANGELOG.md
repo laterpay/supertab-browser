@@ -1,3 +1,9 @@
+## [3.0.4](https://github.com/laterpay/supertab-browser/compare/v3.0.3...v3.0.4) (2024-02-22)
+
+### Bug Fixes
+
+- temporarily disable prefetching to avoid CORS issues ([#48](https://github.com/laterpay/supertab-browser/issues/48)) ([fd9794d](https://github.com/laterpay/supertab-browser/commit/fd9794d7ff3686d54172e80616da84e986e91b1f))
+
 ## [3.0.3](https://github.com/laterpay/supertab-browser/compare/v3.0.2...v3.0.3) (2024-02-22)
 
 ### Bug Fixes
