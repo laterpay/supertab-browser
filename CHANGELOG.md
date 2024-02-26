@@ -1,3 +1,9 @@
+## [3.0.5](https://github.com/laterpay/supertab-browser/compare/v3.0.4...v3.0.5) (2024-02-26)
+
+### Bug Fixes
+
+- bring the prefetching back ([5a83070](https://github.com/laterpay/supertab-browser/commit/5a830702ad7e9a41e8cdd39ebde68650c4b68346))
+
 ## [3.0.4](https://github.com/laterpay/supertab-browser/compare/v3.0.3...v3.0.4) (2024-02-22)
 
 ### Bug Fixes
