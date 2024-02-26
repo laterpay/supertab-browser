@@ -15,9 +15,9 @@ export const handleChildWindow = async <T>({
     throw new Error("Window is null");
   }
 
-  //fetch(url.toString())
-  //  .then(() => (openedWindow.location.href = url.toString()))
-  //  .catch(() => {});
+  fetch(url.toString())
+    .then(() => (openedWindow.location.href = url.toString()))
+    .catch(() => {});
 
   try {
     openedWindow.location.href = url.toString();
