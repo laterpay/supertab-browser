@@ -134,10 +134,8 @@ export class Supertab {
     preferredCurrencyCode = this.preferredCurrencyCode,
   }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
-    const defaultCurrency =
+    const presentedCurrency =
       preferredCurrencyCode ?? clientConfig.suggestedCurrency ?? "USD";
-
-    console.log(defaultCurrency);
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -182,7 +180,7 @@ export class Supertab {
           id: eachOffering.id,
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
-          price: getPrice(eachOffering, eachOffering.price, defaultCurrency)
+          price: getPrice(eachOffering, eachOffering.price, presentedCurrency)
             .text,
           prices,
         };

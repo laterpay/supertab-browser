@@ -243,6 +243,54 @@ describe("Supertab", () => {
       ]);
     });
 
+    test("return offering price in preferred currency passed as a local param", async () => {
+      const { client } = setup({ preferredCurrencyCode: "EUR" });
+
+      server.withClientConfig({
+        contentKeys: [],
+        redirectUri: "",
+        siteName: "",
+        testMode: false,
+        offerings: [
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "BRL",
+            },
+          } as SiteOffering,
+        ],
+        currencies: [
+          {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
+          {
+            isoCode: "BRL",
+            baseUnit: 100,
+          },
+          {
+            isoCode: "EUR",
+            baseUnit: 100,
+          },
+        ] as Currency[],
+        suggestedCurrency: "BRL",
+      });
+
+      expect(
+        await client.getOfferings({ preferredCurrencyCode: "USD" }),
+      ).toEqual([
+        {
+          id: "test-offering-id",
+          description: "Test Offering Description",
+          salesModel: "time_pass",
+          price: "$1.00",
+        },
+      ]);
+    });
+
     test("return offering price in suggested currency if preferred currency is not set", async () => {
       const { client } = setup();
 
