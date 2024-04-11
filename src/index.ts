@@ -248,7 +248,8 @@ export class Supertab {
     return handleChildWindow({
       url,
       childWindow: checkoutWindow,
-      onMessage: async (ev) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onMessage: async (ev): Promise<any> => {
         if (
           ev.data.status !== "payment_completed" ||
           ev.origin !== url.origin
