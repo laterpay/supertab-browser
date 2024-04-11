@@ -1,3 +1,9 @@
+## [3.0.6](https://github.com/laterpay/supertab-browser/compare/v3.0.5...v3.0.6) (2024-04-11)
+
+### Bug Fixes
+
+- make payTab return Promise<any> ([e969e7b](https://github.com/laterpay/supertab-browser/commit/e969e7bee5718e4a8da2082b56734c6cc20418f4))
+
 ## [3.0.5](https://github.com/laterpay/supertab-browser/compare/v3.0.4...v3.0.5) (2024-02-26)
 
 ### Bug Fixes
