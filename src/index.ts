@@ -118,14 +118,21 @@ export class Supertab {
       this.tapperConfig,
     ).getClientConfigV1({
       clientId: this.clientId,
-      currency: "USD",
     });
 
     return this._clientConfig;
   }
 
-  async getOfferings({ language = this.language }: { language?: string } = {}) {
+  async getOfferings({
+    language = this.language,
+    preferredCurrencyCode,
+  }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
+    console.log(preferredCurrencyCode);
+    const defaultCurrency =
+      preferredCurrencyCode ?? clientConfig.suggestedCurrency ?? "USD";
+
+    console.log(defaultCurrency);
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -136,8 +143,14 @@ export class Supertab {
         {},
       );
 
-    const getPrice = (offering: SiteOffering, price: Price) => {
-      const currency = currenciesByCode[price.currency];
+    const getPrice = (
+      offering: SiteOffering,
+      price: Price,
+      currencyCode?: string,
+    ) => {
+      const currency =
+        currenciesByCode[currencyCode ?? price.currency] ??
+        currenciesByCode["USD"];
 
       const text = formatPrice({
         amount: offering.price.amount,
@@ -164,7 +177,8 @@ export class Supertab {
           id: eachOffering.id,
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
-          price: getPrice(eachOffering, eachOffering.price).text,
+          price: getPrice(eachOffering, eachOffering.price, defaultCurrency)
+            .text,
           prices,
         };
       });
