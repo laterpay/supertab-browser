@@ -280,13 +280,13 @@ export class Supertab {
   @authenticated
   async purchase({
     offeringId,
-    preferredCurrency = this.preferredCurrencyCode,
+    preferredCurrencyCode = this.preferredCurrencyCode,
   }: {
     offeringId: string;
-    preferredCurrency?: string;
+    preferredCurrencyCode?: string;
   }) {
     const tab = await this.getTab();
-    const currency = tab?.currency || preferredCurrency || "USD";
+    const currency = tab?.currency || preferredCurrencyCode || "USD";
 
     try {
       const { tab, detail } = await new TabsApi(
