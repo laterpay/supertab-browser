@@ -276,7 +276,7 @@ describe("Supertab", () => {
           id: "test-offering-id",
           description: "Test Offering Description",
           salesModel: "time_pass",
-          price: "R$ 1,00",
+          price: "R$1.00",
         },
       ]);
     });
