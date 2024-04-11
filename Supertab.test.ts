@@ -14,10 +14,12 @@ const setup = ({
   authenticated = true,
   authExpiresIn = 100000,
   language = "en-US",
+  preferredCurrencyCode,
 }: {
   authenticated?: boolean;
   authExpiresIn?: number;
   language?: string;
+  preferredCurrencyCode?: string;
 } = {}) => {
   const emitter = new EventEmitter();
 
@@ -36,7 +38,11 @@ const setup = ({
     }
     return null;
   });
-  const client = new Supertab({ clientId: "test-client-id", language });
+  const client = new Supertab({
+    clientId: "test-client-id",
+    language,
+    ...(preferredCurrencyCode && { preferredCurrencyCode }),
+  });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   window.addEventListener = emitter.addListener.bind(emitter) as any;
@@ -191,8 +197,8 @@ describe("Supertab", () => {
       ]);
     });
 
-    test("return offering price in preferred currency", async () => {
-      const { client } = setup();
+    test("return offering price in preferred currency passed as a global param", async () => {
+      const { client } = setup({ preferredCurrencyCode: "EUR" });
 
       server.withClientConfig({
         contentKeys: [],
@@ -227,9 +233,7 @@ describe("Supertab", () => {
         suggestedCurrency: "USD",
       });
 
-      expect(
-        await client.getOfferings({ preferredCurrencyCode: "EUR" }),
-      ).toEqual([
+      expect(await client.getOfferings()).toEqual([
         {
           id: "test-offering-id",
           description: "Test Offering Description",

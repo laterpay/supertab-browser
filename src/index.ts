@@ -54,11 +54,17 @@ export class Supertab {
   private clientId: string;
   private tapperConfig: Configuration;
   private language: string;
+  private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
 
-  constructor(options: { clientId: string; language?: string }) {
+  constructor(options: {
+    clientId: string;
+    language?: string;
+    preferredCurrencyCode?: string;
+  }) {
     this.clientId = options.clientId;
     this.language = options.language || window.navigator.language;
+    this.preferredCurrencyCode = options.preferredCurrencyCode;
     this.tapperConfig = new Configuration({
       basePath: TAPI_BASE_URL,
       accessToken: () => `Bearer ${getAccessToken()}`,
@@ -125,10 +131,9 @@ export class Supertab {
 
   async getOfferings({
     language = this.language,
-    preferredCurrencyCode,
+    preferredCurrencyCode = this.preferredCurrencyCode,
   }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
-    console.log(preferredCurrencyCode);
     const defaultCurrency =
       preferredCurrencyCode ?? clientConfig.suggestedCurrency ?? "USD";
 
@@ -277,13 +282,13 @@ export class Supertab {
   @authenticated
   async purchase({
     offeringId,
-    preferredCurrency,
+    preferredCurrency = this.preferredCurrencyCode,
   }: {
     offeringId: string;
-    preferredCurrency: string;
+    preferredCurrency?: string;
   }) {
     const tab = await this.getTab();
-    const currency = tab?.currency || preferredCurrency;
+    const currency = tab?.currency || preferredCurrency || "USD";
 
     try {
       const { tab, detail } = await new TabsApi(
