@@ -1,3 +1,14 @@
+# [4.0.0](https://github.com/laterpay/supertab-browser/compare/v3.0.6...v4.0.0) (2024-04-16)
+
+### Features
+
+- add multicurrency support ([#49](https://github.com/laterpay/supertab-browser/issues/49)) ([fb448b4](https://github.com/laterpay/supertab-browser/commit/fb448b4017757d333c354db47eeadd0ed0eef936))
+
+### BREAKING CHANGES
+
+- `purchase()` function's `preferredCurrency` parameter renamed to `preferredCurrencyCode` to unify the naming.
+- Removed `?currency=USD` from the client config call. This can break integrations that do not have offerings created in all prices (shouldn't occur in production, but can break some client apps created by hand by us across envs).
+
 ## [3.0.6](https://github.com/laterpay/supertab-browser/compare/v3.0.5...v3.0.6) (2024-04-11)
 
 ### Bug Fixes
