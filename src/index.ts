@@ -21,7 +21,7 @@ import {
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
-import { formatPrice } from "./price";
+import { DEFAULT_CURRENCY, formatPrice } from "./price";
 import { Authenticable, ScreenHint } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
@@ -135,7 +135,9 @@ export class Supertab {
   }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
     const presentedCurrency =
-      preferredCurrencyCode ?? clientConfig.suggestedCurrency ?? "USD";
+      preferredCurrencyCode ??
+      clientConfig.suggestedCurrency ??
+      DEFAULT_CURRENCY;
 
     const currenciesByCode: Record<string, Currency> =
       clientConfig.currencies.reduce(
@@ -153,7 +155,7 @@ export class Supertab {
     ) => {
       const currency =
         currenciesByCode[currencyCode ?? price.currency] ??
-        currenciesByCode["USD"];
+        currenciesByCode[DEFAULT_CURRENCY];
 
       const text = formatPrice({
         amount: offering.price.amount,
@@ -286,7 +288,7 @@ export class Supertab {
     preferredCurrencyCode?: string;
   }) {
     const tab = await this.getTab();
-    const currency = tab?.currency || preferredCurrencyCode || "USD";
+    const currency = tab?.currency || preferredCurrencyCode || DEFAULT_CURRENCY;
 
     try {
       const { tab, detail } = await new TabsApi(
