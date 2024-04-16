@@ -31,3 +31,5 @@ export function formatPrice({
 
   return value;
 }
+
+export const DEFAULT_CURRENCY = "USD";
