@@ -133,7 +133,7 @@ describe("Supertab", () => {
                 currency: "USD",
               },
               {
-                amount: 110,
+                amount: 100,
                 currency: "EUR",
               },
             ],
@@ -172,16 +172,6 @@ describe("Supertab", () => {
               amount: 100,
               currency: "BRL",
             },
-            prices: [
-              {
-                amount: 100,
-                currency: "USD",
-              },
-              {
-                amount: 110,
-                currency: "EUR",
-              },
-            ],
           } as SiteOffering,
         ],
         currencies: [
@@ -207,16 +197,6 @@ describe("Supertab", () => {
             currency: "USD",
             text: "$ 1,00",
           },
-          prices: [
-            {
-              amount: 100,
-              currency: "USD",
-            },
-            {
-              amount: 110,
-              currency: "EUR",
-            },
-          ],
         },
       ]);
     });
@@ -238,16 +218,6 @@ describe("Supertab", () => {
               amount: 100,
               currency: "BRL",
             },
-            prices: [
-              {
-                amount: 100,
-                currency: "USD",
-              },
-              {
-                amount: 110,
-                currency: "EUR",
-              },
-            ],
           } as SiteOffering,
         ],
         currencies: [
@@ -277,16 +247,6 @@ describe("Supertab", () => {
             currency: "EUR",
             text: "€1.00",
           },
-          prices: [
-            {
-              amount: 100,
-              currency: "USD",
-            },
-            {
-              amount: 110,
-              currency: "EUR",
-            },
-          ],
         },
       ]);
     });
