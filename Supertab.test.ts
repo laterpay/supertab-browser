@@ -192,7 +192,11 @@ describe("Supertab", () => {
           id: "test-offering-id",
           description: "Test Offering Description",
           salesModel: "time_pass",
-          price: "$ 1,00",
+          price: {
+            amount: 100,
+            currency: "USD",
+            text: "$ 1,00",
+          },
         },
       ]);
     });
@@ -238,7 +242,11 @@ describe("Supertab", () => {
           id: "test-offering-id",
           description: "Test Offering Description",
           salesModel: "time_pass",
-          price: "€1.00",
+          price: {
+            amount: 100,
+            currency: "EUR",
+            text: "€1.00",
+          },
         },
       ]);
     });
@@ -286,7 +294,11 @@ describe("Supertab", () => {
           id: "test-offering-id",
           description: "Test Offering Description",
           salesModel: "time_pass",
-          price: "$1.00",
+          price: {
+            amount: 100,
+            currency: "USD",
+            text: "$1.00",
+          },
         },
       ]);
     });
@@ -328,7 +340,11 @@ describe("Supertab", () => {
           id: "test-offering-id",
           description: "Test Offering Description",
           salesModel: "time_pass",
-          price: "R$1.00",
+          price: {
+            amount: 100,
+            currency: "BRL",
+            text: "R$1.00",
+          },
         },
       ]);
     });
