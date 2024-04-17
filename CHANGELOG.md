@@ -1,3 +1,13 @@
+# [4.1.0](https://github.com/laterpay/supertab-browser/compare/v4.0.0...v4.1.0) (2024-04-17)
+
+### Bug Fixes
+
+- return preferred currency code ([4611585](https://github.com/laterpay/supertab-browser/commit/4611585d6f395ae3cf513212b359acc08e37325f))
+
+### Features
+
+- return entire price object for the offerings ([7d946cd](https://github.com/laterpay/supertab-browser/commit/7d946cd76b7c8600ac5ce579c57a34129fc6f14f))
+
 # [4.0.0](https://github.com/laterpay/supertab-browser/compare/v3.0.6...v4.0.0) (2024-04-16)
 
 ### Features
