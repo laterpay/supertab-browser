@@ -167,7 +167,7 @@ export class Supertab {
 
       return {
         amount: offering.price.amount,
-        currency: price.currency,
+        currency: currency.isoCode,
         text,
       };
     };
