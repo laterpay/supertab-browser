@@ -182,8 +182,7 @@ export class Supertab {
           id: eachOffering.id,
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
-          price: getPrice(eachOffering, eachOffering.price, presentedCurrency)
-            .text,
+          price: getPrice(eachOffering, eachOffering.price, presentedCurrency),
           prices,
         };
       });
