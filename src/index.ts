@@ -163,6 +163,7 @@ export class Supertab {
         baseUnit: currency.baseUnit,
         localeCode: language,
         showZeroFractionDigits: true,
+        showSymbol: currency.isoCode !== "CHF",
       });
 
       return {
@@ -214,6 +215,7 @@ export class Supertab {
 
   @authenticated
   async getTab() {
+    const clientConfig = await this.#getClientConfig();
     const {
       data: [tab],
     } = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
@@ -224,17 +226,42 @@ export class Supertab {
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
     if (filterStatuses.includes(tab?.status)) {
+      const currencyObject = clientConfig.currencies.find(
+        (currency) => currency.isoCode === tab.currency,
+      );
+
       return {
         id: tab.id,
         status: tab.status,
-        total: tab.total,
+        total: {
+          amount: tab.total,
+          text: formatPrice({
+            amount: tab.total,
+            currency: currencyObject?.isoCode ?? "",
+            baseUnit: currencyObject?.baseUnit ?? 100,
+            localeCode: this.language,
+            showZeroFractionDigits: true,
+            showSymbol: currencyObject?.isoCode !== "CHF",
+          }),
+        },
         limit: tab.limit,
         currency: tab.currency,
         purchases: tab.purchases.map((purchase) => {
           return {
             purchaseDate: purchase.purchaseDate,
             summary: purchase.summary,
-            price: purchase.price,
+            price: {
+              amount: purchase.price.amount,
+              text: formatPrice({
+                amount: purchase.price.amount,
+                currency: currencyObject?.isoCode ?? "",
+                baseUnit: currencyObject?.baseUnit ?? 100,
+                localeCode: this.language,
+                showZeroFractionDigits: true,
+                showSymbol: currencyObject?.isoCode !== "CHF",
+              }),
+              currency: purchase.price.currency,
+            },
           };
         }),
       };
