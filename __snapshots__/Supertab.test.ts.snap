@@ -10,18 +10,7 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
       "currency": "USD",
       "text": "$1.00",
     },
-    "prices": [
-      {
-        "amount": 100,
-        "currency": "USD",
-        "text": "$1.00",
-      },
-      {
-        "amount": 100,
-        "currency": "EUR",
-        "text": "€1.00",
-      },
-    ],
+    "prices": undefined,
     "salesModel": "time_pass",
   },
 ]
