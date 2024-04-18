@@ -15,11 +15,16 @@ const setup = ({
   authExpiresIn = 100000,
   language = "en-US",
   preferredCurrencyCode,
+  clientConfigProps,
 }: {
   authenticated?: boolean;
   authExpiresIn?: number;
   language?: string;
   preferredCurrencyCode?: string;
+  clientConfigProps?: {
+    suggestedCurrency?: string;
+    offeringCurrency?: string;
+  };
 } = {}) => {
   const emitter = new EventEmitter();
 
@@ -58,6 +63,53 @@ const setup = ({
       }),
     );
   }
+
+  server.withClientConfig({
+    contentKeys: [],
+    redirectUri: "",
+    siteName: "",
+    testMode: false,
+    offerings: [
+      {
+        id: "test-offering-id",
+        description: "Test Offering Description",
+        salesModel: "time_pass",
+        price: {
+          amount: 100,
+          currency: clientConfigProps?.offeringCurrency ?? "USD",
+        },
+        prices: [
+          {
+            amount: 100,
+            currency: "USD",
+          },
+          {
+            amount: 100,
+            currency: "BRL",
+          },
+          {
+            amount: 100,
+            currency: "EUR",
+          },
+        ],
+      } as SiteOffering,
+    ],
+    currencies: [
+      {
+        isoCode: "USD",
+        baseUnit: 100,
+      },
+      {
+        isoCode: "BRL",
+        baseUnit: 100,
+      },
+      {
+        isoCode: "EUR",
+        baseUnit: 100,
+      },
+    ] as Currency[],
+    suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
+  });
 
   return {
     client,
@@ -113,240 +165,83 @@ describe("Supertab", () => {
     test("return offerings with default currency", async () => {
       const { client } = setup();
 
-      server.withClientConfig({
-        contentKeys: [],
-        redirectUri: "",
-        siteName: "",
-        testMode: false,
-        offerings: [
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            price: {
-              amount: 100,
-              currency: "USD",
-            },
-            prices: [
-              {
-                amount: 100,
-                currency: "USD",
-              },
-              {
-                amount: 100,
-                currency: "EUR",
-              },
-            ],
-          } as SiteOffering,
-        ],
-        currencies: [
-          {
-            isoCode: "USD",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "EUR",
-            baseUnit: 100,
-          },
-        ] as Currency[],
-        suggestedCurrency: "USD",
-      });
-
       expect(await client.getOfferings()).toMatchSnapshot();
     });
 
     test("return offerings in given locale", async () => {
-      const { client } = setup({ language: "pt-BR" });
-
-      server.withClientConfig({
-        contentKeys: [],
-        redirectUri: "",
-        siteName: "",
-        testMode: false,
-        offerings: [
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            price: {
-              amount: 100,
-              currency: "BRL",
-            },
-          } as SiteOffering,
-        ],
-        currencies: [
-          {
-            isoCode: "USD",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "BRL",
-            baseUnit: 100,
-          },
-        ] as Currency[],
-        suggestedCurrency: "USD",
+      const { client } = setup({
+        language: "pt-BR",
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "USD",
-            text: "$ 1,00",
-          },
+      const offerings = await client.getOfferings();
+
+      expect(offerings[0].price).toEqual({
+        amount: 100,
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
         },
-      ]);
+        text: "$ 1,00",
+      });
     });
 
     test("return offering price in preferred currency passed as a global param", async () => {
-      const { client } = setup({ preferredCurrencyCode: "EUR" });
-
-      server.withClientConfig({
-        contentKeys: [],
-        redirectUri: "",
-        siteName: "",
-        testMode: false,
-        offerings: [
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            price: {
-              amount: 100,
-              currency: "BRL",
-            },
-          } as SiteOffering,
-        ],
-        currencies: [
-          {
-            isoCode: "USD",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "BRL",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "EUR",
-            baseUnit: 100,
-          },
-        ] as Currency[],
-        suggestedCurrency: "USD",
+      const { client } = setup({
+        preferredCurrencyCode: "EUR",
+        clientConfigProps: { offeringCurrency: "USD" },
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "EUR",
-            text: "€1.00",
-          },
+      const offerings = await client.getOfferings();
+
+      expect(offerings[0].price).toEqual({
+        amount: 100,
+        currency: {
+          isoCode: "EUR",
+          baseUnit: 100,
         },
-      ]);
+        text: "€1.00",
+      });
     });
 
     test("return offering price in preferred currency passed as a local param", async () => {
-      const { client } = setup({ preferredCurrencyCode: "EUR" });
-
-      server.withClientConfig({
-        contentKeys: [],
-        redirectUri: "",
-        siteName: "",
-        testMode: false,
-        offerings: [
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            price: {
-              amount: 100,
-              currency: "BRL",
-            },
-          } as SiteOffering,
-        ],
-        currencies: [
-          {
-            isoCode: "USD",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "BRL",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "EUR",
-            baseUnit: 100,
-          },
-        ] as Currency[],
-        suggestedCurrency: "BRL",
+      const { client } = setup({
+        clientConfigProps: {
+          offeringCurrency: "EUR",
+          suggestedCurrency: "EUR",
+        },
       });
 
-      expect(
-        await client.getOfferings({ preferredCurrencyCode: "USD" }),
-      ).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "USD",
-            text: "$1.00",
-          },
+      const offerings = await client.getOfferings({
+        preferredCurrencyCode: "USD",
+      });
+
+      expect(offerings[0].price).toEqual({
+        amount: 100,
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
         },
-      ]);
+        text: "$1.00",
+      });
     });
 
     test("return offering price in suggested currency if preferred currency is not set", async () => {
-      const { client } = setup();
-
-      server.withClientConfig({
-        contentKeys: [],
-        redirectUri: "",
-        siteName: "",
-        testMode: false,
-        offerings: [
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            price: {
-              amount: 100,
-              currency: "BRL",
-            },
-          } as SiteOffering,
-        ],
-        currencies: [
-          {
-            isoCode: "USD",
-            baseUnit: 100,
-          },
-          {
-            isoCode: "BRL",
-            baseUnit: 100,
-          },
-        ] as Currency[],
-        suggestedCurrency: "BRL",
+      const { client } = setup({
+        clientConfigProps: {
+          suggestedCurrency: "BRL",
+        },
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "BRL",
-            text: "R$1.00",
-          },
+      const offerings = await client.getOfferings();
+
+      expect(offerings[0].price).toEqual({
+        amount: 100,
+        currency: {
+          isoCode: "BRL",
+          baseUnit: 100,
         },
-      ]);
+        text: "R$1.00",
+      });
     });
   });
 
@@ -475,7 +370,10 @@ describe("Supertab", () => {
           status,
           total: 50,
           limit: 500,
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           purchases: [
             {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -581,7 +479,7 @@ describe("Supertab", () => {
   });
 
   describe(".payTab", () => {
-    beforeEach(() => {
+    beforeEach(() =>
       server.withGetTabById({
         id: "test-tab-id",
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
@@ -597,11 +495,12 @@ describe("Supertab", () => {
         purchases: [],
         testMode: false,
         tabStatistics: {},
-      });
-    });
+      }),
+    );
 
     test("opens checkout popup", async () => {
       const { client, windowOpen, emitter, checkoutWindow } = setup();
+
       const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
@@ -793,7 +692,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: true,
@@ -827,7 +726,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: true,
@@ -865,7 +764,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: false,
@@ -893,7 +792,7 @@ describe("Supertab", () => {
         async () =>
           await client.purchase({
             offeringId: "test-offering-id",
-            preferredCurrency: "USD",
+            preferredCurrencyCode: "USD",
           }),
       ).toThrow();
     });

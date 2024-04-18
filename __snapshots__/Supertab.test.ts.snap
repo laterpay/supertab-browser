@@ -7,18 +7,35 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
     "id": "test-offering-id",
     "price": {
       "amount": 100,
-      "currency": "USD",
+      "currency": {
+        "baseUnit": 100,
+        "isoCode": "USD",
+      },
       "text": "$1.00",
     },
     "prices": [
       {
         "amount": 100,
-        "currency": "USD",
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "USD",
+        },
         "text": "$1.00",
       },
       {
         "amount": 100,
-        "currency": "EUR",
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "BRL",
+        },
+        "text": "R$1.00",
+      },
+      {
+        "amount": 100,
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "EUR",
+        },
         "text": "€1.00",
       },
     ],

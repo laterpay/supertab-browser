@@ -167,7 +167,10 @@ export class Supertab {
 
       return {
         amount: offering.price.amount,
-        currency: currency.isoCode,
+        currency: {
+          isoCode: currency.isoCode,
+          baseUnit: currency.baseUnit,
+        },
         text,
       };
     };
@@ -214,6 +217,7 @@ export class Supertab {
 
   @authenticated
   async getTab() {
+    const clientConfig = await this.#getClientConfig();
     const {
       data: [tab],
     } = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
@@ -224,12 +228,19 @@ export class Supertab {
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
     if (filterStatuses.includes(tab?.status)) {
+      const currencyObject = clientConfig.currencies.find(
+        (currency) => currency.isoCode === tab.currency,
+      );
+
       return {
         id: tab.id,
         status: tab.status,
         total: tab.total,
         limit: tab.limit,
-        currency: tab.currency,
+        currency: {
+          isoCode: currencyObject?.isoCode,
+          baseUnit: currencyObject?.baseUnit,
+        },
         purchases: tab.purchases.map((purchase) => {
           return {
             purchaseDate: purchase.purchaseDate,
@@ -287,7 +298,8 @@ export class Supertab {
     preferredCurrencyCode?: string;
   }) {
     const tab = await this.getTab();
-    const currency = tab?.currency || preferredCurrencyCode || DEFAULT_CURRENCY;
+    const currency =
+      tab?.currency.isoCode || preferredCurrencyCode || DEFAULT_CURRENCY;
 
     try {
       const { tab, detail } = await new TabsApi(
