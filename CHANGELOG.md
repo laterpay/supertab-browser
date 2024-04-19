@@ -1,3 +1,9 @@
+# [4.3.0](https://github.com/laterpay/supertab-browser/compare/v4.2.1...v4.3.0) (2024-04-19)
+
+### Features
+
+- return offerings in tab currency if tab is found ([20d6f42](https://github.com/laterpay/supertab-browser/commit/20d6f4209917ff7d0ede4dca7295c75076534ecb))
+
 ## [4.2.1](https://github.com/laterpay/supertab-browser/compare/v4.2.0...v4.2.1) (2024-04-19)
 
 ### Bug Fixes
