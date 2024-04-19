@@ -1,3 +1,9 @@
+## [4.4.2](https://github.com/laterpay/supertab-browser/compare/v4.4.1...v4.4.2) (2024-04-19)
+
+### Bug Fixes
+
+- make purchase in suggested currency if tab is undefined and preferred currency not set ([01f9bba](https://github.com/laterpay/supertab-browser/commit/01f9bba816b638fbd4b9df783b276448a551cb22))
+
 ## [4.4.1](https://github.com/laterpay/supertab-browser/compare/v4.4.0...v4.4.1) (2024-04-19)
 
 ### Bug Fixes
