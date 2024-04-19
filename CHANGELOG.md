@@ -1,3 +1,9 @@
+## [4.4.3](https://github.com/laterpay/supertab-browser/compare/v4.4.2...v4.4.3) (2024-04-19)
+
+### Bug Fixes
+
+- do not show zero fraction digits in tab limit formatted amount ([c8f5e18](https://github.com/laterpay/supertab-browser/commit/c8f5e185f3e239478ecf9970a9de7b9f9b8e7792))
+
 ## [4.4.2](https://github.com/laterpay/supertab-browser/compare/v4.4.1...v4.4.2) (2024-04-19)
 
 ### Bug Fixes
