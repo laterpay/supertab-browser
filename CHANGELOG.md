@@ -1,3 +1,9 @@
+## [4.4.1](https://github.com/laterpay/supertab-browser/compare/v4.4.0...v4.4.1) (2024-04-19)
+
+### Bug Fixes
+
+- expose missing tab limit.text in purchase response ([4e4d979](https://github.com/laterpay/supertab-browser/commit/4e4d979556a6fce1539385dc02dedfb79ccdbdea))
+
 # [4.4.0](https://github.com/laterpay/supertab-browser/compare/v4.3.0...v4.4.0) (2024-04-19)
 
 ### Features
