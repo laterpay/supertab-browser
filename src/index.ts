@@ -360,7 +360,17 @@ export class Supertab {
               showSymbol: currencyObject?.isoCode !== "CHF",
             }),
           },
-          limit: tab.limit,
+          limit: {
+            amount: tab.limit,
+            text: formatPrice({
+              amount: tab.limit,
+              currency: currencyObject?.isoCode ?? "",
+              baseUnit: currencyObject?.baseUnit ?? 100,
+              localeCode: this.language,
+              showZeroFractionDigits: true,
+              showSymbol: currencyObject?.isoCode !== "CHF",
+            }),
+          },
           currency: tab.currency,
         },
       };
@@ -389,7 +399,17 @@ export class Supertab {
                 showSymbol: currencyObject?.isoCode !== "CHF",
               }),
             },
-            limit: tab.limit,
+            limit: {
+              amount: tab.limit,
+              text: formatPrice({
+                amount: tab.limit,
+                currency: currencyObject?.isoCode ?? "",
+                baseUnit: currencyObject?.baseUnit ?? 100,
+                localeCode: this.language,
+                showZeroFractionDigits: true,
+                showSymbol: currencyObject?.isoCode !== "CHF",
+              }),
+            },
             currency: tab.currency,
           },
         };

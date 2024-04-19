@@ -830,7 +830,10 @@ describe("Supertab", () => {
         tab: {
           currency: "USD",
           id: "test-tab-id",
-          limit: 500,
+          limit: {
+            amount: 500,
+            text: "$5.00",
+          },
           status: "open",
           total: {
             amount: 50,
@@ -867,7 +870,10 @@ describe("Supertab", () => {
         tab: {
           currency: "EUR",
           id: "test-tab-id",
-          limit: 500,
+          limit: {
+            amount: 500,
+            text: "€5.00",
+          },
           status: "open",
           total: {
             amount: 50,
@@ -908,7 +914,10 @@ describe("Supertab", () => {
         tab: {
           currency: "USD",
           id: "test-tab-id",
-          limit: 500,
+          limit: {
+            amount: 500,
+            text: "$5.00",
+          },
           status: "full",
           total: {
             amount: 50,
