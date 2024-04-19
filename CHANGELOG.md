@@ -1,3 +1,9 @@
+## [4.2.1](https://github.com/laterpay/supertab-browser/compare/v4.2.0...v4.2.1) (2024-04-19)
+
+### Bug Fixes
+
+- return object for the `tab.total` in purchase response ([2459a93](https://github.com/laterpay/supertab-browser/commit/2459a93ba560555a9ec6ca34f7cbd8673a495173))
+
 # [4.2.0](https://github.com/laterpay/supertab-browser/compare/v4.1.0...v4.2.0) (2024-04-19)
 
 ### Features
