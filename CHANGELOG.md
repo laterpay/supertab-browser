@@ -1,3 +1,9 @@
+# [4.2.0](https://github.com/laterpay/supertab-browser/compare/v4.1.0...v4.2.0) (2024-04-19)
+
+### Features
+
+- include formatted price in tab and purchases ([#51](https://github.com/laterpay/supertab-browser/issues/51)) ([10c135e](https://github.com/laterpay/supertab-browser/commit/10c135e93a0dba42926d09cf4d8e1030117deed6))
+
 # [4.1.0](https://github.com/laterpay/supertab-browser/compare/v4.0.0...v4.1.0) (2024-04-17)
 
 ### Bug Fixes
