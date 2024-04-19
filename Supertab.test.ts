@@ -500,7 +500,10 @@ describe("Supertab", () => {
             amount: 50,
             text: "$0.50",
           },
-          limit: 500,
+          limit: {
+            amount: 500,
+            text: "$5.00",
+          },
           currency: "USD",
           purchases: [
             {
