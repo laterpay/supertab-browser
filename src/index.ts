@@ -328,7 +328,11 @@ export class Supertab {
   }) {
     const tab = await this.getTab();
     const clientConfig = await this.#getClientConfig();
-    const currency = tab?.currency || preferredCurrencyCode || DEFAULT_CURRENCY;
+    const currency =
+      tab?.currency ||
+      preferredCurrencyCode ||
+      clientConfig.suggestedCurrency ||
+      DEFAULT_CURRENCY;
 
     try {
       const { tab, detail } = await new TabsApi(
