@@ -134,7 +134,10 @@ export class Supertab {
     preferredCurrencyCode = this.preferredCurrencyCode,
   }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
+    const tab = await this.getTab();
+
     const presentedCurrency =
+      tab?.currency ??
       preferredCurrencyCode ??
       clientConfig.suggestedCurrency ??
       DEFAULT_CURRENCY;

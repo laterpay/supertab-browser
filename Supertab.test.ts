@@ -148,90 +148,228 @@ describe("Supertab", () => {
   });
 
   describe(".getOfferings", () => {
-    test("return offerings with default currency", async () => {
-      const { client } = setup();
-
-      expect(await client.getOfferings()).toMatchSnapshot();
-    });
-
-    test("return offerings in given locale", async () => {
-      const { client } = setup({ language: "pt-BR" });
-
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "USD",
-            text: "$ 1,00",
+    describe("with no existing tab", () => {
+      beforeEach(() => {
+        server.withGetTab({
+          data: [],
+          metadata: {
+            count: 1,
+            perPage: 1,
+            links: {
+              previous: "",
+              next: "",
+            },
+            numberPages: 1,
           },
-        },
-      ]);
-    });
-
-    test("return offering price in preferred currency passed as a global param", async () => {
-      const { client } = setup({
-        preferredCurrencyCode: "EUR",
-        clientConfigProps: { suggestedCurrency: "USD" },
+        });
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "EUR",
-            text: "€1.00",
-          },
-        },
-      ]);
-    });
+      test("return offerings with default currency", async () => {
+        const { client } = setup();
 
-    test("return offering price in preferred currency passed as a local param", async () => {
-      const { client } = setup({
-        preferredCurrencyCode: "EUR",
-        clientConfigProps: { suggestedCurrency: "EUR" },
+        expect(await client.getOfferings()).toMatchSnapshot();
       });
 
-      expect(
-        await client.getOfferings({ preferredCurrencyCode: "USD" }),
-      ).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "USD",
-            text: "$1.00",
-          },
-        },
-      ]);
-    });
+      test("return offerings in given locale", async () => {
+        const { client } = setup({ language: "pt-BR" });
 
-    test("return offering price in suggested currency if preferred currency is not set", async () => {
-      const { client } = setup({
-        clientConfigProps: {
-          suggestedCurrency: "BRL",
-        },
+        expect(await client.getOfferings()).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "USD",
+              text: "$ 1,00",
+            },
+          },
+        ]);
       });
 
-      expect(await client.getOfferings()).toEqual([
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          salesModel: "time_pass",
-          price: {
-            amount: 100,
-            currency: "BRL",
-            text: "R$1.00",
+      test("return offering price in preferred currency passed as a global param", async () => {
+        const { client } = setup({
+          preferredCurrencyCode: "EUR",
+          clientConfigProps: { suggestedCurrency: "USD" },
+        });
+
+        expect(await client.getOfferings()).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "EUR",
+              text: "€1.00",
+            },
           },
-        },
-      ]);
+        ]);
+      });
+
+      test("return offering price in preferred currency passed as a local param", async () => {
+        const { client } = setup({
+          preferredCurrencyCode: "EUR",
+          clientConfigProps: { suggestedCurrency: "EUR" },
+        });
+
+        expect(
+          await client.getOfferings({ preferredCurrencyCode: "USD" }),
+        ).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "USD",
+              text: "$1.00",
+            },
+          },
+        ]);
+      });
+
+      test("return offering price in suggested currency if preferred currency is not set", async () => {
+        const { client } = setup({
+          clientConfigProps: {
+            suggestedCurrency: "BRL",
+          },
+        });
+
+        expect(await client.getOfferings()).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "BRL",
+              text: "R$1.00",
+            },
+          },
+        ]);
+      });
+    });
+
+    describe("with existing tab", () => {
+      beforeEach(() => {
+        server.withGetTab({
+          data: [
+            {
+              id: "test-tab-id",
+              createdAt: new Date("2023-11-03T15:34:44.852Z"),
+              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+              merchantId: "test-merchant-id",
+              userId: "test-user-id",
+              status: "open",
+              paidAt: null,
+              total: 50,
+              limit: 500,
+              currency: "EUR",
+              paymentModel: "pay_later",
+              purchases: [
+                {
+                  id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+                  createdAt: new Date("2023-11-03T15:34:44.852Z"),
+                  updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+                  purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                  merchantId: "test-merchant-id",
+                  summary: "test-summary",
+                  price: {
+                    amount: 50,
+                    currency: "EUR",
+                  },
+                  salesModel: "time_pass",
+                  paymentModel: "pay_later",
+                  metadata: {
+                    additionalProp1: {},
+                    additionalProp2: {},
+                    additionalProp3: {},
+                  },
+                  attributedTo: "test-id",
+                  offeringId: "test-offering-id",
+                  contentKey: "test-content-key",
+                  testMode: false,
+                  merchantName: "test-merchant-name",
+                },
+              ],
+              metadata: {
+                additionalProp1: {},
+                additionalProp2: {},
+                additionalProp3: {},
+              },
+              testMode: false,
+              tabStatistics: {
+                purchasesCount: 0,
+                obfuscatedPurchasesCount: 0,
+                obfuscatedPurchasesTotal: 0,
+              },
+            },
+          ],
+          metadata: {
+            count: 1,
+            perPage: 1,
+            links: {
+              previous: "",
+              next: "",
+            },
+            numberPages: 1,
+          },
+        });
+      });
+
+      test("return offerings in tab currency by default", async () => {
+        const { client } = setup();
+
+        expect(await client.getOfferings()).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "EUR",
+              text: "€1.00",
+            },
+          },
+        ]);
+      });
+
+      test("return offerings in tab currency when global currency param is set to different currency", async () => {
+        const { client } = setup({ preferredCurrencyCode: "USD" });
+
+        expect(await client.getOfferings()).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "EUR",
+              text: "€1.00",
+            },
+          },
+        ]);
+      });
+
+      test("return offerings in tab currency when local currency param is set to different currency", async () => {
+        const { client } = setup();
+
+        expect(
+          await client.getOfferings({ preferredCurrencyCode: "BRL" }),
+        ).toEqual([
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            salesModel: "time_pass",
+            price: {
+              amount: 100,
+              currency: "EUR",
+              text: "€1.00",
+            },
+          },
+        ]);
+      });
     });
   });
 

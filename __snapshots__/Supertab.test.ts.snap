@@ -15,3 +15,19 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
   },
 ]
 `;
+
+exports[`Supertab .getOfferings with no existing tab return offerings with default currency 1`] = `
+[
+  {
+    "description": "Test Offering Description",
+    "id": "test-offering-id",
+    "price": {
+      "amount": 100,
+      "currency": "USD",
+      "text": "$1.00",
+    },
+    "prices": undefined,
+    "salesModel": "time_pass",
+  },
+]
+`;
