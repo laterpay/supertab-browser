@@ -502,7 +502,7 @@ describe("Supertab", () => {
           },
           limit: {
             amount: 500,
-            text: "$5.00",
+            text: "$5",
           },
           currency: "USD",
           purchases: [
@@ -832,7 +832,7 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: {
             amount: 500,
-            text: "$5.00",
+            text: "$5",
           },
           status: "open",
           total: {
@@ -872,7 +872,7 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: {
             amount: 500,
-            text: "€5.00",
+            text: "€5",
           },
           status: "open",
           total: {
@@ -911,7 +911,7 @@ describe("Supertab", () => {
             id: "test-tab-id",
             limit: {
               amount: 500,
-              text: "R$5.00",
+              text: "R$5",
             },
             status: "open",
             total: {
@@ -956,7 +956,7 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: {
             amount: 500,
-            text: "$5.00",
+            text: "$5",
           },
           status: "full",
           total: {
