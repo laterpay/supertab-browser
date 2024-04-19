@@ -682,7 +682,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: true,
@@ -691,7 +691,10 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: 500,
           status: "open",
-          total: 50,
+          total: {
+            amount: 50,
+            text: "$0.50",
+          },
         },
       });
     });
@@ -716,7 +719,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: true,
@@ -725,7 +728,10 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: 500,
           status: "open",
-          total: 50,
+          total: {
+            amount: 50,
+            text: "€0.50",
+          },
         },
       });
     });
@@ -754,7 +760,7 @@ describe("Supertab", () => {
       expect(
         await client.purchase({
           offeringId: "test-offering-id",
-          preferredCurrency: "USD",
+          preferredCurrencyCode: "USD",
         }),
       ).toEqual({
         itemAdded: false,
@@ -763,7 +769,10 @@ describe("Supertab", () => {
           id: "test-tab-id",
           limit: 500,
           status: "full",
-          total: 50,
+          total: {
+            amount: 50,
+            text: "$0.50",
+          },
         },
       });
     });
@@ -782,7 +791,7 @@ describe("Supertab", () => {
         async () =>
           await client.purchase({
             offeringId: "test-offering-id",
-            preferredCurrency: "USD",
+            preferredCurrencyCode: "USD",
           }),
       ).toThrow();
     });

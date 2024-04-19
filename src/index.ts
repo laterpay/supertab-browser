@@ -314,6 +314,7 @@ export class Supertab {
     preferredCurrencyCode?: string;
   }) {
     const tab = await this.getTab();
+    const clientConfig = await this.#getClientConfig();
     const currency = tab?.currency || preferredCurrencyCode || DEFAULT_CURRENCY;
 
     try {
@@ -326,13 +327,26 @@ export class Supertab {
           metadata: {},
         },
       });
+      const currencyObject = clientConfig.currencies.find(
+        (currency) => currency.isoCode === tab.currency,
+      );
 
       return {
         itemAdded: detail?.itemAdded,
         tab: {
           id: tab.id,
           status: tab.status,
-          total: tab.total,
+          total: {
+            amount: tab.total,
+            text: formatPrice({
+              amount: tab.total,
+              currency: currencyObject?.isoCode ?? "",
+              baseUnit: currencyObject?.baseUnit ?? 100,
+              localeCode: this.language,
+              showZeroFractionDigits: true,
+              showSymbol: currencyObject?.isoCode !== "CHF",
+            }),
+          },
           limit: tab.limit,
           currency: tab.currency,
         },
@@ -342,12 +356,26 @@ export class Supertab {
         const { tab, detail } = PurchaseOfferingResponseFromJSON(
           await e.response.json(),
         );
+        const currencyObject = clientConfig.currencies.find(
+          (currency) => currency.isoCode === tab.currency,
+        );
+
         return {
           itemAdded: detail?.itemAdded,
           tab: {
             id: tab.id,
             status: tab.status,
-            total: tab.total,
+            total: {
+              amount: tab.total,
+              text: formatPrice({
+                amount: tab.total,
+                currency: currencyObject?.isoCode ?? "",
+                baseUnit: currencyObject?.baseUnit ?? 100,
+                localeCode: this.language,
+                showZeroFractionDigits: true,
+                showSymbol: currencyObject?.isoCode !== "CHF",
+              }),
+            },
             limit: tab.limit,
             currency: tab.currency,
           },
