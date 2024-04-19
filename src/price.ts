@@ -4,12 +4,14 @@ export function formatPrice({
   baseUnit,
   localeCode,
   showZeroFractionDigits = false,
+  showSymbol = true,
 }: {
   amount: number;
   currency: string;
   baseUnit: number;
   localeCode: string;
   showZeroFractionDigits?: boolean;
+  showSymbol?: boolean;
 }) {
   const isoCodePattern = new RegExp(currency, "i");
   const amountRest = amount % baseUnit;
@@ -17,17 +19,21 @@ export function formatPrice({
 
   const options = {
     style: "currency",
-    currencyDisplay: "narrowSymbol",
+    currencyDisplay: showSymbol ? "narrowSymbol" : "code",
     currency,
     minimumFractionDigits:
       hasZeroFractionDigits || (showZeroFractionDigits && baseUnit !== 1)
         ? 2
         : 0,
   };
-  const value = new Intl.NumberFormat(localeCode, options)
-    .format(amount / baseUnit)
-    .replace(isoCodePattern, "")
-    .trim();
+  const value = showSymbol
+    ? new Intl.NumberFormat(localeCode, options)
+        .format(amount / baseUnit)
+        .replace(isoCodePattern, "")
+        .trim()
+    : new Intl.NumberFormat(localeCode, options)
+        .format(amount / baseUnit)
+        .trim();
 
   return value;
 }

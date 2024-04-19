@@ -358,7 +358,10 @@ describe("Supertab", () => {
         expect(await client.getTab()).toEqual({
           id: "test-tab-id",
           status,
-          total: 50,
+          total: {
+            amount: 50,
+            text: "$0.50",
+          },
           limit: 500,
           currency: "USD",
           purchases: [
@@ -368,6 +371,7 @@ describe("Supertab", () => {
               price: {
                 amount: 50,
                 currency: "USD",
+                text: "$0.50",
               },
             },
           ],
