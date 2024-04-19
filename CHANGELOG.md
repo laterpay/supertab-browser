@@ -1,3 +1,9 @@
+# [4.4.0](https://github.com/laterpay/supertab-browser/compare/v4.3.0...v4.4.0) (2024-04-19)
+
+### Features
+
+- return tab limit as an object ([e9edafd](https://github.com/laterpay/supertab-browser/commit/e9edafdc8d2f34f1e8f0f92067ad3c424c9ae6b7))
+
 # [4.3.0](https://github.com/laterpay/supertab-browser/compare/v4.2.1...v4.3.0) (2024-04-19)
 
 ### Features
