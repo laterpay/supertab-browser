@@ -883,6 +883,46 @@ describe("Supertab", () => {
       });
     });
 
+    test("creates a purchase in suggested currency if tab is not found", async () => {
+      const { client } = setup({
+        clientConfigProps: { suggestedCurrency: "BRL" },
+      });
+
+      server.withGetTab({
+        data: [],
+        metadata: tabMetaData,
+      });
+
+      server.withPurchase({
+        detail: {
+          itemAdded: true,
+        },
+        tab: {
+          ...tabData,
+          currency: "BRL",
+        },
+      });
+
+      expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
+        {
+          itemAdded: true,
+          tab: {
+            currency: "BRL",
+            id: "test-tab-id",
+            limit: {
+              amount: 500,
+              text: "R$5.00",
+            },
+            status: "open",
+            total: {
+              amount: 50,
+              text: "R$0.50",
+            },
+          },
+        },
+      );
+    });
+
     test("handle tab being full", async () => {
       const { client } = setup();
 
