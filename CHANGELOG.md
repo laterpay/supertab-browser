@@ -1,3 +1,9 @@
+# [4.5.0](https://github.com/laterpay/supertab-browser/compare/v4.4.3...v4.5.0) (2024-04-22)
+
+### Features
+
+- add formatAmount function for formatting price ([f2b0158](https://github.com/laterpay/supertab-browser/commit/f2b0158e13855ca0320eb2f2698878c03a6e536c))
+
 ## [4.4.3](https://github.com/laterpay/supertab-browser/compare/v4.4.2...v4.4.3) (2024-04-19)
 
 ### Bug Fixes
