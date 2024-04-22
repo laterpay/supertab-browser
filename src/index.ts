@@ -18,6 +18,7 @@ import {
   PurchaseOfferingResponseFromJSON,
   Price,
   SiteOffering,
+  TabResponse,
 } from "@laterpay/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -307,13 +308,26 @@ export class Supertab {
       url,
       childWindow: checkoutWindow,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onMessage: async (ev): Promise<any> => {
+      onMessage: async (
+        ev,
+      ): Promise<{
+        tab: TabResponse;
+      } | null> => {
         if (
           ev.data.status !== "payment_completed" ||
           ev.origin !== url.origin
         ) {
           throw new Error("Payment failed");
         }
+
+        const tab = await new TabsApi(this.tapperConfig).tabViewV1({
+          tabId: id,
+        });
+
+        // TODO: display zero tab amount in the response
+        // TODO: expose a function for formatting the price so e.g. tab.js can format zero price just passing "0" and currency code to it
+
+        return { tab };
       },
     });
   }
@@ -426,5 +440,29 @@ export class Supertab {
   async openAboutSupertab() {
     const url = new URL("https://supertab.co/personal");
     window.open(url, "_blank");
+  }
+
+  async formatAmount(amount: number, currency: string) {
+    if (amount === undefined) {
+      throw new Error("Missing amount");
+    }
+
+    const clientConfig = await this.#getClientConfig();
+    const currencyObject = clientConfig.currencies.find(
+      (eachCurrency) => eachCurrency.isoCode === currency,
+    );
+
+    if (!currencyObject) {
+      throw new Error("Currency not found");
+    }
+
+    return formatPrice({
+      amount,
+      currency: currencyObject?.isoCode ?? "",
+      baseUnit: currencyObject?.baseUnit ?? 100,
+      localeCode: this.language,
+      showZeroFractionDigits: true,
+      showSymbol: true,
+    });
   }
 }

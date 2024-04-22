@@ -986,4 +986,30 @@ describe("Supertab", () => {
       ).toThrow();
     });
   });
+
+  describe(".formatAmount", () => {
+    test("formats price", async () => {
+      const { client } = setup();
+
+      expect(await client.formatAmount(100, "USD")).toBe("$1.00");
+    });
+
+    test("formats price based on the locale", async () => {
+      const { client } = setup({ language: "de-DE" });
+
+      expect(await client.formatAmount(250, "USD")).toBe("2,50 $");
+    });
+
+    test("throws an error if currency is empty", async () => {
+      const { client } = setup();
+
+      expect(async () => await client.formatAmount(0, "")).toThrow();
+    });
+
+    test("throws an error if currency is unknown", async () => {
+      const { client } = setup();
+
+      expect(async () => await client.formatAmount(0, "ABC")).toThrow();
+    });
+  });
 });
