@@ -1,3 +1,9 @@
+## [4.5.1](https://github.com/laterpay/supertab-browser/compare/v4.5.0...v4.5.1) (2024-04-24)
+
+### Bug Fixes
+
+- return type of .payTab ([31dac44](https://github.com/laterpay/supertab-browser/commit/31dac4485455ddfd29ba215029271e74bb4d044d))
+
 # [4.5.0](https://github.com/laterpay/supertab-browser/compare/v4.4.3...v4.5.0) (2024-04-22)
 
 ### Features
