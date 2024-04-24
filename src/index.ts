@@ -283,7 +283,9 @@ export class Supertab {
   }
 
   @authenticated
-  async payTab(id: string) {
+  async payTab(
+    id: string,
+  ): Promise<{ tab: TabResponse } | { error: string } | null> {
     const checkoutWindow = openBlankChildWindow({
       width: 400,
       height: 800,
@@ -307,12 +309,7 @@ export class Supertab {
     return handleChildWindow({
       url,
       childWindow: checkoutWindow,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onMessage: async (
-        ev,
-      ): Promise<{
-        tab: TabResponse;
-      } | null> => {
+      onMessage: async (ev) => {
         if (
           ev.data.status !== "payment_completed" ||
           ev.origin !== url.origin
@@ -323,9 +320,6 @@ export class Supertab {
         const tab = await new TabsApi(this.tapperConfig).tabViewV1({
           tabId: id,
         });
-
-        // TODO: display zero tab amount in the response
-        // TODO: expose a function for formatting the price so e.g. tab.js can format zero price just passing "0" and currency code to it
 
         return { tab };
       },
