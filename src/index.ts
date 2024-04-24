@@ -285,7 +285,7 @@ export class Supertab {
   @authenticated
   async payTab(
     id: string,
-  ): Promise<{ tab: TabResponse } | { error: string } | null> {
+  ): Promise<{ tab?: TabResponse; error?: string } | null> {
     const checkoutWindow = openBlankChildWindow({
       width: 400,
       height: 800,
