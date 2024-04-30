@@ -1,3 +1,9 @@
+# [4.6.0](https://github.com/laterpay/supertab-browser/compare/v4.5.2...v4.6.0) (2024-04-30)
+
+### Features
+
+- Add optional constructor param `systemUrls` ([#52](https://github.com/laterpay/supertab-browser/issues/52)) ([5c34626](https://github.com/laterpay/supertab-browser/commit/5c346269aaf2183a545aa831ace9eb64b0d980af))
+
 ## [4.5.2](https://github.com/laterpay/supertab-browser/compare/v4.5.1...v4.5.2) (2024-04-24)
 
 ### Bug Fixes
