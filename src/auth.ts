@@ -120,8 +120,7 @@ export async function authorize({
     }),
   );
 
-  const url = new URL(authBaseUrl);
-  url.pathname += "/oauth2/auth";
+  const url = new URL(`${authBaseUrl}/oauth2/auth`);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
   url.searchParams.set("scope", scope);
@@ -151,8 +150,7 @@ export async function authenticate({
   redirectUri: string;
   authCode: string;
 }): Promise<Authentication> {
-  const url = new URL(authBaseUrl);
-  url.pathname += "/oauth2/token";
+  const url = new URL(`${authBaseUrl}/oauth2/token`);
   const method = "POST";
   const params = new URLSearchParams();
   params.append("grant_type", "authorization_code");
@@ -193,8 +191,7 @@ export async function refreshAuthentication({
   authBaseUrl: string;
   refreshToken: string;
 }): Promise<Authentication> {
-  const url = new URL(authBaseUrl);
-  url.pathname += "/oauth2/token";
+  const url = new URL(`${authBaseUrl}/oauth2/token`);
   const params = new URLSearchParams();
   params.append("grant_type", "refresh_token");
   params.append("refresh_token", refreshToken);

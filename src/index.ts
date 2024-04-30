@@ -57,7 +57,7 @@ export class Supertab {
   private language: string;
   private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
-  private sytemUrls: SystemUrls;
+  private systemUrls: SystemUrls;
 
   constructor(options: {
     clientId: string;
@@ -68,14 +68,14 @@ export class Supertab {
     this.clientId = options.clientId;
     this.language = options.language || window.navigator.language;
     this.preferredCurrencyCode = options.preferredCurrencyCode;
-    this.sytemUrls = options.systemUrls || {
+    this.systemUrls = options.systemUrls || {
       authBaseUrl: AUTH_BASE_URL,
       ssoBaseUrl: SSO_BASE_URL,
       tapiBaseUrl: TAPI_BASE_URL,
       checkoutBaseUrl: CHECKOUT_BASE_URL,
     };
     this.tapperConfig = new Configuration({
-      basePath: this.sytemUrls.tapiBaseUrl,
+      basePath: this.systemUrls.tapiBaseUrl,
       accessToken: () => `Bearer ${getAccessToken()}`,
     });
   }
@@ -99,8 +99,8 @@ export class Supertab {
       silently: !!silently,
       screenHint,
       state,
-      authBaseUrl: this.sytemUrls.authBaseUrl,
-      redirectUri: `${this.sytemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${
+      authBaseUrl: this.systemUrls.authBaseUrl,
+      redirectUri: `${this.systemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${
         redirectUri ?? window.location.origin
       }`,
       clientId: this.clientId,
@@ -309,7 +309,7 @@ export class Supertab {
       throw new Error("Tab is not full");
     }
 
-    const url = new URL(this.sytemUrls.checkoutBaseUrl);
+    const url = new URL(this.systemUrls.checkoutBaseUrl);
     url.searchParams.append("tab_id", id);
     url.searchParams.append("language", this.language);
     url.searchParams.append("testmode", tab.testMode ? "true" : "false");
