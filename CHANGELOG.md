@@ -1,3 +1,9 @@
+# [4.7.0](https://github.com/laterpay/supertab-browser/compare/v4.6.0...v4.7.0) (2024-05-14)
+
+### Features
+
+- preload URLs for new windows only ([#53](https://github.com/laterpay/supertab-browser/issues/53)) ([5bbb22f](https://github.com/laterpay/supertab-browser/commit/5bbb22f08cc934e8ee57c85daddccd08a9b6bb54))
+
 # [4.6.0](https://github.com/laterpay/supertab-browser/compare/v4.5.2...v4.6.0) (2024-04-30)
 
 ### Features
