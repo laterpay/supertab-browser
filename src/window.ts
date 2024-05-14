@@ -15,12 +15,16 @@ export const handleChildWindow = async <T>({
     throw new Error("Window is null");
   }
 
-  fetch(url.toString())
-    .then(() => (openedWindow.location.href = url.toString()))
-    .catch(() => {});
-
   try {
-    openedWindow.location.href = url.toString();
+    const isUrlOpened = openedWindow.location.href === url.toString();
+    const setWindowLocation = () =>
+      (openedWindow.location.href = url.toString());
+
+    if (!isUrlOpened) {
+      fetch(url.toString())
+        .then(setWindowLocation)
+        .catch(() => {});
+    }
     // eslint-disable-next-line no-empty
   } catch (e) {}
 
