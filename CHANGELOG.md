@@ -1,3 +1,9 @@
+# [5.1.0](https://github.com/laterpay/supertab-browser/compare/v5.0.0...v5.1.0) (2024-05-28)
+
+### Features
+
+- update tapper-sdk client to v37.0.0 ([08691ec](https://github.com/laterpay/supertab-browser/commit/08691ec5f152b5f49d27371614b68c106dc1289e))
+
 # [5.0.0](https://github.com/laterpay/supertab-browser/compare/v4.7.0...v5.0.0) (2024-05-28)
 
 ### Features
