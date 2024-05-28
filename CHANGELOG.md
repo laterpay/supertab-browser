@@ -1,3 +1,13 @@
+# [5.0.0](https://github.com/laterpay/supertab-browser/compare/v4.7.0...v5.0.0) (2024-05-28)
+
+### Features
+
+- make `checkAccess()` responses more sensible ([#54](https://github.com/laterpay/supertab-browser/issues/54)) ([abbfb9c](https://github.com/laterpay/supertab-browser/commit/abbfb9c83ae4fcbe0c0e52632488b5ddeb2d5502))
+
+### BREAKING CHANGES
+
+- checkAccess() response was modified. It now returns access object with validTo property if access is found. If no access, the access is set to null.
+
 # [4.7.0](https://github.com/laterpay/supertab-browser/compare/v4.6.0...v4.7.0) (2024-05-14)
 
 ### Features
