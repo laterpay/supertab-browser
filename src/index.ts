@@ -216,13 +216,17 @@ export class Supertab {
 
     if (access.access) {
       return {
-        validTo: access.access.validTo
-          ? new Date(access.access.validTo * 1000)
-          : undefined,
+        access: {
+          validTo: access.access.validTo
+            ? new Date(access.access.validTo * 1000)
+            : undefined,
+        },
       };
-    } else {
-      throw new Error("Access denied");
     }
+
+    return {
+      access: null,
+    };
   }
 
   @authenticated

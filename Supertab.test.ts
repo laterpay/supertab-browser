@@ -418,7 +418,23 @@ describe("Supertab", () => {
       });
 
       expect(await client.checkAccess()).toEqual({
-        validTo: new Date(1700119519 * 1000),
+        access: {
+          validTo: new Date(1700119519 * 1000),
+        },
+      });
+    });
+
+    test("return empty access if no access is found", async () => {
+      const { client } = setup();
+
+      server.withClientConfig(accessClientConfig);
+
+      server.withAccessCheck({
+        access: undefined,
+      });
+
+      expect(await client.checkAccess()).toEqual({
+        access: null,
       });
     });
   });
