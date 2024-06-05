@@ -1,3 +1,9 @@
+# [5.2.0](https://github.com/laterpay/supertab-browser/compare/v5.1.0...v5.2.0) (2024-06-05)
+
+### Features
+
+- allow calling getOfferings() in no-auth context ([16e8840](https://github.com/laterpay/supertab-browser/commit/16e8840c3aebb56d0da3f00b6346f97f0ad1802c))
+
 # [5.1.0](https://github.com/laterpay/supertab-browser/compare/v5.0.0...v5.1.0) (2024-05-28)
 
 ### Features
