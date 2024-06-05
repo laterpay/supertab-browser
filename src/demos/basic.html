@@ -173,6 +173,20 @@
         }
       }
 
+      async function getOfferings() {
+        const offerings = await Supertab.getOfferings();
+
+        log(
+          JSON.stringify(
+            {
+              offerings,
+            },
+            null,
+            2,
+          ),
+        );
+      }
+
       async function purchase() {
         const offerings = await Supertab.getOfferings();
         const offeringId = offerings[0].id;
@@ -234,6 +248,9 @@
         <button type="button" onClick="Supertab.openPersonalMarketingPage();">
           Open personal marketing page
         </button>
+      </li>
+      <li>
+        <button type="button" onClick="getOfferings()">Get Offerings</button>
       </li>
       <li>
         <button type="button" onClick="startAuthFlow({ silently: true })">

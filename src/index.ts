@@ -143,7 +143,12 @@ export class Supertab {
     preferredCurrencyCode = this.preferredCurrencyCode,
   }: { language?: string; preferredCurrencyCode?: string } = {}) {
     const clientConfig = await this.#getClientConfig();
-    const tab = await this.getTab();
+    let tab = null;
+
+    try {
+      tab = await this.getTab();
+      // eslint-disable-next-line no-empty
+    } catch (e) {}
 
     const presentedCurrency =
       tab?.currency ??
