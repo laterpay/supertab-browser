@@ -1,3 +1,9 @@
+# [5.3.0](https://github.com/laterpay/supertab-browser/compare/v5.2.0...v5.3.0) (2024-06-19)
+
+### Features
+
+- Include payment model in offerings ([#55](https://github.com/laterpay/supertab-browser/issues/55)) ([9926420](https://github.com/laterpay/supertab-browser/commit/99264208ba13312ad1c557f8f9d5951c5126c3d2))
+
 # [5.2.0](https://github.com/laterpay/supertab-browser/compare/v5.1.0...v5.2.0) (2024-06-05)
 
 ### Features
