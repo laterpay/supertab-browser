@@ -12,7 +12,7 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
     },
     "prices": undefined,
     "salesModel": "time_pass",
-    "payment_model: "pay_later",
+    "paymentModel: "pay_later",
   },
 ]
 `;
@@ -29,7 +29,7 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
     },
     "prices": undefined,
     "salesModel": "time_pass",
-    "payment_model: "pay_later",
+    "paymentModel: "pay_later",
   },
 ]
 `;
