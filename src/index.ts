@@ -200,6 +200,7 @@ export class Supertab {
           id: eachOffering.id,
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
+          paymentModel: eachOffering.paymentModel,
           price: getPrice(eachOffering, eachOffering.price, presentedCurrency),
           prices,
         };
