@@ -74,6 +74,7 @@ const setup = ({
         id: "test-offering-id",
         description: "Test Offering Description",
         salesModel: "time_pass",
+        paymentModel: "pay_later",
         price: {
           amount: 100,
           currency: clientConfigProps?.offeringCurrency ?? "USD",
@@ -178,6 +179,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "USD",
@@ -198,6 +200,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "EUR",
@@ -220,6 +223,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "USD",
@@ -241,6 +245,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "BRL",
@@ -326,6 +331,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "EUR",
@@ -343,6 +349,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "EUR",
@@ -362,6 +369,7 @@ describe("Supertab", () => {
             id: "test-offering-id",
             description: "Test Offering Description",
             salesModel: "time_pass",
+            paymentModel: "pay_later",
             price: {
               amount: 100,
               currency: "EUR",

@@ -5,6 +5,7 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
   {
     "description": "Test Offering Description",
     "id": "test-offering-id",
+    "paymentModel": "pay_later",
     "price": {
       "amount": 100,
       "currency": "USD",
@@ -21,6 +22,7 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
   {
     "description": "Test Offering Description",
     "id": "test-offering-id",
+    "paymentModel": "pay_later",
     "price": {
       "amount": 100,
       "currency": "USD",
