@@ -203,6 +203,8 @@ export class Supertab {
           paymentModel: eachOffering.paymentModel,
           price: getPrice(eachOffering, eachOffering.price, presentedCurrency),
           prices,
+          timePassDetails: eachOffering.timePassDetails,
+          recurringDetails: eachOffering.recurringDetails,
         };
       });
 
