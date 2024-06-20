@@ -1,3 +1,9 @@
+# [5.4.0](https://github.com/laterpay/supertab-browser/compare/v5.3.0...v5.4.0) (2024-06-20)
+
+### Features
+
+- Add flag `isSubscription` to return value of method `checkAccess` ([#56](https://github.com/laterpay/supertab-browser/issues/56)) ([dade8c6](https://github.com/laterpay/supertab-browser/commit/dade8c6aa8df00915df5e34b32b86b9d262bf3f8))
+
 # [5.3.0](https://github.com/laterpay/supertab-browser/compare/v5.2.0...v5.3.0) (2024-06-19)
 
 ### Features
