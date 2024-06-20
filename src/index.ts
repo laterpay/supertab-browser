@@ -23,7 +23,7 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
-import { Authenticable, ScreenHint, SystemUrls } from "./types";
+import { Authenticable, FormattedTab, ScreenHint, SystemUrls } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
@@ -239,7 +239,7 @@ export class Supertab {
   }
 
   @authenticated
-  async getTab() {
+  async getTab(): Promise<FormattedTab | null> {
     const clientConfig = await this.#getClientConfig();
     const {
       data: [tab],
@@ -251,62 +251,18 @@ export class Supertab {
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
     if (filterStatuses.includes(tab?.status)) {
-      const currencyObject = clientConfig.currencies.find(
-        (currency) => currency.isoCode === tab.currency,
-      );
-
-      return {
-        id: tab.id,
-        status: tab.status,
-        total: {
-          amount: tab.total,
-          text: formatPrice({
-            amount: tab.total,
-            currency: currencyObject?.isoCode ?? "",
-            baseUnit: currencyObject?.baseUnit ?? 100,
-            localeCode: this.language,
-            showZeroFractionDigits: true,
-            showSymbol: currencyObject?.isoCode !== "CHF",
-          }),
-        },
-        limit: {
-          amount: tab.limit,
-          text: formatPrice({
-            amount: tab.limit,
-            currency: currencyObject?.isoCode ?? "",
-            baseUnit: currencyObject?.baseUnit ?? 100,
-            localeCode: this.language,
-            showZeroFractionDigits: false,
-            showSymbol: currencyObject?.isoCode !== "CHF",
-          }),
-        },
-        currency: tab.currency,
-        purchases: tab.purchases.map((purchase) => {
-          return {
-            purchaseDate: purchase.purchaseDate,
-            summary: purchase.summary,
-            price: {
-              amount: purchase.price.amount,
-              text: formatPrice({
-                amount: purchase.price.amount,
-                currency: currencyObject?.isoCode ?? "",
-                baseUnit: currencyObject?.baseUnit ?? 100,
-                localeCode: this.language,
-                showZeroFractionDigits: true,
-                showSymbol: currencyObject?.isoCode !== "CHF",
-              }),
-              currency: purchase.price.currency,
-            },
-          };
-        }),
-      };
+      return this.formatTab({ tab, clientConfig });
     }
+    return null;
   }
 
   @authenticated
   async payTab(
     id: string,
-  ): Promise<{ tab?: TabResponse; error?: string } | null> {
+  ): Promise<
+    | { status: "success"; tab: FormattedTab }
+    | { status: "error"; error: string }
+  > {
     const checkoutWindow = openBlankChildWindow({
       width: 400,
       height: 800,
@@ -338,11 +294,17 @@ export class Supertab {
           throw new Error("Payment failed");
         }
 
-        const tab = await new TabsApi(this.tapperConfig).tabViewV1({
-          tabId: id,
-        });
+        const [tab, clientConfig] = await Promise.all([
+          new TabsApi(this.tapperConfig).tabViewV1({
+            tabId: id,
+          }),
+          this.#getClientConfig(),
+        ]);
 
-        return { tab };
+        return {
+          status: "success",
+          tab: this.formatTab({ tab, clientConfig }),
+        };
       },
     });
   }
@@ -354,7 +316,7 @@ export class Supertab {
   }: {
     offeringId: string;
     preferredCurrencyCode?: string;
-  }) {
+  }): Promise<{ itemAdded: boolean; tab: FormattedTab }> {
     const tab = await this.getTab();
     const clientConfig = await this.#getClientConfig();
     const currency =
@@ -373,78 +335,19 @@ export class Supertab {
           metadata: {},
         },
       });
-      const currencyObject = clientConfig.currencies.find(
-        (currency) => currency.isoCode === tab.currency,
-      );
 
       return {
-        itemAdded: detail?.itemAdded,
-        tab: {
-          id: tab.id,
-          status: tab.status,
-          total: {
-            amount: tab.total,
-            text: formatPrice({
-              amount: tab.total,
-              currency: currencyObject?.isoCode ?? "",
-              baseUnit: currencyObject?.baseUnit ?? 100,
-              localeCode: this.language,
-              showZeroFractionDigits: true,
-              showSymbol: currencyObject?.isoCode !== "CHF",
-            }),
-          },
-          limit: {
-            amount: tab.limit,
-            text: formatPrice({
-              amount: tab.limit,
-              currency: currencyObject?.isoCode ?? "",
-              baseUnit: currencyObject?.baseUnit ?? 100,
-              localeCode: this.language,
-              showZeroFractionDigits: false,
-              showSymbol: currencyObject?.isoCode !== "CHF",
-            }),
-          },
-          currency: tab.currency,
-        },
+        itemAdded: !!detail?.itemAdded,
+        tab: this.formatTab({ tab, clientConfig }),
       };
     } catch (e) {
       if (e instanceof ResponseError && e.response.status === 402) {
         const { tab, detail } = PurchaseOfferingResponseFromJSON(
           await e.response.json(),
         );
-        const currencyObject = clientConfig.currencies.find(
-          (currency) => currency.isoCode === tab.currency,
-        );
-
         return {
-          itemAdded: detail?.itemAdded,
-          tab: {
-            id: tab.id,
-            status: tab.status,
-            total: {
-              amount: tab.total,
-              text: formatPrice({
-                amount: tab.total,
-                currency: currencyObject?.isoCode ?? "",
-                baseUnit: currencyObject?.baseUnit ?? 100,
-                localeCode: this.language,
-                showZeroFractionDigits: true,
-                showSymbol: currencyObject?.isoCode !== "CHF",
-              }),
-            },
-            limit: {
-              amount: tab.limit,
-              text: formatPrice({
-                amount: tab.limit,
-                currency: currencyObject?.isoCode ?? "",
-                baseUnit: currencyObject?.baseUnit ?? 100,
-                localeCode: this.language,
-                showZeroFractionDigits: false,
-                showSymbol: currencyObject?.isoCode !== "CHF",
-              }),
-            },
-            currency: tab.currency,
-          },
+          itemAdded: !!detail?.itemAdded,
+          tab: this.formatTab({ tab, clientConfig }),
         };
       }
 
@@ -479,5 +382,54 @@ export class Supertab {
       showZeroFractionDigits: true,
       showSymbol: true,
     });
+  }
+
+  formatTab({
+    tab,
+    clientConfig,
+  }: {
+    tab: TabResponse;
+    clientConfig: ClientConfig;
+  }) {
+    const currencyObject = clientConfig.currencies.find(
+      (currency) => currency.isoCode === tab.currency,
+    );
+    const priceToText = (amount: number) =>
+      formatPrice({
+        amount,
+        currency: currencyObject?.isoCode ?? "",
+        baseUnit: currencyObject?.baseUnit ?? 100,
+        localeCode: this.language,
+        showZeroFractionDigits: false,
+        showSymbol: currencyObject?.isoCode !== "CHF",
+      });
+
+    const formattedTab = {
+      id: tab.id,
+      status: tab.status,
+      total: {
+        amount: tab.total,
+        text: priceToText(tab.total),
+      },
+      limit: {
+        amount: tab.limit,
+        text: priceToText(tab.limit),
+      },
+      currency: tab.currency,
+      purchases: tab.purchases.map((purchase) => {
+        return {
+          purchaseDate: purchase.purchaseDate,
+          summary: purchase.summary,
+          price: {
+            amount: purchase.price.amount,
+            text: priceToText(purchase.price.amount),
+            currency: purchase.price.currency,
+          },
+          validTo: purchase.validTo,
+          recurringDetails: purchase.recurringDetails,
+        };
+      }),
+    };
+    return formattedTab;
   }
 }

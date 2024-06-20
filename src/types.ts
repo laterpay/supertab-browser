@@ -1,3 +1,4 @@
+import { Supertab } from ".";
 import { AuthStatus } from "./auth";
 
 export interface Authenticable {
@@ -12,3 +13,7 @@ export interface SystemUrls {
   tapiBaseUrl: string;
   checkoutBaseUrl: string;
 }
+
+export type FormattedTab = Awaited<
+  ReturnType<typeof Supertab.prototype.formatTab>
+>;

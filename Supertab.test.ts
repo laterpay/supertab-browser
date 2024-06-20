@@ -567,7 +567,7 @@ describe("Supertab", () => {
       },
     );
 
-    test("return undefined if no tabs", async () => {
+    test("return null if no tabs", async () => {
       const { client } = setup();
 
       server.withGetTab({
@@ -583,10 +583,10 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.getTab()).toBeUndefined();
+      expect(await client.getTab()).toBeNull();
     });
 
-    test("return undefined if no open tab", async () => {
+    test("return null if no open tab", async () => {
       const { client } = setup();
 
       server.withGetTab({
@@ -653,7 +653,7 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.getTab()).toBeUndefined();
+      expect(await client.getTab()).toBeNull();
     });
   });
 
@@ -881,6 +881,19 @@ describe("Supertab", () => {
             amount: 500,
             text: "$5",
           },
+          purchases: [
+            {
+              price: {
+                amount: 50,
+                currency: "USD",
+                text: "$0.50",
+              },
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              recurringDetails: undefined,
+              summary: "test-summary",
+              validTo: undefined,
+            },
+          ],
           status: "open",
           total: {
             amount: 50,
@@ -921,6 +934,19 @@ describe("Supertab", () => {
             amount: 500,
             text: "€5",
           },
+          purchases: [
+            {
+              price: {
+                amount: 50,
+                currency: "USD",
+                text: "€0.50",
+              },
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              recurringDetails: undefined,
+              summary: "test-summary",
+              validTo: undefined,
+            },
+          ],
           status: "open",
           total: {
             amount: 50,
@@ -960,6 +986,19 @@ describe("Supertab", () => {
               amount: 500,
               text: "R$5",
             },
+            purchases: [
+              {
+                price: {
+                  amount: 50,
+                  currency: "USD",
+                  text: "R$0.50",
+                },
+                purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                recurringDetails: undefined,
+                summary: "test-summary",
+                validTo: undefined,
+              },
+            ],
             status: "open",
             total: {
               amount: 50,
@@ -1005,6 +1044,19 @@ describe("Supertab", () => {
             amount: 500,
             text: "$5",
           },
+          purchases: [
+            {
+              price: {
+                amount: 50,
+                currency: "USD",
+                text: "$0.50",
+              },
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              recurringDetails: undefined,
+              summary: "test-summary",
+              validTo: undefined,
+            },
+          ],
           status: "full",
           total: {
             amount: 50,
