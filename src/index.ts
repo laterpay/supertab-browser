@@ -297,6 +297,8 @@ export class Supertab {
               }),
               currency: purchase.price.currency,
             },
+            validTo: purchase.validTo,
+            recurringDetails: purchase.recurringDetails,
           };
         }),
       };
