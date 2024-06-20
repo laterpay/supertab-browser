@@ -1,3 +1,9 @@
+# [5.5.0](https://github.com/laterpay/supertab-browser/compare/v5.4.0...v5.5.0) (2024-06-20)
+
+### Features
+
+- Add timepass and subscription details to offerings ([#57](https://github.com/laterpay/supertab-browser/issues/57)) ([aa382c7](https://github.com/laterpay/supertab-browser/commit/aa382c7616731344bbfc20a93be210de6ac6a4d5))
+
 # [5.4.0](https://github.com/laterpay/supertab-browser/compare/v5.3.0...v5.4.0) (2024-06-20)
 
 ### Features
