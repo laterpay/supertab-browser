@@ -428,6 +428,29 @@ describe("Supertab", () => {
       expect(await client.checkAccess()).toEqual({
         access: {
           validTo: new Date(1700119519 * 1000),
+          isSubscription: false,
+        },
+      });
+    });
+
+    test("set flag `isSubscription` for subscription based access", async () => {
+      const { client } = setup();
+
+      server.withClientConfig(accessClientConfig);
+
+      server.withAccessCheck({
+        access: {
+          status: "Granted",
+          contentKey: "test-content-key",
+          validTo: 1700119519,
+          subscriptionId: "test-subscription-id",
+        },
+      });
+
+      expect(await client.checkAccess()).toEqual({
+        access: {
+          validTo: new Date(1700119519 * 1000),
+          isSubscription: true,
         },
       });
     });
