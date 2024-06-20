@@ -12,7 +12,9 @@ exports[`Supertab .getOfferings return offerings with default currency 1`] = `
       "text": "$1.00",
     },
     "prices": undefined,
+    "recurringDetails": undefined,
     "salesModel": "time_pass",
+    "timePassDetails": undefined,
   },
 ]
 `;
@@ -29,7 +31,9 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
       "text": "$1.00",
     },
     "prices": undefined,
+    "recurringDetails": undefined,
     "salesModel": "time_pass",
+    "timePassDetails": undefined,
   },
 ]
 `;
