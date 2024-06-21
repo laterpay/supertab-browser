@@ -1,3 +1,21 @@
+# [6.0.0](https://github.com/laterpay/supertab-browser/compare/v5.5.0...v6.0.0) (2024-06-21)
+
+### Features
+
+- Normalize tab formatting ([#59](https://github.com/laterpay/supertab-browser/issues/59)) ([7d291d0](https://github.com/laterpay/supertab-browser/commit/7d291d0e6a9b05c9ace10a2037361629fe3639d4))
+
+### BREAKING CHANGES
+
+- Format the reponse of `payTab`, too (it was returning
+  the raw TabResponse before)
+- Return `null` instead of `undefined` from `getTab` if
+  no open Tab was found.
+
+* Narrow down response types of the above methods
+* Add "status" property to the response of `payTab`. It can be `success`
+  or `error` and makes handling the responses on the consuming end more
+  fun.
+
 # [5.5.0](https://github.com/laterpay/supertab-browser/compare/v5.4.0...v5.5.0) (2024-06-20)
 
 ### Features
