@@ -45,7 +45,7 @@ export const handleChildWindow = async <T>({
         clearInterval(checkChildWindowState);
 
         if (!receivedPostMessage) {
-          resolve({ error: "Window closed" } as T);
+          resolve({ status: "error", error: "Window closed" } as T);
         }
       }
     }, 500);
