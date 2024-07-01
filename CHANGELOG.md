@@ -1,3 +1,9 @@
+## [6.0.1](https://github.com/laterpay/supertab-browser/compare/v6.0.0...v6.0.1) (2024-07-01)
+
+### Bug Fixes
+
+- Increase checkout window width to fit Stripe subscription form ([#60](https://github.com/laterpay/supertab-browser/issues/60)) ([b333137](https://github.com/laterpay/supertab-browser/commit/b333137c07ed787ae35610365dd42179e26ab6f7))
+
 # [6.0.0](https://github.com/laterpay/supertab-browser/compare/v5.5.0...v6.0.0) (2024-06-21)
 
 ### Features
