@@ -264,7 +264,7 @@ export class Supertab {
     | { status: "error"; error: string }
   > {
     const checkoutWindow = openBlankChildWindow({
-      width: 400,
+      width: 488,
       height: 800,
       target: "supertabCheckout",
     });
