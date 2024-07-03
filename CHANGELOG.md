@@ -1,3 +1,9 @@
+# [6.1.0](https://github.com/laterpay/supertab-browser/compare/v6.0.1...v6.1.0) (2024-07-03)
+
+### Features
+
+- Add new public method `openCheckoutWindow` ([#61](https://github.com/laterpay/supertab-browser/issues/61)) ([ed45813](https://github.com/laterpay/supertab-browser/commit/ed4581350a54bd6efed9f025c88bd4e82bf5431d))
+
 ## [6.0.1](https://github.com/laterpay/supertab-browser/compare/v6.0.0...v6.0.1) (2024-07-01)
 
 ### Bug Fixes
