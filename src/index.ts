@@ -256,6 +256,14 @@ export class Supertab {
     return null;
   }
 
+  openCheckoutWindow() {
+    return openBlankChildWindow({
+      width: 488,
+      height: 800,
+      target: "supertabCheckout",
+    });
+  }
+
   @authenticated
   async payTab(
     id: string,
@@ -263,11 +271,7 @@ export class Supertab {
     | { status: "success"; tab: FormattedTab }
     | { status: "error"; error: string }
   > {
-    const checkoutWindow = openBlankChildWindow({
-      width: 488,
-      height: 800,
-      target: "supertabCheckout",
-    });
+    const checkoutWindow = this.openCheckoutWindow();
 
     const tab = await new TabsApi(this.tapperConfig).tabViewV1({
       tabId: id,
