@@ -878,6 +878,7 @@ describe("Supertab", () => {
         tab: {
           currency: "USD",
           id: "test-tab-id",
+          paymentModel: "pay_later",
           limit: {
             amount: 500,
             text: "$5",
@@ -931,6 +932,7 @@ describe("Supertab", () => {
         tab: {
           currency: "EUR",
           id: "test-tab-id",
+          paymentModel: "pay_later",
           limit: {
             amount: 500,
             text: "€5",
