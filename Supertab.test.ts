@@ -989,6 +989,7 @@ describe("Supertab", () => {
               amount: 500,
               text: "R$5",
             },
+            paymentModel: "pay_later",
             purchases: [
               {
                 price: {
