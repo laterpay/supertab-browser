@@ -1,3 +1,14 @@
+# [6.2.0](https://github.com/laterpay/supertab-browser/compare/v6.1.0...v6.2.0) (2024-07-16)
+
+### Bug Fixes
+
+- test cases ([68c5d3d](https://github.com/laterpay/supertab-browser/commit/68c5d3dc552bb6954e1409485818a925e4ab92df))
+
+### Features
+
+- add tests for tab payment model ([cefbfd0](https://github.com/laterpay/supertab-browser/commit/cefbfd0dc9526a90e9e696110b275e9bf9b857ad))
+- include payment model in tab response ([9208857](https://github.com/laterpay/supertab-browser/commit/920885790ab7ec7d7f16e5f08adc0235ce77145c))
+
 # [6.1.0](https://github.com/laterpay/supertab-browser/compare/v6.0.1...v6.1.0) (2024-07-03)
 
 ### Features
