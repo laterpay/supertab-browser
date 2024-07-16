@@ -420,6 +420,7 @@ export class Supertab {
         text: priceToText(tab.limit),
       },
       currency: tab.currency,
+      paymentModel: tab.paymentModel,
       purchases: tab.purchases.map((purchase) => {
         return {
           purchaseDate: purchase.purchaseDate,
