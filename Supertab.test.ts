@@ -552,6 +552,7 @@ describe("Supertab", () => {
             text: "$5",
           },
           currency: "USD",
+          paymentModel: "pay_later",
           purchases: [
             {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1040,6 +1041,7 @@ describe("Supertab", () => {
         tab: {
           currency: "USD",
           id: "test-tab-id",
+          paymentModel: "pay_later",
           limit: {
             amount: 500,
             text: "$5",
