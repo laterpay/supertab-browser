@@ -1,5 +1,7 @@
 import {
   AUTH_BASE_URL,
+  AUTH_URL,
+  TOKEN_URL,
   CHECKOUT_BASE_URL,
   SSO_BASE_URL,
   TAPI_BASE_URL,
@@ -70,6 +72,8 @@ export class Supertab {
     this.preferredCurrencyCode = options.preferredCurrencyCode;
     this.systemUrls = options.systemUrls || {
       authBaseUrl: AUTH_BASE_URL,
+      authUrl: AUTH_URL,
+      tokenUrl: TOKEN_URL,
       ssoBaseUrl: SSO_BASE_URL,
       tapiBaseUrl: TAPI_BASE_URL,
       checkoutBaseUrl: CHECKOUT_BASE_URL,
@@ -100,6 +104,8 @@ export class Supertab {
       screenHint,
       state,
       authBaseUrl: this.systemUrls.authBaseUrl,
+      authUrl: this.systemUrls.authUrl,
+      tokenUrl: this.systemUrls.tokenUrl,
       redirectUri: `${this.systemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${
         redirectUri ?? window.location.origin
       }`,
