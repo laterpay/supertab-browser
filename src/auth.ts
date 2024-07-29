@@ -6,9 +6,8 @@ const scope = "tab:tab:read tab:purchase:write auth:user:read offline_access";
 export type AuthOptions = {
   clientId: string;
   redirectUri: string;
-  authBaseUrl: string;
-  authUrl?: string;
-  tokenUrl?: string;
+  authUrl: string;
+  tokenUrl: string;
   screenHint?: ScreenHint;
   loginAction?: string;
   state?: object;
@@ -109,7 +108,6 @@ export async function authorize({
   clientId,
   redirectUri,
   screenHint,
-  authBaseUrl,
   authUrl,
   ...rest
 }: AuthOptions): Promise<Authorization> {
@@ -123,7 +121,7 @@ export async function authorize({
     }),
   );
 
-  const url = new URL(authUrl ?? "/oauth2/auth", authBaseUrl);
+  const url = new URL(authUrl);
   url.searchParams.set("code_challenge", codeChallenge);
   url.searchParams.set("code_challenge_method", "S256");
   url.searchParams.set("scope", scope);
@@ -143,19 +141,17 @@ export async function authorize({
 export async function authenticate({
   clientId,
   codeVerifier,
-  authBaseUrl,
   tokenUrl,
   redirectUri,
   authCode,
 }: {
   clientId: string;
   codeVerifier: string;
-  authBaseUrl: string;
-  tokenUrl?: string;
+  tokenUrl: string;
   redirectUri: string;
   authCode: string;
 }): Promise<Authentication> {
-  const url = new URL(tokenUrl ?? "/oauth2/token", authBaseUrl);
+  const url = new URL(tokenUrl);
   const method = "POST";
   const params = new URLSearchParams();
   params.append("grant_type", "authorization_code");
@@ -189,16 +185,14 @@ export async function authenticate({
 // Refresh access token
 export async function refreshAuthentication({
   clientId,
-  authBaseUrl,
   tokenUrl,
   refreshToken,
 }: {
   clientId: string;
-  authBaseUrl: string;
-  tokenUrl?: string;
+  tokenUrl: string;
   refreshToken: string;
 }): Promise<Authentication> {
-  const url = new URL(tokenUrl ?? "/oauth2/token", authBaseUrl);
+  const url = new URL(tokenUrl);
   const params = new URLSearchParams();
   params.append("grant_type", "refresh_token");
   params.append("refresh_token", refreshToken);

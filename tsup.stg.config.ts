@@ -10,7 +10,6 @@ export default defineConfig({
   outDir: "dist/stg",
   minify: false,
   env: {
-    AUTH_BASE_URL: "https://auth.stg.laterpay.net",
     AUTH_URL: "https://signon.stg.supertab.co/oauth2/auth",
     TOKEN_URL: "https://auth.stg.supetab.co/oauth2/token",
     SSO_BASE_URL: "https://signon.stg.supertab.co",

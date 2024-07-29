@@ -9,7 +9,8 @@ describe("auth", () => {
         clientId: "clientId",
         redirectUri: "redirectUri",
         screenHint: "register",
-        authBaseUrl: "https://auth.sbx.laterpaytest.net",
+        authUrl: "https://auth.sbx.laterpaytest.net/oauth2/auth",
+        tokenUrl: "https://auth.sbx.laterpaytest.net/oauth2/token",
       });
 
       const params = Object.fromEntries(url.searchParams.entries());
@@ -53,7 +54,7 @@ describe("auth", () => {
         authCode: "authCode",
         clientId: "clientId",
         redirectUri: "redirectUri",
-        authBaseUrl: "https://auth.sbx.laterpaytest.net",
+        tokenUrl: "https://auth.sbx.laterpaytest.net/oauth2/token",
       });
 
       expect(authentication).toEqual({
@@ -87,7 +88,7 @@ describe("auth", () => {
             authCode: "authCode",
             clientId: "clientId",
             redirectUri: "redirectUri",
-            authBaseUrl: "https://auth.sbx.laterpaytest.net",
+            tokenUrl: "https://auth.sbx.laterpaytest.net/oauth2/token",
           }),
       ).toThrow("Invalid code");
     });
