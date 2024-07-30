@@ -13,7 +13,7 @@ export default defineConfig({
     AUTH_URL: "https://signon.stg.supertab.co/oauth2/auth",
     TOKEN_URL: "https://auth.stg.supetab.co/oauth2/token",
     SSO_BASE_URL: "https://signon.stg.supertab.co",
-    TAPI_BASE_URL: "https://tapi.stg.laterpay.net",
+    TAPI_BASE_URL: "https://tapi.stg.supertab.co",
     CHECKOUT_BASE_URL: "https://checkout.stg.supertab.co",
   },
 });
