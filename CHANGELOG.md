@@ -1,3 +1,9 @@
+# [6.3.0](https://github.com/laterpay/supertab-browser/compare/v6.2.0...v6.3.0) (2024-07-30)
+
+### Features
+
+- Add explicit auth and token urls ([#62](https://github.com/laterpay/supertab-browser/issues/62)) ([52896b1](https://github.com/laterpay/supertab-browser/commit/52896b1e5f8d8fb15e0936abd201a4e9c6cf0c72))
+
 # [6.2.0](https://github.com/laterpay/supertab-browser/compare/v6.1.0...v6.2.0) (2024-07-16)
 
 ### Bug Fixes
