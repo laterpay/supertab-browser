@@ -8,7 +8,8 @@ export interface Authenticable {
 export type ScreenHint = "login" | "register";
 
 export interface SystemUrls {
-  authBaseUrl: string;
+  authUrl: string;
+  tokenUrl: string;
   ssoBaseUrl: string;
   tapiBaseUrl: string;
   checkoutBaseUrl: string;
