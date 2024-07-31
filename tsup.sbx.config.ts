@@ -10,10 +10,10 @@ export default defineConfig({
   outDir: "dist/sbx",
   minify: false,
   env: {
-    AUTH_URL: "https://auth.sbx.laterpay.net/oauth2/auth",
-    TOKEN_URL: "https://auth.sbx.laterpay.net/oauth2/token",
+    AUTH_URL: "https://signon.sbx.supertab.co/oauth2/auth",
+    TOKEN_URL: "https://auth.sbx.supertab.co/oauth2/token",
     SSO_BASE_URL: "https://signon.sbx.supertab.co",
-    TAPI_BASE_URL: "https://tapi.sbx.laterpay.net",
+    TAPI_BASE_URL: "https://tapi.sbx.supertab.co",
     CHECKOUT_BASE_URL: "https://checkout.sbx.supertab.co",
   },
 });

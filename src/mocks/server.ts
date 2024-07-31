@@ -22,7 +22,7 @@ import {
 const withClientConfig = (clientConfig: ClientConfig) => {
   server.use(
     rest.get(
-      "https://tapi.sbx.laterpay.net/v1/public/items/client/:id/config",
+      "https://tapi.sbx.supertab.co/v1/public/items/client/:id/config",
       (_, res, ctx) =>
         res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig))),
     ),
@@ -33,7 +33,7 @@ const withClientConfig = (clientConfig: ClientConfig) => {
 
 const withCurrentUser = (user: UserResponse) => {
   server.use(
-    rest.get("https://tapi.sbx.laterpay.net/v1/identity/me", (_, res, ctx) =>
+    rest.get("https://tapi.sbx.supertab.co/v1/identity/me", (_, res, ctx) =>
       res(ctx.status(200), ctx.json(UserResponseToJSON(user))),
     ),
   );
@@ -43,7 +43,7 @@ const withCurrentUser = (user: UserResponse) => {
 
 const withHealth = (health: HealthResponse) => {
   server.use(
-    rest.get("https://tapi.sbx.laterpay.net/health", (_, res, ctx) =>
+    rest.get("https://tapi.sbx.supertab.co/health", (_, res, ctx) =>
       res(ctx.status(200), ctx.json(HealthResponseToJSON(health))),
     ),
   );
@@ -53,7 +53,7 @@ const withHealth = (health: HealthResponse) => {
 
 const withAccessCheck = (accessCheck: AccessResponse) => {
   server.use(
-    rest.get("https://tapi.sbx.laterpay.net/v2/access/check", (_, res, ctx) =>
+    rest.get("https://tapi.sbx.supertab.co/v2/access/check", (_, res, ctx) =>
       res(ctx.status(200), ctx.json(AccessResponseToJSON(accessCheck))),
     ),
   );
@@ -61,7 +61,7 @@ const withAccessCheck = (accessCheck: AccessResponse) => {
 
 const withGetTab = (tab: PaginatedTabResponse) => {
   server.use(
-    rest.get("https://tapi.sbx.laterpay.net/v1/tabs", (_, res, ctx) =>
+    rest.get("https://tapi.sbx.supertab.co/v1/tabs", (_, res, ctx) =>
       res(ctx.status(200), ctx.json(PaginatedTabResponseToJSON(tab))),
     ),
   );
@@ -69,7 +69,7 @@ const withGetTab = (tab: PaginatedTabResponse) => {
 
 const withGetTabById = (tab: TabResponse) => {
   server.use(
-    rest.get(`https://tapi.sbx.laterpay.net/v1/tabs/${tab.id}`, (_, res, ctx) =>
+    rest.get(`https://tapi.sbx.supertab.co/v1/tabs/${tab.id}`, (_, res, ctx) =>
       res(ctx.status(200), ctx.json(TabResponseToJSON(tab))),
     ),
   );
@@ -78,7 +78,7 @@ const withGetTabById = (tab: TabResponse) => {
 const withPurchase = (purchase: PurchaseOfferingResponse, status = 200) => {
   server.use(
     rest.post(
-      "https://tapi.sbx.laterpay.net/v1/purchase/test-offering-id",
+      "https://tapi.sbx.supertab.co/v1/purchase/test-offering-id",
       (_, res, ctx) =>
         res(
           ctx.status(status),
