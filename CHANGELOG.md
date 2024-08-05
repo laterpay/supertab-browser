@@ -1,3 +1,9 @@
+# [6.4.0](https://github.com/laterpay/supertab-browser/compare/v6.3.0...v6.4.0) (2024-08-05)
+
+### Features
+
+- make package public ([daf408c](https://github.com/laterpay/supertab-browser/commit/daf408cb6ecca80bfad95abfc34fd2d9aa909b52))
+
 # [6.3.0](https://github.com/laterpay/supertab-browser/compare/v6.2.0...v6.3.0) (2024-07-30)
 
 ### Features
