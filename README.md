@@ -2,17 +2,15 @@
 
 Supertab Browser SDK.
 
-## Usage
-
-### Installation
+## Installation
 
 ```bash
 npm install @laterpay/supertab-browser
 ```
 
-### Configuration
+## Usage
 
-The supertab-browser instance can be configured with the following options:
+The supertab-browser instance can be initialized in two ways:
 
 #### 1. Using `window` global variables
 
