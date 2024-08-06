@@ -1,3 +1,10 @@
+## [6.7.3](https://github.com/laterpay/supertab-browser/compare/v6.7.2...v6.7.3) (2024-08-06)
+
+### Bug Fixes
+
+- add ci step to publish to npm ([0cd17b4](https://github.com/laterpay/supertab-browser/commit/0cd17b4abfc25af810b0fea94ae61082120f952d))
+- use npmjs.org registry ([9b33d4f](https://github.com/laterpay/supertab-browser/commit/9b33d4f1ddd8d81a2a0ee0cb6815e05f21d997b8))
+
 ## [6.7.2](https://github.com/laterpay/supertab-browser/compare/v6.7.1...v6.7.2) (2024-08-06)
 
 ### Bug Fixes
