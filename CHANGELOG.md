@@ -1,3 +1,9 @@
+## [6.7.5](https://github.com/laterpay/supertab-browser/compare/v6.7.4...v6.7.5) (2024-08-06)
+
+### Bug Fixes
+
+- make npm publish script unscoped ([890f3e6](https://github.com/laterpay/supertab-browser/commit/890f3e6ea51e0ea126cf75f5946c0bcef2c9c0c9))
+
 ## [6.7.4](https://github.com/laterpay/supertab-browser/compare/v6.7.3...v6.7.4) (2024-08-06)
 
 ### Bug Fixes
