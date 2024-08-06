@@ -1,3 +1,10 @@
+## [6.7.4](https://github.com/laterpay/supertab-browser/compare/v6.7.3...v6.7.4) (2024-08-06)
+
+### Bug Fixes
+
+- add scoped registry for npm ([ca7fd6d](https://github.com/laterpay/supertab-browser/commit/ca7fd6dc5f2f2b1aef2854a7290862517a7d8f05))
+- registry urls ([fd737ec](https://github.com/laterpay/supertab-browser/commit/fd737ec0b8739d70dd056d1e46a134ba6d1b3f95))
+
 ## [6.7.3](https://github.com/laterpay/supertab-browser/compare/v6.7.2...v6.7.3) (2024-08-06)
 
 ### Bug Fixes
