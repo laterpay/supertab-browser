@@ -1,3 +1,9 @@
+# [6.9.0](https://github.com/laterpay/supertab-browser/compare/v6.8.0...v6.9.0) (2024-08-06)
+
+### Features
+
+- dynamically load omega animation ([01d16b3](https://github.com/laterpay/supertab-browser/commit/01d16b36309500d1dadc0ca07a9c2b81f53a16c4))
+
 # [6.8.0](https://github.com/laterpay/supertab-browser/compare/v6.7.5...v6.8.0) (2024-08-06)
 
 ### Features
