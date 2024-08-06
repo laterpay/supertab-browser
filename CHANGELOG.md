@@ -1,3 +1,9 @@
+## [6.7.2](https://github.com/laterpay/supertab-browser/compare/v6.7.1...v6.7.2) (2024-08-06)
+
+### Bug Fixes
+
+- remove additional invokation of semantic-release/npm ([6f5bb1c](https://github.com/laterpay/supertab-browser/commit/6f5bb1c347cf219bd36e5fa259cf633f1d28d0c3))
+
 ## [6.7.1](https://github.com/laterpay/supertab-browser/compare/v6.7.0...v6.7.1) (2024-08-06)
 
 ### Bug Fixes
