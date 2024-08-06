@@ -1,3 +1,9 @@
+# [6.8.0](https://github.com/laterpay/supertab-browser/compare/v6.7.5...v6.8.0) (2024-08-06)
+
+### Features
+
+- version bump ([dd91f7a](https://github.com/laterpay/supertab-browser/commit/dd91f7a39d5395b25028822c2963580563af95db))
+
 ## [6.7.5](https://github.com/laterpay/supertab-browser/compare/v6.7.4...v6.7.5) (2024-08-06)
 
 ### Bug Fixes
