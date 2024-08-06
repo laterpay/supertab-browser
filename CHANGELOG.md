@@ -1,3 +1,13 @@
+# [6.7.0](https://github.com/laterpay/supertab-browser/compare/v6.6.0...v6.7.0) (2024-08-06)
+
+### Bug Fixes
+
+- consolidate registries ([2ab71ce](https://github.com/laterpay/supertab-browser/commit/2ab71ce5ad1552f2aab184ff2fceb54643647fce))
+
+### Features
+
+- publish to npm registry ([8c058ff](https://github.com/laterpay/supertab-browser/commit/8c058ffea67dd2eb2ba34ecf579cbf163d81af10))
+
 # [6.6.0](https://github.com/laterpay/supertab-browser/compare/v6.5.0...v6.6.0) (2024-08-06)
 
 ### Features
