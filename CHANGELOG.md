@@ -1,3 +1,9 @@
+## [6.7.1](https://github.com/laterpay/supertab-browser/compare/v6.7.0...v6.7.1) (2024-08-06)
+
+### Bug Fixes
+
+- auth token env var ([38167f7](https://github.com/laterpay/supertab-browser/commit/38167f7d7ca36698486a0d7faad5dd952028fb36))
+
 # [6.7.0](https://github.com/laterpay/supertab-browser/compare/v6.6.0...v6.7.0) (2024-08-06)
 
 ### Bug Fixes
