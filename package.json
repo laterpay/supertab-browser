@@ -59,7 +59,7 @@
     "style:fix": "prettier --write .",
     "lint:check": "eslint --ext .ts .",
     "lint:fix": "eslint --fix --ext .ts .",
-    "publish:npm": "npm publish --access public --registry=https://registry.npmjs.org --scope=@laterpay"
+    "publish:npm": "npm publish --access public --registry=https://registry.npmjs.org"
   },
   "peerDependencies": {
     "typescript": "^4.0.0 || ^5.0.0"
