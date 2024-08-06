@@ -7,7 +7,18 @@
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
-    "@semantic-release/npm",
+    [
+      "@semantic-release/npm",
+      {
+        "registry": "https://npm.pkg.github.com/"
+      }
+    ],
+    [
+      "@semantic-release/npm",
+      {
+        "registry": "https://registry.npmjs.org/"
+      }
+    ],
     "@semantic-release/github",
     [
       "@semantic-release/git",
