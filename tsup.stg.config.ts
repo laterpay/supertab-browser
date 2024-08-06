@@ -9,6 +9,7 @@ export default defineConfig({
   format: ["cjs", "esm"],
   outDir: "dist/stg",
   minify: false,
+  splitting: true,
   env: {
     AUTH_URL: "https://signon.stg.supertab.co/oauth2/auth",
     TOKEN_URL: "https://auth.stg.supetab.co/oauth2/token",

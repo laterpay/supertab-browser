@@ -9,6 +9,7 @@ export default defineConfig({
   format: ["cjs", "esm"],
   outDir: "dist/prod",
   minify: true,
+  splitting: true,
   env: {
     AUTH_URL: "https://auth.laterpay.net/oauth2/auth",
     TOKEN_URL: "https://auth.laterpay.net/oauth2/token",
