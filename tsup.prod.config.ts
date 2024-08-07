@@ -2,7 +2,7 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["index.ts"],
-  sourcemap: true,
+  sourcemap: false,
   clean: true,
   tsconfig: "tsconfig.json",
   dts: true,
