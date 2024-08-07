@@ -3,6 +3,7 @@
   "module": "dist/prod/index.mjs",
   "main": "dist/prod/index.js",
   "types": "dist/prod/index.d.ts",
+  "type": "module",
   "files": [
     "dist"
   ],
