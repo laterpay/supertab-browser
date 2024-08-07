@@ -1,3 +1,9 @@
+# [6.10.0](https://github.com/laterpay/supertab-browser/compare/v6.9.1...v6.10.0) (2024-08-07)
+
+### Features
+
+- improve bundler config to include external deps ([92b702f](https://github.com/laterpay/supertab-browser/commit/92b702f6bf7151f3c03efba7ab4d9c1d98107a81))
+
 ## [6.9.1](https://github.com/laterpay/supertab-browser/compare/v6.9.0...v6.9.1) (2024-08-07)
 
 ### Bug Fixes
