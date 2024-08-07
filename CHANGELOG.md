@@ -1,3 +1,9 @@
+## [6.9.1](https://github.com/laterpay/supertab-browser/compare/v6.9.0...v6.9.1) (2024-08-07)
+
+### Bug Fixes
+
+- do not include sourcemap in the prod build ([1e58d0d](https://github.com/laterpay/supertab-browser/commit/1e58d0dea3c95a73f8222e51003053555e64e993))
+
 # [6.9.0](https://github.com/laterpay/supertab-browser/compare/v6.8.0...v6.9.0) (2024-08-06)
 
 ### Features
