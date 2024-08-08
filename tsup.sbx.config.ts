@@ -17,6 +17,8 @@ export default defineConfig({
     SSO_BASE_URL: "https://signon.sbx.supertab.co",
     TAPI_BASE_URL: "https://tapi.sbx.laterpay.net",
     CHECKOUT_BASE_URL: "https://checkout.sbx.supertab.co",
+    SENTRY_DSN:
+      "https://52977a2775f03e0a17133cee24848baa@o23455.ingest.us.sentry.io/4507741231448064",
     PACKAGE_NAME: JSON.stringify(name),
     PACKAGE_VERSION: JSON.stringify(version),
   },
