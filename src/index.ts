@@ -26,6 +26,7 @@ import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
 import { Authenticable, FormattedTab, ScreenHint, SystemUrls } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
+import "./capture-errors";
 
 function authenticated(
   target: Authenticable,
