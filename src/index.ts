@@ -208,6 +208,8 @@ export class Supertab {
           prices,
           timePassDetails: eachOffering.timePassDetails,
           recurringDetails: eachOffering.recurringDetails,
+          connectedSubscriptionOffering:
+            eachOffering.connectedSubscriptionOffering,
         };
       });
 
