@@ -195,6 +195,7 @@ export class Supertab {
 
     const offerings = clientConfig.offerings
       .filter((eachOffering) => !!currenciesByCode[eachOffering.price.currency])
+      // Format all offerings
       .map((eachOffering) => {
         const prices = eachOffering.prices?.map((eachPrice) =>
           getPrice(eachOffering, eachPrice),
@@ -208,8 +209,27 @@ export class Supertab {
           prices,
           timePassDetails: eachOffering.timePassDetails,
           recurringDetails: eachOffering.recurringDetails,
-          connectedSubscriptionOffering:
-            eachOffering.connectedSubscriptionOffering,
+          // Temporarily store the connected subscription offering id (for the next step)
+          connectedSubscriptionOfferingId:
+            eachOffering.connectedSubscriptionOffering?.id,
+        };
+      })
+      // Add potential connected subscription offerings
+      .map((eachOffering, _, offerings) => {
+        // Find and return the formatted connected subscription offering
+        const connectedSubscriptionOffering =
+          eachOffering.connectedSubscriptionOfferingId
+            ? offerings.find(
+                (offering) =>
+                  offering.id === eachOffering.connectedSubscriptionOfferingId,
+              )
+            : undefined;
+        // Remove the temporary property from the offering
+        delete eachOffering.connectedSubscriptionOfferingId;
+        // Return the offering with the connected subscription offering
+        return {
+          ...eachOffering,
+          connectedSubscriptionOffering,
         };
       });
 
