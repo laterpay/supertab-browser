@@ -1,3 +1,9 @@
+# [6.11.0](https://github.com/laterpay/supertab-browser/compare/v6.10.0...v6.11.0) (2024-08-13)
+
+### Features
+
+- Expose connected subscription offerings ([#65](https://github.com/laterpay/supertab-browser/issues/65)) ([8ae9b5f](https://github.com/laterpay/supertab-browser/commit/8ae9b5ff011912edc37a710cf936db5b32429b4d))
+
 # [6.10.0](https://github.com/laterpay/supertab-browser/compare/v6.9.1...v6.10.0) (2024-08-07)
 
 ### Features
