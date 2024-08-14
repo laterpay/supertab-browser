@@ -200,6 +200,17 @@ export class Supertab {
         const prices = eachOffering.prices?.map((eachPrice) =>
           getPrice(eachOffering, eachPrice),
         );
+
+        let connectedSubscriptionOffering;
+        // If the offering has a connected subscription offering, store the id
+        // temporarily to be able to find the formatted connected subscription
+        // offering in the next map function.
+        if (eachOffering.connectedSubscriptionOffering?.id) {
+          connectedSubscriptionOffering = {
+            id: eachOffering.connectedSubscriptionOffering.id,
+          };
+        }
+
         return {
           id: eachOffering.id,
           description: eachOffering.description,
@@ -209,24 +220,20 @@ export class Supertab {
           prices,
           timePassDetails: eachOffering.timePassDetails,
           recurringDetails: eachOffering.recurringDetails,
-          // Temporarily store the connected subscription offering id (for the next step)
-          connectedSubscriptionOfferingId:
-            eachOffering.connectedSubscriptionOffering?.id,
+          connectedSubscriptionOffering,
         };
       })
       // Add potential connected subscription offerings
       .map((eachOffering, _, offerings) => {
-        // Find and return the formatted connected subscription offering
-        const connectedSubscriptionOffering =
-          eachOffering.connectedSubscriptionOfferingId
-            ? offerings.find(
-                (offering) =>
-                  offering.id === eachOffering.connectedSubscriptionOfferingId,
-              )
-            : undefined;
-        // Remove the temporary property from the offering
-        delete eachOffering.connectedSubscriptionOfferingId;
-        // Return the offering with the connected subscription offering
+        let connectedSubscriptionOffering;
+        // If the offering has a connected subscription offering, find the
+        // formatted connected subscription offering and add it to the offering.
+        if (eachOffering.connectedSubscriptionOffering) {
+          connectedSubscriptionOffering = offerings.find(
+            (offering) =>
+              offering.id === eachOffering.connectedSubscriptionOffering?.id,
+          );
+        }
         return {
           ...eachOffering,
           connectedSubscriptionOffering,
