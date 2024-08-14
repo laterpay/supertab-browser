@@ -5,7 +5,7 @@ Supertab Browser SDK.
 ## Installation
 
 ```bash
-npm install @laterpay/supertab-browser
+npm install @getsupertab/supertab-browser
 ```
 
 ## Usage

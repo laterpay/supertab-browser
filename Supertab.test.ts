@@ -8,7 +8,7 @@ import {
   TabResponse,
   TabStatus,
   UserResponse,
-} from "@laterpay/tapper-sdk";
+} from "@getsupertab/tapper-sdk";
 
 const setup = ({
   authenticated = true,

@@ -17,5 +17,5 @@ export default defineConfig({
     TAPI_BASE_URL: "https://tapi.sbx.laterpay.net",
     CHECKOUT_BASE_URL: "https://checkout.sbx.supertab.co",
   },
-  noExternal: ["zod", "@laterpay/tapper-sdk"],
+  noExternal: ["zod", "@getsupertab/tapper-sdk"],
 });
