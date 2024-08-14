@@ -1,3 +1,9 @@
+## [6.11.1](https://github.com/laterpay/supertab-browser/compare/v6.11.0...v6.11.1) (2024-08-14)
+
+### Bug Fixes
+
+- Refactor connected subscription logic to fix TypeScript issue ([#66](https://github.com/laterpay/supertab-browser/issues/66)) ([d335205](https://github.com/laterpay/supertab-browser/commit/d3352052cdae31232f9a594f04a6c89f46f71297))
+
 # [6.11.0](https://github.com/laterpay/supertab-browser/compare/v6.10.0...v6.11.0) (2024-08-13)
 
 ### Features
