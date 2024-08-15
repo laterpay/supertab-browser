@@ -1,5 +1,5 @@
-[install]
-registry = { url = "https://registry.npmjs.org", token = "$NPMJS_TOKEN" }
+[install.scopes]
+"@getsupertab" = { url = "https://registry.npmjs.org/:_authToken=$NPMJS_TOKEN/" }
 
 [test]
 preload = ["./src/setupTests.ts"]
