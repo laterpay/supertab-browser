@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - bun-orb/setup
-      - run: bun install
+      - run: bun install --verbose
       - run: bun run bundle
       - persist_to_workspace:
           root: ./
