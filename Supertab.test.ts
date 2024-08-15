@@ -5,10 +5,11 @@ import Supertab from ".";
 import {
   Currency,
   SiteOffering,
-  TabResponse,
+  TabResponsePurchaseEnhanced,
   TabStatus,
   UserResponse,
 } from "@getsupertab/tapper-sdk";
+import { nextTick } from "process";
 
 const setup = ({
   authenticated = true,
@@ -262,6 +263,7 @@ describe("Supertab", () => {
           data: [
             {
               id: "test-tab-id",
+              guestEmail: null,
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
               merchantId: "test-merchant-id",
@@ -295,6 +297,10 @@ describe("Supertab", () => {
                   offeringId: "test-offering-id",
                   contentKey: "test-content-key",
                   testMode: false,
+                  validFrom: null,
+                  validTo: null,
+                  validTimedelta: null,
+                  recurringDetails: null,
                   merchantName: "test-merchant-name",
                 },
               ],
@@ -388,6 +394,7 @@ describe("Supertab", () => {
           contentKey: "test-content-key",
           offeringIds: ["test-offering-id"],
           productId: "test-product-id",
+          contentKeyRequired: true,
         },
       ],
       redirectUri: "",
@@ -480,6 +487,7 @@ describe("Supertab", () => {
           data: [
             {
               id: "test-tab-id",
+              guestEmail: null,
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
               merchantId: "test-merchant-id",
@@ -514,6 +522,10 @@ describe("Supertab", () => {
                   contentKey: "test-content-key",
                   testMode: false,
                   merchantName: "test-merchant-name",
+                  validFrom: null,
+                  validTo: null,
+                  validTimedelta: null,
+                  recurringDetails: null,
                 },
               ],
               metadata: {
@@ -594,6 +606,7 @@ describe("Supertab", () => {
         data: [
           {
             id: "test-tab-id",
+            guestEmail: null,
             createdAt: new Date("2023-11-03T15:34:44.852Z"),
             updatedAt: new Date("2023-11-03T15:34:44.852Z"),
             merchantId: "test-merchant-id",
@@ -628,6 +641,10 @@ describe("Supertab", () => {
                 contentKey: "test-content-key",
                 testMode: false,
                 merchantName: "test-merchant-name",
+                validFrom: null,
+                validTo: null,
+                validTimedelta: null,
+                recurringDetails: null,
               },
             ],
             metadata: {
@@ -662,6 +679,7 @@ describe("Supertab", () => {
     beforeEach(() => {
       server.withGetTabById({
         id: "test-tab-id",
+        guestEmail: null,
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         merchantId: "test-merchant-id",
@@ -674,7 +692,16 @@ describe("Supertab", () => {
         paymentModel: "pay_later",
         purchases: [],
         testMode: false,
-        tabStatistics: {},
+        tabStatistics: {
+          purchasesCount: 0,
+          obfuscatedPurchasesCount: null,
+          obfuscatedPurchasesTotal: null,
+        },
+        metadata: {
+          additionalProp1: {},
+          additionalProp2: {},
+          additionalProp3: {},
+        },
       });
     });
 
@@ -683,7 +710,7 @@ describe("Supertab", () => {
       const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
-      await nextTick();
+      await nextTick(() => {});
 
       emitter.emit("message", {
         source: checkoutWindow,
@@ -710,7 +737,7 @@ describe("Supertab", () => {
       const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
-      await nextTick();
+      await nextTick(() => {});
 
       emitter.emit("message", {
         source: checkoutWindow,
@@ -737,7 +764,7 @@ describe("Supertab", () => {
         const payment = client.payTab("test-tab-id");
 
         //wait a tick to interact with the window
-        await nextTick();
+        await nextTick(() => {});
 
         emitter.emit("message", {
           source: checkoutWindow,
@@ -769,6 +796,7 @@ describe("Supertab", () => {
 
       server.withGetTabById({
         id: "test-tab-id",
+        guestEmail: null,
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         merchantId: "test-merchant-id",
@@ -781,7 +809,16 @@ describe("Supertab", () => {
         paymentModel: "pay_later",
         purchases: [],
         testMode: false,
-        tabStatistics: {},
+        tabStatistics: {
+          purchasesCount: 0,
+          obfuscatedPurchasesCount: null,
+          obfuscatedPurchasesTotal: null,
+        },
+        metadata: {
+          additionalProp1: {},
+          additionalProp2: {},
+          additionalProp3: {},
+        },
       });
 
       expect(async () => {
@@ -793,8 +830,9 @@ describe("Supertab", () => {
   });
 
   describe(".purchase", () => {
-    const tabData: TabResponse = {
+    const tabData: TabResponsePurchaseEnhanced = {
       id: "test-tab-id",
+      guestEmail: null,
       createdAt: new Date("2023-11-03T15:34:44.852Z"),
       updatedAt: new Date("2023-11-03T15:34:44.852Z"),
       merchantId: "test-merchant-id",
@@ -828,6 +866,11 @@ describe("Supertab", () => {
           offeringId: "test-offering-id",
           contentKey: "test-content-key",
           testMode: false,
+          validFrom: null,
+          validTo: null,
+          validTimedelta: null,
+          recurringDetails: null,
+          merchantName: "test-merchant-name",
         },
       ],
       metadata: {
