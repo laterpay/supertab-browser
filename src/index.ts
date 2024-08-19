@@ -20,7 +20,7 @@ import {
   Price,
   SiteOffering,
   TabResponse,
-} from "@laterpay/tapper-sdk";
+} from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
@@ -118,9 +118,7 @@ export class Supertab {
 
   @authenticated
   async getUser() {
-    const user = await new UserIdentityApi(
-      this.tapperConfig,
-    ).getCurrentUserV1();
+    const user = await new UserIdentityApi(this.tapperConfig).getIdentityMeV1();
 
     return {
       id: user.id,

@@ -16,7 +16,7 @@ import {
   TabResponseToJSON,
   UserResponse,
   UserResponseToJSON,
-} from "@laterpay/tapper-sdk";
+} from "@getsupertab/tapper-sdk";
 
 // typed mocks handlers
 const withClientConfig = (clientConfig: ClientConfig) => {
