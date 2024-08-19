@@ -1,3 +1,13 @@
+# [6.12.0](https://github.com/laterpay/supertab-browser/compare/v6.11.1...v6.12.0) (2024-08-19)
+
+### Bug Fixes
+
+- use `NPM_TOKEN` for CI ([86228b2](https://github.com/laterpay/supertab-browser/commit/86228b29c36a605f3f9d667b3c8819709b37cca5))
+
+### Features
+
+- use [@getsupertab](https://github.com/getsupertab) scope and host on npm ([#67](https://github.com/laterpay/supertab-browser/issues/67)) ([af0ce1d](https://github.com/laterpay/supertab-browser/commit/af0ce1d37294326ec29bde2773d05d0226914489))
+
 ## [6.11.1](https://github.com/laterpay/supertab-browser/compare/v6.11.0...v6.11.1) (2024-08-14)
 
 ### Bug Fixes
