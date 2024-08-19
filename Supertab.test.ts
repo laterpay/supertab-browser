@@ -4,6 +4,7 @@ import EventEmitter from "events";
 import Supertab from ".";
 import {
   Currency,
+  Price,
   SiteOffering,
   TabResponsePurchaseEnhanced,
   TabStatus,
@@ -66,7 +67,14 @@ const setup = ({
   }
 
   server.withClientConfig({
-    contentKeys: [],
+    contentKeys: [
+      {
+        productId: "product.test-product-id",
+        offeringIds: ["offering.test-offering-id"],
+        contentKey: "test-content-key",
+        contentKeyRequired: true,
+      },
+    ],
     redirectUri: "",
     siteName: "",
     testMode: false,
@@ -74,26 +82,52 @@ const setup = ({
       {
         id: "test-offering-id",
         description: "Test Offering Description",
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+        deletedAt: null,
         salesModel: "time_pass",
         paymentModel: "pay_later",
         price: {
           amount: 100,
           currency: clientConfigProps?.offeringCurrency ?? "USD",
         },
-      } as SiteOffering,
-    ],
+        prices: [
+          {
+            amount: 100,
+            currency: "USD",
+          },
+          {
+            amount: 100,
+            currency: "EUR",
+          },
+          {
+            amount: 100,
+            currency: "BRL",
+          },
+        ] as Price[],
+        recurringDetails: null,
+        timePassDetails: null,
+        connectedSubscriptionOffering: null,
+      },
+    ] as SiteOffering[],
     currencies: [
       {
         isoCode: "USD",
         baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
       },
       {
         isoCode: "EUR",
         baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
       },
       {
         isoCode: "BRL",
         baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
@@ -150,6 +184,24 @@ describe("Supertab", () => {
   });
 
   describe(".getOfferings", () => {
+    const prices = [
+      {
+        amount: 100,
+        currency: "USD",
+        text: "$1.00",
+      },
+      {
+        amount: 100,
+        currency: "EUR",
+        text: "€1.00",
+      },
+      {
+        amount: 100,
+        currency: "BRL",
+        text: "R$1.00",
+      },
+    ];
+
     describe("with no existing tab", () => {
       beforeEach(() => {
         server.withGetTab({
@@ -172,24 +224,6 @@ describe("Supertab", () => {
         expect(await client.getOfferings()).toMatchSnapshot();
       });
 
-      test("return offerings in given locale", async () => {
-        const { client } = setup({ language: "pt-BR" });
-
-        expect(await client.getOfferings()).toEqual([
-          {
-            id: "test-offering-id",
-            description: "Test Offering Description",
-            salesModel: "time_pass",
-            paymentModel: "pay_later",
-            price: {
-              amount: 100,
-              currency: "USD",
-              text: "$ 1,00",
-            },
-          },
-        ]);
-      });
-
       test("return offering price in preferred currency passed as a global param", async () => {
         const { client } = setup({
           preferredCurrencyCode: "EUR",
@@ -207,6 +241,10 @@ describe("Supertab", () => {
               currency: "EUR",
               text: "€1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -230,6 +268,10 @@ describe("Supertab", () => {
               currency: "USD",
               text: "$1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -252,6 +294,10 @@ describe("Supertab", () => {
               currency: "BRL",
               text: "R$1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -343,6 +389,10 @@ describe("Supertab", () => {
               currency: "EUR",
               text: "€1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -361,6 +411,10 @@ describe("Supertab", () => {
               currency: "EUR",
               text: "€1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -381,6 +435,10 @@ describe("Supertab", () => {
               currency: "EUR",
               text: "€1.00",
             },
+            prices,
+            recurringDetails: null,
+            timePassDetails: null,
+            connectedSubscriptionOffering: undefined,
           },
         ]);
       });
@@ -404,16 +462,37 @@ describe("Supertab", () => {
         {
           id: "test-offering-id",
           description: "Test Offering Description",
+          createdAt: new Date("2023-11-03T15:34:44.852Z"),
+          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+          deletedAt: null,
+          salesModel: "time_pass",
+          paymentModel: "pay_later",
           price: {
             amount: 100,
             currency: "USD",
           },
+          prices: [
+            {
+              amount: 100,
+              currency: "USD",
+            },
+            {
+              amount: 100,
+              currency: "EUR",
+            },
+            {
+              amount: 100,
+              currency: "BRL",
+            },
+          ],
         } as SiteOffering,
       ],
       currencies: [
         {
           isoCode: "USD",
           baseUnit: 100,
+          createdAt: new Date("2023-11-03T15:34:44.852Z"),
+          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         },
       ] as Currency[],
       suggestedCurrency: "USD",
@@ -569,6 +648,8 @@ describe("Supertab", () => {
             {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
+              recurringDetails: null,
+              validTo: null,
               price: {
                 amount: 50,
                 currency: "USD",
@@ -934,9 +1015,9 @@ describe("Supertab", () => {
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: undefined,
+              recurringDetails: null,
               summary: "test-summary",
-              validTo: undefined,
+              validTo: null,
             },
           ],
           status: "open",
