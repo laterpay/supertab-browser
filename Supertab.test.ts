@@ -10,7 +10,6 @@ import {
   TabStatus,
   UserResponse,
 } from "@getsupertab/tapper-sdk";
-import { nextTick } from "process";
 
 const setup = ({
   authenticated = true,
@@ -791,7 +790,7 @@ describe("Supertab", () => {
       const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
-      await nextTick(() => {});
+      await nextTick();
 
       emitter.emit("message", {
         source: checkoutWindow,
@@ -818,7 +817,7 @@ describe("Supertab", () => {
       const payment = client.payTab("test-tab-id");
 
       //wait a tick to interact with the window
-      await nextTick(() => {});
+      await nextTick();
 
       emitter.emit("message", {
         source: checkoutWindow,
@@ -845,7 +844,7 @@ describe("Supertab", () => {
         const payment = client.payTab("test-tab-id");
 
         //wait a tick to interact with the window
-        await nextTick(() => {});
+        await nextTick();
 
         emitter.emit("message", {
           source: checkoutWindow,
@@ -1069,9 +1068,9 @@ describe("Supertab", () => {
                 text: "€0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: undefined,
+              recurringDetails: null,
               summary: "test-summary",
-              validTo: undefined,
+              validTo: null,
             },
           ],
           status: "open",
@@ -1122,9 +1121,9 @@ describe("Supertab", () => {
                   text: "R$0.50",
                 },
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-                recurringDetails: undefined,
+                recurringDetails: null,
                 summary: "test-summary",
-                validTo: undefined,
+                validTo: null,
               },
             ],
             status: "open",
@@ -1181,9 +1180,9 @@ describe("Supertab", () => {
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: undefined,
+              recurringDetails: null,
               summary: "test-summary",
-              validTo: undefined,
+              validTo: null,
             },
           ],
           status: "full",
