@@ -1,3 +1,9 @@
+## [6.12.2](https://github.com/laterpay/supertab-browser/compare/v6.12.1...v6.12.2) (2024-08-22)
+
+### Bug Fixes
+
+- Switch to supertab.co domain on SBX ([#63](https://github.com/laterpay/supertab-browser/issues/63)) ([cea41b5](https://github.com/laterpay/supertab-browser/commit/cea41b51fd4270ca724a10ecceae0463c051a3dc))
+
 ## [6.12.1](https://github.com/laterpay/supertab-browser/compare/v6.12.0...v6.12.1) (2024-08-22)
 
 ### Bug Fixes
