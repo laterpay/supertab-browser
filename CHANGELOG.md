@@ -1,3 +1,9 @@
+## [6.12.1](https://github.com/laterpay/supertab-browser/compare/v6.12.0...v6.12.1) (2024-08-22)
+
+### Bug Fixes
+
+- create a new release after [#68](https://github.com/laterpay/supertab-browser/issues/68) ([#69](https://github.com/laterpay/supertab-browser/issues/69)) ([6c5a93c](https://github.com/laterpay/supertab-browser/commit/6c5a93c92c186b1f04fc51c08d967b1675f42608))
+
 # [6.12.0](https://github.com/laterpay/supertab-browser/compare/v6.11.1...v6.12.0) (2024-08-19)
 
 ### Bug Fixes
