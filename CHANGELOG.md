@@ -1,3 +1,9 @@
+## [6.12.3](https://github.com/laterpay/supertab-browser/compare/v6.12.2...v6.12.3) (2024-09-03)
+
+### Bug Fixes
+
+- Switch back to Hydra auth endpoint on SBX ([#70](https://github.com/laterpay/supertab-browser/issues/70)) ([408220f](https://github.com/laterpay/supertab-browser/commit/408220f43a1d13dad041d143ec64e61751a87012))
+
 ## [6.12.2](https://github.com/laterpay/supertab-browser/compare/v6.12.1...v6.12.2) (2024-08-22)
 
 ### Bug Fixes
