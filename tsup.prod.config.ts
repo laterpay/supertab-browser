@@ -11,10 +11,10 @@ export default defineConfig({
   minify: true,
   splitting: true,
   env: {
-    AUTH_URL: "https://auth.laterpay.net/oauth2/auth",
-    TOKEN_URL: "https://auth.laterpay.net/oauth2/token",
+    AUTH_URL: "https://signon.supertab.co/oauth2/auth",
+    TOKEN_URL: "https://auth.supertab.co/oauth2/token",
     SSO_BASE_URL: "https://signon.supertab.co",
-    TAPI_BASE_URL: "https://tapi.laterpay.net",
+    TAPI_BASE_URL: "https://tapi.supertab.co",
     CHECKOUT_BASE_URL: "https://checkout.supertab.co",
   },
   noExternal: ["zod", "@getsupertab/tapper-sdk"],
