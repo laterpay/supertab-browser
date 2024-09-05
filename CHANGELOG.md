@@ -1,3 +1,9 @@
+## [6.12.4](https://github.com/laterpay/supertab-browser/compare/v6.12.3...v6.12.4) (2024-09-05)
+
+### Bug Fixes
+
+- missing release again... ([#73](https://github.com/laterpay/supertab-browser/issues/73)) ([00eac9d](https://github.com/laterpay/supertab-browser/commit/00eac9da68fb5848340533da485ac91b056cc467))
+
 ## [6.12.3](https://github.com/laterpay/supertab-browser/compare/v6.12.2...v6.12.3) (2024-09-03)
 
 ### Bug Fixes
