@@ -1,3 +1,9 @@
+## [6.12.5](https://github.com/laterpay/supertab-browser/compare/v6.12.4...v6.12.5) (2024-09-09)
+
+### Bug Fixes
+
+- Switch back to Hydra auth endpoint on PROD ([#74](https://github.com/laterpay/supertab-browser/issues/74)) ([e924571](https://github.com/laterpay/supertab-browser/commit/e92457141faf49ebbf950cef1844589eaacf0e40))
+
 ## [6.12.4](https://github.com/laterpay/supertab-browser/compare/v6.12.3...v6.12.4) (2024-09-05)
 
 ### Bug Fixes
