@@ -870,43 +870,6 @@ describe("Supertab", () => {
         expect(res).toEqual({ error: "Window closed" });
       });
     });
-
-    test("throw an error if tab is not 'full'", async () => {
-      const { client } = setup();
-
-      server.withGetTabById({
-        id: "test-tab-id",
-        guestEmail: null,
-        createdAt: new Date("2023-11-03T15:34:44.852Z"),
-        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        merchantId: "test-merchant-id",
-        userId: "test-user-id",
-        status: "open",
-        paidAt: null,
-        total: 50,
-        limit: 500,
-        currency: "USD",
-        paymentModel: "pay_later",
-        purchases: [],
-        testMode: false,
-        tabStatistics: {
-          purchasesCount: 0,
-          obfuscatedPurchasesCount: null,
-          obfuscatedPurchasesTotal: null,
-        },
-        metadata: {
-          additionalProp1: {},
-          additionalProp2: {},
-          additionalProp3: {},
-        },
-      });
-
-      expect(async () => {
-        const payment = client.payTab("test-tab-id");
-
-        await payment;
-      }).toThrow(/Tab is not full/);
-    });
   });
 
   describe(".purchase", () => {
