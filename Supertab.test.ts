@@ -556,109 +556,106 @@ describe("Supertab", () => {
   });
 
   describe(".getTab", () => {
-    test.each([TabStatus.Open, TabStatus.Full])(
-      "return user's %s tab",
-      async (status) => {
-        const { client } = setup();
+    test("return user's open tab", async () => {
+      const { client } = setup();
 
-        server.withGetTab({
-          data: [
-            {
-              id: "test-tab-id",
-              guestEmail: null,
-              createdAt: new Date("2023-11-03T15:34:44.852Z"),
-              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-              merchantId: "test-merchant-id",
-              userId: "test-user-id",
-              status,
-              paidAt: null,
-              total: 50,
-              limit: 500,
-              currency: "USD",
-              paymentModel: "pay_later",
-              purchases: [
-                {
-                  id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
-                  createdAt: new Date("2023-11-03T15:34:44.852Z"),
-                  updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-                  purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-                  merchantId: "test-merchant-id",
-                  summary: "test-summary",
-                  price: {
-                    amount: 50,
-                    currency: "USD",
-                  },
-                  salesModel: "time_pass",
-                  paymentModel: "pay_later",
-                  metadata: {
-                    additionalProp1: {},
-                    additionalProp2: {},
-                    additionalProp3: {},
-                  },
-                  attributedTo: "test-id",
-                  offeringId: "test-offering-id",
-                  contentKey: "test-content-key",
-                  testMode: false,
-                  merchantName: "test-merchant-name",
-                  validFrom: null,
-                  validTo: null,
-                  validTimedelta: null,
-                  recurringDetails: null,
+      server.withGetTab({
+        data: [
+          {
+            id: "test-tab-id",
+            guestEmail: null,
+            createdAt: new Date("2023-11-03T15:34:44.852Z"),
+            updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+            merchantId: "test-merchant-id",
+            userId: "test-user-id",
+            status: TabStatus.Open,
+            paidAt: null,
+            total: 50,
+            limit: 500,
+            currency: "USD",
+            paymentModel: "pay_later",
+            purchases: [
+              {
+                id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+                createdAt: new Date("2023-11-03T15:34:44.852Z"),
+                updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+                purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                merchantId: "test-merchant-id",
+                summary: "test-summary",
+                price: {
+                  amount: 50,
+                  currency: "USD",
                 },
-              ],
-              metadata: {
-                additionalProp1: {},
-                additionalProp2: {},
-                additionalProp3: {},
+                salesModel: "time_pass",
+                paymentModel: "pay_later",
+                metadata: {
+                  additionalProp1: {},
+                  additionalProp2: {},
+                  additionalProp3: {},
+                },
+                attributedTo: "test-id",
+                offeringId: "test-offering-id",
+                contentKey: "test-content-key",
+                testMode: false,
+                merchantName: "test-merchant-name",
+                validFrom: null,
+                validTo: null,
+                validTimedelta: null,
+                recurringDetails: null,
               },
-              testMode: false,
-              tabStatistics: {
-                purchasesCount: 0,
-                obfuscatedPurchasesCount: 0,
-                obfuscatedPurchasesTotal: 0,
-              },
+            ],
+            metadata: {
+              additionalProp1: {},
+              additionalProp2: {},
+              additionalProp3: {},
             },
-          ],
-          metadata: {
-            count: 1,
-            perPage: 1,
-            links: {
-              previous: "",
-              next: "",
+            testMode: false,
+            tabStatistics: {
+              purchasesCount: 0,
+              obfuscatedPurchasesCount: 0,
+              obfuscatedPurchasesTotal: 0,
             },
-            numberPages: 1,
           },
-        });
+        ],
+        metadata: {
+          count: 1,
+          perPage: 1,
+          links: {
+            previous: "",
+            next: "",
+          },
+          numberPages: 1,
+        },
+      });
 
-        expect(await client.getTab()).toEqual({
-          id: "test-tab-id",
-          status,
-          total: {
-            amount: 50,
-            text: "$0.50",
-          },
-          limit: {
-            amount: 500,
-            text: "$5",
-          },
-          currency: "USD",
-          paymentModel: "pay_later",
-          purchases: [
-            {
-              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              summary: "test-summary",
-              recurringDetails: null,
-              validTo: null,
-              price: {
-                amount: 50,
-                currency: "USD",
-                text: "$0.50",
-              },
+      expect(await client.getTab()).toEqual({
+        id: "test-tab-id",
+        status: TabStatus.Open,
+        total: {
+          amount: 50,
+          text: "$0.50",
+        },
+        limit: {
+          amount: 500,
+          text: "$5",
+        },
+        currency: "USD",
+        paymentModel: "pay_later",
+        purchases: [
+          {
+            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+            summary: "test-summary",
+            recurringDetails: null,
+            validTo: null,
+            price: {
+              amount: 50,
+              currency: "USD",
+              text: "$0.50",
             },
-          ],
-        });
-      },
-    );
+          },
+        ],
+      });
+    });
 
     test("return null if no tabs", async () => {
       const { client } = setup();
@@ -764,7 +761,7 @@ describe("Supertab", () => {
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         merchantId: "test-merchant-id",
         userId: "test-user-id",
-        status: "full",
+        status: TabStatus.Open,
         paidAt: null,
         total: 50,
         limit: 500,

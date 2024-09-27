@@ -278,9 +278,7 @@ export class Supertab {
       paymentModel: "pay_later",
     });
 
-    const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
-
-    if (filterStatuses.includes(tab?.status)) {
+    if (tab?.status === TabStatus.Open) {
       return this.formatTab({ tab, clientConfig });
     }
     return null;
