@@ -1,3 +1,9 @@
+## [6.12.7](https://github.com/laterpay/supertab-browser/compare/v6.12.6...v6.12.7) (2024-09-27)
+
+### Bug Fixes
+
+- Correct typo in STG token URL ([#76](https://github.com/laterpay/supertab-browser/issues/76)) ([140651c](https://github.com/laterpay/supertab-browser/commit/140651cc03a1da4008e1ad1477b23d9669e406bc))
+
 ## [6.12.6](https://github.com/laterpay/supertab-browser/compare/v6.12.5...v6.12.6) (2024-09-27)
 
 ### Bug Fixes
