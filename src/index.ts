@@ -307,11 +307,6 @@ export class Supertab {
       tabId: id,
     });
 
-    if (tab.status !== TabStatus.Full) {
-      checkoutWindow?.close();
-      throw new Error("Tab is not full");
-    }
-
     const url = new URL(this.systemUrls.checkoutBaseUrl);
     url.searchParams.append("tab_id", id);
     url.searchParams.append("language", this.language);
