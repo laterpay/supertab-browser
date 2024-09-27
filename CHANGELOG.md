@@ -1,3 +1,9 @@
+## [6.12.6](https://github.com/laterpay/supertab-browser/compare/v6.12.5...v6.12.6) (2024-09-27)
+
+### Bug Fixes
+
+- Don't require full tab before payment ([#75](https://github.com/laterpay/supertab-browser/issues/75)) ([4333b1c](https://github.com/laterpay/supertab-browser/commit/4333b1ce4eae12b43dc90b7cb49783c5f1b1b556))
+
 ## [6.12.5](https://github.com/laterpay/supertab-browser/compare/v6.12.4...v6.12.5) (2024-09-09)
 
 ### Bug Fixes
