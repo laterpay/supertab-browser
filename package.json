@@ -38,7 +38,7 @@
     "semantic-release": "^22.0.8",
     "tsup": "^8.0.1",
     "typedoc": "^0.26.7",
-    "typedoc-plugin-markdown": "^3.16.0"
+    "typedoc-plugin-markdown": "^4.2.8"
   },
   "scripts": {
     "prepare": "husky install",
