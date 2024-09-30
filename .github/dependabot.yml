@@ -1,14 +1,14 @@
 version: 2
 registries:
-  getsupertab-npm:
+  getsupertab:
     type: npm-registry
     url: https://registry.npmjs.org
-    token: ${{ secrets.NPMJS_READ_TOKEN }}
+    token: ${{secrets.NPMJS_READ_TOKEN}}
+    replaces-base: true
 updates:
   - package-ecosystem: 'npm'
     directory: '/'
-    registries:
-      - getsupertab-npm
+    registries: '*'
     reviewers:
       - laterpay/clients-team
     schedule:
