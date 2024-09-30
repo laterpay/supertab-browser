@@ -24,7 +24,7 @@
     "@tsconfig/docusaurus": "^1.0.5",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "bun-types": "latest",
-    "clsx": "^1.2.1",
+    "clsx": "^2.1.1",
     "docusaurus-plugin-typedoc": "^0.20.2",
     "eslint-config-prettier": "^9.0.0",
     "happy-dom": "^12.1.6",
