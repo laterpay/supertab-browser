@@ -5,6 +5,7 @@ import Supertab from ".";
 import {
   Currency,
   Price,
+  PurchaseStatus,
   SiteOffering,
   TabResponsePurchaseEnhanced,
   TabStatus,
@@ -76,7 +77,6 @@ const setup = ({
     ],
     redirectUri: "",
     siteName: "",
-    testMode: false,
     offerings: [
       {
         id: "test-offering-id",
@@ -168,6 +168,10 @@ describe("Supertab", () => {
       const user: UserResponse = {
         id: "test-user-id",
         firstName: "Test",
+        email: "test@supertab.co",
+        registrationOrigin: "supertab",
+        isSuperuser: false,
+        tabCurrency: "USD",
         lastName: "User",
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
@@ -950,6 +954,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: tabData,
       });
@@ -961,6 +966,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "USD",
           id: "test-tab-id",
@@ -1004,6 +1010,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: euroTabData,
       });
@@ -1058,6 +1065,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: {
           ...tabData,
@@ -1111,6 +1119,7 @@ describe("Supertab", () => {
         {
           detail: {
             itemAdded: false,
+            purchaseStatus: PurchaseStatus.Added,
           },
           tab: {
             ...tabData,
