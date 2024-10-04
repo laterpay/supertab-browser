@@ -3,8 +3,10 @@ import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
 import {
+  ClientConfig,
   Currency,
   Price,
+  PurchaseStatus,
   SiteOffering,
   TabResponsePurchaseEnhanced,
   TabStatus,
@@ -76,7 +78,6 @@ const setup = ({
     ],
     redirectUri: "",
     siteName: "",
-    testMode: false,
     offerings: [
       {
         id: "test-offering-id",
@@ -84,8 +85,10 @@ const setup = ({
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
         deletedAt: null,
+        productId: "test-product-id",
         salesModel: "time_pass",
         paymentModel: "pay_later",
+        summary: "test-summary",
         price: {
           amount: 100,
           currency: clientConfigProps?.offeringCurrency ?? "USD",
@@ -106,6 +109,20 @@ const setup = ({
         ] as Price[],
         recurringDetails: null,
         timePassDetails: null,
+        offeringPrices: [
+          {
+            id: "test-offering-price",
+            createdAt: new Date("2021-01-01T00:00:00.000Z"),
+            updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+            offeringId: "test-offering-id",
+            price: {
+              amount: 100,
+              currency: clientConfigProps?.offeringCurrency ?? "USD",
+            },
+          },
+        ],
+        isActive: true,
+        subscriptionOfferingId: null,
         connectedSubscriptionOffering: null,
       },
     ] as SiteOffering[],
@@ -130,7 +147,7 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  });
+  } as ClientConfig);
 
   return {
     client,
@@ -168,6 +185,10 @@ describe("Supertab", () => {
       const user: UserResponse = {
         id: "test-user-id",
         firstName: "Test",
+        email: "test@supertab.co",
+        registrationOrigin: "supertab",
+        isSuperuser: false,
+        tabCurrency: "USD",
         lastName: "User",
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
@@ -484,6 +505,20 @@ describe("Supertab", () => {
               currency: "BRL",
             },
           ],
+          offeringPrices: [
+            {
+              id: "test-offering-price",
+              createdAt: new Date("2023-11-03T15:34:44.852Z"),
+              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+              price: {
+                amount: 100,
+                currency: "USD",
+              },
+            },
+          ],
+          isActive: true,
+          connectedSubscriptionOffering: null,
+          subscriptionOfferingId: null,
         } as SiteOffering,
       ],
       currencies: [
@@ -950,6 +985,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: tabData,
       });
@@ -961,6 +997,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "USD",
           id: "test-tab-id",
@@ -1004,6 +1041,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: euroTabData,
       });
@@ -1015,6 +1053,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "EUR",
           id: "test-tab-id",
@@ -1058,6 +1097,7 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
         },
         tab: {
           ...tabData,
@@ -1068,6 +1108,7 @@ describe("Supertab", () => {
       expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
         {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
           tab: {
             currency: "BRL",
             id: "test-tab-id",
@@ -1111,6 +1152,7 @@ describe("Supertab", () => {
         {
           detail: {
             itemAdded: false,
+            purchaseStatus: PurchaseStatus.Added,
           },
           tab: {
             ...tabData,
@@ -1127,6 +1169,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: false,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "USD",
           id: "test-tab-id",

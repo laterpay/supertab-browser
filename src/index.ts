@@ -20,6 +20,7 @@ import {
   Price,
   SiteOffering,
   TabResponse,
+  PurchaseStatus,
 } from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -146,10 +147,11 @@ export class Supertab {
     const clientConfig = await this.#getClientConfig();
     let tab = null;
 
+    /* eslint-disable */
     try {
       tab = await this.getTab();
-      // eslint-disable-next-line no-empty
     } catch (e) {}
+    /* eslint-enable */
 
     const presentedCurrency =
       tab?.currency ??
@@ -345,7 +347,11 @@ export class Supertab {
   }: {
     offeringId: string;
     preferredCurrencyCode?: string;
-  }): Promise<{ itemAdded: boolean; tab: FormattedTab }> {
+  }): Promise<{
+    itemAdded: boolean;
+    purchaseStatus: PurchaseStatus | null;
+    tab: FormattedTab;
+  }> {
     const tab = await this.getTab();
     const clientConfig = await this.#getClientConfig();
     const currency =
@@ -367,6 +373,7 @@ export class Supertab {
 
       return {
         itemAdded: !!detail?.itemAdded,
+        purchaseStatus: detail?.purchaseStatus || null,
         tab: this.formatTab({ tab, clientConfig }),
       };
     } catch (e) {
@@ -376,6 +383,7 @@ export class Supertab {
         );
         return {
           itemAdded: !!detail?.itemAdded,
+          purchaseStatus: detail?.purchaseStatus || null,
           tab: this.formatTab({ tab, clientConfig }),
         };
       }
