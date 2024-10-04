@@ -147,10 +147,11 @@ export class Supertab {
     const clientConfig = await this.#getClientConfig();
     let tab = null;
 
+    /* eslint-disable */
     try {
       tab = await this.getTab();
-      // eslint-disable-next-line no-empty
     } catch (e) {}
+    /* eslint-enable */
 
     const presentedCurrency =
       tab?.currency ??
