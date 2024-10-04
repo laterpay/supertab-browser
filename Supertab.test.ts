@@ -84,8 +84,10 @@ const setup = ({
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
         deletedAt: null,
+        productId: "test-product-id",
         salesModel: "time_pass",
         paymentModel: "pay_later",
+        summary: "test-summary",
         price: {
           amount: 100,
           currency: clientConfigProps?.offeringCurrency ?? "USD",
