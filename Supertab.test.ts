@@ -3,6 +3,7 @@ import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
 import {
+  ClientConfig,
   Currency,
   Price,
   PurchaseStatus,
@@ -146,7 +147,7 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  });
+  } as ClientConfig);
 
   return {
     client,
@@ -504,6 +505,20 @@ describe("Supertab", () => {
               currency: "BRL",
             },
           ],
+          offeringPrices: [
+            {
+              id: "test-offering-price",
+              createdAt: new Date("2023-11-03T15:34:44.852Z"),
+              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+              price: {
+                amount: 100,
+                currency: "USD",
+              },
+            },
+          ],
+          isActive: true,
+          connectedSubscriptionOffering: null,
+          subscriptionOfferingId: null,
         } as SiteOffering,
       ],
       currencies: [
