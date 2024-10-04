@@ -976,6 +976,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "USD",
           id: "test-tab-id",
