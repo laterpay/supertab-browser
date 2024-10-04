@@ -8,6 +8,7 @@ import {
   SiteOffering,
   TabResponsePurchaseEnhanced,
   TabStatus,
+  UserRegistrationOrigin,
   UserResponse,
 } from "@getsupertab/tapper-sdk";
 
@@ -174,6 +175,10 @@ describe("Supertab", () => {
         deletedAt: new Date("2021-01-01T00:00:00.000Z"),
         active: true,
         isEmailVerified: true,
+        email: "test@supertab.co",
+        registrationOrigin: UserRegistrationOrigin.Supertab,
+        isSuperuser: false,
+        tabCurrency: "USD",
       };
 
       server.withCurrentUser(user);
