@@ -18,4 +18,6 @@ if (typeof window !== "undefined") {
   };
 }
 
+console.log('test');
+
 export default Supertab;
