@@ -1,3 +1,9 @@
+# [6.13.0](https://github.com/laterpay/supertab-browser/compare/v6.12.7...v6.13.0) (2024-10-04)
+
+### Features
+
+- return `purchaseStatus` in `.purchase()` ([#94](https://github.com/laterpay/supertab-browser/issues/94)) ([13eae65](https://github.com/laterpay/supertab-browser/commit/13eae65636a29242f8db50560ec35bb33af2e22e))
+
 ## [6.12.7](https://github.com/laterpay/supertab-browser/compare/v6.12.6...v6.12.7) (2024-09-27)
 
 ### Bug Fixes
