@@ -77,7 +77,6 @@ const setup = ({
     ],
     redirectUri: "",
     siteName: "",
-    testMode: false,
     offerings: [
       {
         id: "test-offering-id",
