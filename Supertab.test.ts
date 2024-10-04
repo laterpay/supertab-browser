@@ -113,6 +113,11 @@ const setup = ({
             id: "test-offering-price",
             createdAt: new Date("2021-01-01T00:00:00.000Z"),
             updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+            offeringId: "test-offering-id",
+            price: {
+              amount: 100,
+              currency: clientConfigProps?.offeringCurrency ?? "USD",
+            },
           },
         ],
         isActive: true,
