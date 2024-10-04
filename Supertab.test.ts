@@ -77,6 +77,7 @@ const setup = ({
     ],
     redirectUri: "",
     siteName: "",
+    testMode: false,
     offerings: [
       {
         id: "test-offering-id",
@@ -106,6 +107,15 @@ const setup = ({
         ] as Price[],
         recurringDetails: null,
         timePassDetails: null,
+        offeringPrices: [
+          {
+            id: "test-offering-price",
+            createdAt: new Date("2021-01-01T00:00:00.000Z"),
+            updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+          },
+        ],
+        isActive: true,
+        subscriptionOfferingId: null,
         connectedSubscriptionOffering: null,
       },
     ] as SiteOffering[],
