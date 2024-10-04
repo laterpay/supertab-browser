@@ -1031,6 +1031,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "EUR",
           id: "test-tab-id",
@@ -1085,6 +1086,7 @@ describe("Supertab", () => {
       expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
         {
           itemAdded: true,
+          purchaseStatus: PurchaseStatus.Added,
           tab: {
             currency: "BRL",
             id: "test-tab-id",
@@ -1145,6 +1147,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: false,
+        purchaseStatus: PurchaseStatus.Added,
         tab: {
           currency: "USD",
           id: "test-tab-id",
