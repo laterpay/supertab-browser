@@ -174,6 +174,10 @@ describe("Supertab", () => {
         deletedAt: new Date("2021-01-01T00:00:00.000Z"),
         active: true,
         isEmailVerified: true,
+        email: "user@example.com",
+        registrationOrigin: "supertab",
+        isSuperuser: false,
+        tabCurrency: "USD",
       };
 
       server.withCurrentUser(user);
