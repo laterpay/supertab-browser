@@ -1,3 +1,4 @@
+import { Currency } from "@getsupertab/tapper-sdk";
 import { Supertab } from ".";
 import { AuthStatus } from "./auth";
 
@@ -18,3 +19,5 @@ export interface SystemUrls {
 export type FormattedTab = Awaited<
   ReturnType<typeof Supertab.prototype.formatTab>
 >;
+
+export type PublicCurrencyDetails = Pick<Currency, "isoCode" | "baseUnit">;

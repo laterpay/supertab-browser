@@ -24,7 +24,13 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
-import { Authenticable, FormattedTab, ScreenHint, SystemUrls } from "./types";
+import {
+  Authenticable,
+  FormattedTab,
+  PublicCurrencyDetails,
+  ScreenHint,
+  SystemUrls,
+} from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 
 function authenticated(
@@ -186,7 +192,7 @@ export class Supertab {
 
       return {
         amount: offering.price.amount,
-        currency: currency.isoCode,
+        currency: getPublicCurrencyDetails(currency),
         text,
       };
     };
@@ -462,4 +468,11 @@ export class Supertab {
     };
     return formattedTab;
   }
+}
+
+function getPublicCurrencyDetails(currency: Currency): PublicCurrencyDetails {
+  return {
+    isoCode: currency.isoCode,
+    baseUnit: currency.baseUnit,
+  };
 }

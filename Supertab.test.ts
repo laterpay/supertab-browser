@@ -190,17 +190,26 @@ describe("Supertab", () => {
     const prices = [
       {
         amount: 100,
-        currency: "USD",
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
+        },
         text: "$1.00",
       },
       {
         amount: 100,
-        currency: "EUR",
+        currency: {
+          isoCode: "EUR",
+          baseUnit: 100,
+        },
         text: "€1.00",
       },
       {
         amount: 100,
-        currency: "BRL",
+        currency: {
+          isoCode: "BRL",
+          baseUnit: 100,
+        },
         text: "R$1.00",
       },
     ];
@@ -241,7 +250,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -268,7 +280,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "USD",
+              currency: {
+                isoCode: "USD",
+                baseUnit: 100,
+              },
               text: "$1.00",
             },
             prices,
@@ -294,7 +309,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "BRL",
+              currency: {
+                isoCode: "BRL",
+                baseUnit: 100,
+              },
               text: "R$1.00",
             },
             prices,
@@ -389,7 +407,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -411,7 +432,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -435,7 +459,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
