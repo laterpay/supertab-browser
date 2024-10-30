@@ -672,7 +672,10 @@ describe("Supertab", () => {
             amount: 500,
             text: "$5",
           },
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           paymentModel: "pay_later",
           purchases: [
             {
@@ -682,7 +685,10 @@ describe("Supertab", () => {
               validTo: null,
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
             },
@@ -993,7 +999,10 @@ describe("Supertab", () => {
       ).toEqual({
         itemAdded: true,
         tab: {
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1004,7 +1013,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1047,7 +1059,10 @@ describe("Supertab", () => {
       ).toEqual({
         itemAdded: true,
         tab: {
-          currency: "EUR",
+          currency: {
+            isoCode: "EUR",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1058,7 +1073,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "EUR",
+                  baseUnit: 100,
+                },
                 text: "€0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1090,17 +1108,17 @@ describe("Supertab", () => {
         detail: {
           itemAdded: true,
         },
-        tab: {
-          ...tabData,
-          currency: "BRL",
-        },
+        tab: createTabData("BRL"),
       });
 
       expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
         {
           itemAdded: true,
           tab: {
-            currency: "BRL",
+            currency: {
+              isoCode: "BRL",
+              baseUnit: 100,
+            },
             id: "test-tab-id",
             limit: {
               amount: 500,
@@ -1111,7 +1129,10 @@ describe("Supertab", () => {
               {
                 price: {
                   amount: 50,
-                  currency: "USD",
+                  currency: {
+                    isoCode: "BRL",
+                    baseUnit: 100,
+                  },
                   text: "R$0.50",
                 },
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1159,7 +1180,10 @@ describe("Supertab", () => {
       ).toEqual({
         itemAdded: false,
         tab: {
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1170,7 +1194,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),

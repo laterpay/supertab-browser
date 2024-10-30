@@ -158,7 +158,7 @@ export class Supertab {
     } catch (e) {}
 
     const presentedCurrency =
-      tab?.currency ??
+      tab?.currency.isoCode ??
       preferredCurrencyCode ??
       clientConfig.suggestedCurrency ??
       DEFAULT_CURRENCY;
@@ -355,7 +355,7 @@ export class Supertab {
     const tab = await this.getTab();
     const clientConfig = await this.#getClientConfig();
     const currency =
-      tab?.currency ||
+      tab?.currency.isoCode ||
       preferredCurrencyCode ||
       clientConfig.suggestedCurrency ||
       DEFAULT_CURRENCY;
@@ -429,14 +429,17 @@ export class Supertab {
     const currencyObject = clientConfig.currencies.find(
       (currency) => currency.isoCode === tab.currency,
     );
+    if (!currencyObject) {
+      throw new Error("Currency details not found for isoCode" + tab.currency);
+    }
     const priceToText = (amount: number) =>
       formatPrice({
         amount,
-        currency: currencyObject?.isoCode ?? "",
-        baseUnit: currencyObject?.baseUnit ?? 100,
+        currency: currencyObject.isoCode ?? "",
+        baseUnit: currencyObject.baseUnit ?? 100,
         localeCode: this.language,
         showZeroFractionDigits: false,
-        showSymbol: currencyObject?.isoCode !== "CHF",
+        showSymbol: currencyObject.isoCode !== "CHF",
       });
 
     const formattedTab = {
@@ -450,16 +453,25 @@ export class Supertab {
         amount: tab.limit,
         text: priceToText(tab.limit),
       },
-      currency: tab.currency,
+      currency: getPublicCurrencyDetails(currencyObject),
       paymentModel: tab.paymentModel,
       purchases: tab.purchases.map((purchase) => {
+        if (purchase.price.currency !== currencyObject.isoCode) {
+          throw new Error(
+            "Currency mismatch: Expected tab currency " +
+              tab.currency +
+              " and purchase currency " +
+              purchase.price.currency +
+              " to be equal.",
+          );
+        }
         return {
           purchaseDate: purchase.purchaseDate,
           summary: purchase.summary,
           price: {
             amount: purchase.price.amount,
             text: priceToText(purchase.price.amount),
-            currency: purchase.price.currency,
+            currency: getPublicCurrencyDetails(currencyObject),
           },
           validTo: purchase.validTo,
           recurringDetails: purchase.recurringDetails,
