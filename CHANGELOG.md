@@ -1,3 +1,39 @@
+# [7.0.0](https://github.com/laterpay/supertab-browser/compare/v6.13.0...v7.0.0) (2024-10-31)
+
+### feature
+
+- Include more currency details in offerings and tabs ([#104](https://github.com/laterpay/supertab-browser/issues/104)) ([c9eefa5](https://github.com/laterpay/supertab-browser/commit/c9eefa5498c7412e1f56b27228037a057c6b49ed))
+
+### BREAKING CHANGES
+
+- Change currency type from `string` (isoCode) to `object` (isoCode, baseUnit)
+
+## Details
+
+Offerings, tabs and tab purchases now contain more currency details in the form of an object. Before, they contained just the currency iso code string.
+
+```typescript
+type PublicCurrencyDetails = Pick<Currency, "isoCode" | "baseUnit">;
+
+// Example
+const currency: PublicCurrencyDetails = {
+  isoCode: "USD",
+  baseUnit: 100,
+};
+```
+
+## Why
+
+We're implementing Google's Monetization Provider API for experiences.js and we need to know the currency's base unit for the response data.
+
+## Changes
+
+- **fix: Correct typo in STG token URL**
+- **Add missing data to mock user**
+- **Include currency isoCode and baseUnit in offerings**
+- **Include currency iso code and base unit in tabs**
+- **Fix inconsitent currency handling in test mock api**
+
 # [6.13.0](https://github.com/laterpay/supertab-browser/compare/v6.12.7...v6.13.0) (2024-10-04)
 
 ### Features
