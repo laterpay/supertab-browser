@@ -411,8 +411,8 @@ export class Supertab {
 
     return formatPrice({
       amount,
-      currency: currencyObject?.isoCode ?? "",
-      baseUnit: currencyObject?.baseUnit ?? 100,
+      currency: currencyObject.isoCode,
+      baseUnit: currencyObject.baseUnit,
       localeCode: this.language,
       showZeroFractionDigits: true,
       showSymbol: true,
@@ -435,8 +435,8 @@ export class Supertab {
     const priceToText = (amount: number) =>
       formatPrice({
         amount,
-        currency: currencyObject.isoCode ?? "",
-        baseUnit: currencyObject.baseUnit ?? 100,
+        currency: currencyObject.isoCode,
+        baseUnit: currencyObject.baseUnit,
         localeCode: this.language,
         showZeroFractionDigits: false,
         showSymbol: currencyObject.isoCode !== "CHF",
