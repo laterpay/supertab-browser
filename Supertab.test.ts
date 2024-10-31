@@ -195,6 +195,10 @@ describe("Supertab", () => {
         deletedAt: new Date("2021-01-01T00:00:00.000Z"),
         active: true,
         isEmailVerified: true,
+        email: "user@example.com",
+        registrationOrigin: "supertab",
+        isSuperuser: false,
+        tabCurrency: "USD",
       };
 
       server.withCurrentUser(user);
@@ -207,17 +211,26 @@ describe("Supertab", () => {
     const prices = [
       {
         amount: 100,
-        currency: "USD",
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
+        },
         text: "$1.00",
       },
       {
         amount: 100,
-        currency: "EUR",
+        currency: {
+          isoCode: "EUR",
+          baseUnit: 100,
+        },
         text: "€1.00",
       },
       {
         amount: 100,
-        currency: "BRL",
+        currency: {
+          isoCode: "BRL",
+          baseUnit: 100,
+        },
         text: "R$1.00",
       },
     ];
@@ -258,7 +271,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -285,7 +301,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "USD",
+              currency: {
+                isoCode: "USD",
+                baseUnit: 100,
+              },
               text: "$1.00",
             },
             prices,
@@ -311,7 +330,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "BRL",
+              currency: {
+                isoCode: "BRL",
+                baseUnit: 100,
+              },
               text: "R$1.00",
             },
             prices,
@@ -406,7 +428,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -428,7 +453,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -452,7 +480,10 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             price: {
               amount: 100,
-              currency: "EUR",
+              currency: {
+                isoCode: "EUR",
+                baseUnit: 100,
+              },
               text: "€1.00",
             },
             prices,
@@ -676,7 +707,10 @@ describe("Supertab", () => {
             amount: 500,
             text: "$5",
           },
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           paymentModel: "pay_later",
           purchases: [
             {
@@ -686,7 +720,10 @@ describe("Supertab", () => {
               validTo: null,
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
             },
@@ -908,61 +945,63 @@ describe("Supertab", () => {
   });
 
   describe(".purchase", () => {
-    const tabData: TabResponsePurchaseEnhanced = {
-      id: "test-tab-id",
-      guestEmail: null,
-      createdAt: new Date("2023-11-03T15:34:44.852Z"),
-      updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-      merchantId: "test-merchant-id",
-      userId: "test-user-id",
-      status: "open",
-      paidAt: null,
-      total: 50,
-      limit: 500,
-      currency: "USD",
-      paymentModel: "pay_later",
-      purchases: [
-        {
-          id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
-          createdAt: new Date("2023-11-03T15:34:44.852Z"),
-          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-          purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-          merchantId: "test-merchant-id",
-          summary: "test-summary",
-          price: {
-            amount: 50,
-            currency: "USD",
+    function createTabData(currency: string): TabResponsePurchaseEnhanced {
+      return {
+        id: "test-tab-id",
+        guestEmail: null,
+        createdAt: new Date("2023-11-03T15:34:44.852Z"),
+        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+        merchantId: "test-merchant-id",
+        userId: "test-user-id",
+        status: "open",
+        paidAt: null,
+        total: 50,
+        limit: 500,
+        currency,
+        paymentModel: "pay_later",
+        purchases: [
+          {
+            id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+            createdAt: new Date("2023-11-03T15:34:44.852Z"),
+            updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+            merchantId: "test-merchant-id",
+            summary: "test-summary",
+            price: {
+              amount: 50,
+              currency,
+            },
+            salesModel: "time_pass",
+            paymentModel: "pay_later",
+            metadata: {
+              additionalProp1: {},
+              additionalProp2: {},
+              additionalProp3: {},
+            },
+            attributedTo: "test-id",
+            offeringId: "test-offering-id",
+            contentKey: "test-content-key",
+            testMode: false,
+            validFrom: null,
+            validTo: null,
+            validTimedelta: null,
+            recurringDetails: null,
+            merchantName: "test-merchant-name",
           },
-          salesModel: "time_pass",
-          paymentModel: "pay_later",
-          metadata: {
-            additionalProp1: {},
-            additionalProp2: {},
-            additionalProp3: {},
-          },
-          attributedTo: "test-id",
-          offeringId: "test-offering-id",
-          contentKey: "test-content-key",
-          testMode: false,
-          validFrom: null,
-          validTo: null,
-          validTimedelta: null,
-          recurringDetails: null,
-          merchantName: "test-merchant-name",
+        ],
+        metadata: {
+          additionalProp1: {},
+          additionalProp2: {},
+          additionalProp3: {},
         },
-      ],
-      metadata: {
-        additionalProp1: {},
-        additionalProp2: {},
-        additionalProp3: {},
-      },
-      testMode: false,
-      tabStatistics: {
-        purchasesCount: 0,
-        obfuscatedPurchasesCount: 0,
-        obfuscatedPurchasesTotal: 0,
-      },
-    };
+        testMode: false,
+        tabStatistics: {
+          purchasesCount: 0,
+          obfuscatedPurchasesCount: 0,
+          obfuscatedPurchasesTotal: 0,
+        },
+      };
+    }
 
     const tabMetaData = {
       count: 1,
@@ -978,7 +1017,7 @@ describe("Supertab", () => {
       const { client } = setup();
 
       server.withGetTab({
-        data: [tabData],
+        data: [createTabData("USD")],
         metadata: tabMetaData,
       });
 
@@ -987,7 +1026,7 @@ describe("Supertab", () => {
           itemAdded: true,
           purchaseStatus: PurchaseStatus.Added,
         },
-        tab: tabData,
+        tab: createTabData("USD"),
       });
 
       expect(
@@ -999,7 +1038,10 @@ describe("Supertab", () => {
         itemAdded: true,
         purchaseStatus: PurchaseStatus.Added,
         tab: {
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1010,7 +1052,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1031,7 +1076,7 @@ describe("Supertab", () => {
     test("creates a purchase in tab currency if found no matter what is preferred currency", async () => {
       const { client } = setup();
 
-      const euroTabData = { ...tabData, currency: "EUR" };
+      const euroTabData = createTabData("EUR");
 
       server.withGetTab({
         data: [euroTabData],
@@ -1055,7 +1100,10 @@ describe("Supertab", () => {
         itemAdded: true,
         purchaseStatus: PurchaseStatus.Added,
         tab: {
-          currency: "EUR",
+          currency: {
+            isoCode: "EUR",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1066,7 +1114,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "EUR",
+                  baseUnit: 100,
+                },
                 text: "€0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1099,10 +1150,7 @@ describe("Supertab", () => {
           itemAdded: true,
           purchaseStatus: PurchaseStatus.Added,
         },
-        tab: {
-          ...tabData,
-          currency: "BRL",
-        },
+        tab: createTabData("BRL"),
       });
 
       expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
@@ -1110,7 +1158,10 @@ describe("Supertab", () => {
           itemAdded: true,
           purchaseStatus: PurchaseStatus.Added,
           tab: {
-            currency: "BRL",
+            currency: {
+              isoCode: "BRL",
+              baseUnit: 100,
+            },
             id: "test-tab-id",
             limit: {
               amount: 500,
@@ -1121,7 +1172,10 @@ describe("Supertab", () => {
               {
                 price: {
                   amount: 50,
-                  currency: "USD",
+                  currency: {
+                    isoCode: "BRL",
+                    baseUnit: 100,
+                  },
                   text: "R$0.50",
                 },
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1144,7 +1198,7 @@ describe("Supertab", () => {
       const { client } = setup();
 
       server.withGetTab({
-        data: [tabData],
+        data: [createTabData("USD")],
         metadata: tabMetaData,
       });
 
@@ -1155,7 +1209,7 @@ describe("Supertab", () => {
             purchaseStatus: PurchaseStatus.Added,
           },
           tab: {
-            ...tabData,
+            ...createTabData("USD"),
             status: TabStatus.Full,
           },
         },
@@ -1171,7 +1225,10 @@ describe("Supertab", () => {
         itemAdded: false,
         purchaseStatus: PurchaseStatus.Added,
         tab: {
-          currency: "USD",
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
           id: "test-tab-id",
           paymentModel: "pay_later",
           limit: {
@@ -1182,7 +1239,10 @@ describe("Supertab", () => {
             {
               price: {
                 amount: 50,
-                currency: "USD",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
@@ -1204,7 +1264,7 @@ describe("Supertab", () => {
       const { client } = setup();
 
       server.withGetTab({
-        data: [tabData],
+        data: [createTabData("USD")],
         metadata: tabMetaData,
       });
 

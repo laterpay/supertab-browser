@@ -1,41 +1,5 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Supertab .getOfferings return offerings with default currency 1`] = `
-[
-  {
-    "connectedSubscriptionOffering": undefined,
-    "description": "Test Offering Description",
-    "id": "test-offering-id",
-    "paymentModel": "pay_later",
-    "price": {
-      "amount": 100,
-      "currency": "USD",
-      "text": "$1.00",
-    },
-    "prices": [
-      {
-        "amount": 100,
-        "currency": "USD",
-        "text": "$1.00",
-      },
-      {
-        "amount": 100,
-        "currency": "EUR",
-        "text": "€1.00",
-      },
-      {
-        "amount": 100,
-        "currency": "BRL",
-        "text": "R$1.00",
-      },
-    ],
-    "recurringDetails": null,
-    "salesModel": "time_pass",
-    "timePassDetails": null,
-  },
-]
-`;
-
 exports[`Supertab .getOfferings with no existing tab return offerings with default currency 1`] = `
 [
   {
@@ -45,23 +9,35 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
     "paymentModel": "pay_later",
     "price": {
       "amount": 100,
-      "currency": "USD",
+      "currency": {
+        "baseUnit": 100,
+        "isoCode": "USD",
+      },
       "text": "$1.00",
     },
     "prices": [
       {
         "amount": 100,
-        "currency": "USD",
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "USD",
+        },
         "text": "$1.00",
       },
       {
         "amount": 100,
-        "currency": "EUR",
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "EUR",
+        },
         "text": "€1.00",
       },
       {
         "amount": 100,
-        "currency": "BRL",
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "BRL",
+        },
         "text": "R$1.00",
       },
     ],
