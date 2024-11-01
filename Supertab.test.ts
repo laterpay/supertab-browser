@@ -1026,7 +1026,7 @@ describe("Supertab", () => {
         detail: {
           itemAdded: true,
           purchaseOutcome: PurchaseOutcome.Added,
-        } as PurchaseDetail,
+        } as PurchaseDetail, // PurchaseDetail in @getsupertab/tapper-sdk@10.0.0 requires both `purchaseStatus` (deprecated) and `purchaseOutcome`. `purchaseStatus` is not an optional property, hence `as` here.
         tab: createTabData("USD"),
       });
 
