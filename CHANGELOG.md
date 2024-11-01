@@ -1,3 +1,13 @@
+# [8.0.0](https://github.com/laterpay/supertab-browser/compare/v7.0.0...v8.0.0) (2024-11-01)
+
+### Features
+
+- use `purchaseOutcome` field ([#105](https://github.com/laterpay/supertab-browser/issues/105)) ([370835d](https://github.com/laterpay/supertab-browser/commit/370835d7594526046ebf2f05a5937b3d87af2eb6))
+
+### BREAKING CHANGES
+
+- `purchaseStatus` in `.purchase` method is renamed to `purchaseOutcome`.
+
 # [7.0.0](https://github.com/laterpay/supertab-browser/compare/v6.13.0...v7.0.0) (2024-10-31)
 
 ### feature
