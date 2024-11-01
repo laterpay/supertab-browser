@@ -20,7 +20,7 @@ import {
   Price,
   SiteOffering,
   TabResponse,
-  PurchaseStatus,
+  PurchaseOutcome,
 } from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -355,7 +355,7 @@ export class Supertab {
     preferredCurrencyCode?: string;
   }): Promise<{
     itemAdded: boolean;
-    purchaseStatus: PurchaseStatus | null;
+    purchaseOutcome: PurchaseOutcome | null;
     tab: FormattedTab;
   }> {
     const tab = await this.getTab();
@@ -379,7 +379,7 @@ export class Supertab {
 
       return {
         itemAdded: !!detail?.itemAdded,
-        purchaseStatus: detail?.purchaseStatus || null,
+        purchaseOutcome: detail?.purchaseOutcome || null,
         tab: this.formatTab({ tab, clientConfig }),
       };
     } catch (e) {
@@ -389,7 +389,7 @@ export class Supertab {
         );
         return {
           itemAdded: !!detail?.itemAdded,
-          purchaseStatus: detail?.purchaseStatus || null,
+          purchaseOutcome: detail?.purchaseOutcome || null,
           tab: this.formatTab({ tab, clientConfig }),
         };
       }

@@ -6,7 +6,8 @@ import {
   ClientConfig,
   Currency,
   Price,
-  PurchaseStatus,
+  PurchaseDetail,
+  PurchaseOutcome,
   SiteOffering,
   TabResponsePurchaseEnhanced,
   TabStatus,
@@ -1024,8 +1025,8 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
-          purchaseStatus: PurchaseStatus.Added,
-        },
+          purchaseOutcome: PurchaseOutcome.Added,
+        } as PurchaseDetail, // PurchaseDetail in @getsupertab/tapper-sdk@10.0.0 requires both `purchaseStatus` (deprecated) and `purchaseOutcome`. `purchaseStatus` is not an optional property, hence `as` here.
         tab: createTabData("USD"),
       });
 
@@ -1036,7 +1037,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
-        purchaseStatus: PurchaseStatus.Added,
+        purchaseOutcome: PurchaseOutcome.Added,
         tab: {
           currency: {
             isoCode: "USD",
@@ -1086,8 +1087,8 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
-          purchaseStatus: PurchaseStatus.Added,
-        },
+          purchaseOutcome: PurchaseOutcome.Added,
+        } as PurchaseDetail,
         tab: euroTabData,
       });
 
@@ -1098,7 +1099,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: true,
-        purchaseStatus: PurchaseStatus.Added,
+        purchaseOutcome: PurchaseOutcome.Added,
         tab: {
           currency: {
             isoCode: "EUR",
@@ -1148,15 +1149,15 @@ describe("Supertab", () => {
       server.withPurchase({
         detail: {
           itemAdded: true,
-          purchaseStatus: PurchaseStatus.Added,
-        },
+          purchaseOutcome: PurchaseOutcome.Added,
+        } as PurchaseDetail,
         tab: createTabData("BRL"),
       });
 
       expect(await client.purchase({ offeringId: "test-offering-id" })).toEqual(
         {
           itemAdded: true,
-          purchaseStatus: PurchaseStatus.Added,
+          purchaseOutcome: PurchaseOutcome.Added,
           tab: {
             currency: {
               isoCode: "BRL",
@@ -1206,8 +1207,8 @@ describe("Supertab", () => {
         {
           detail: {
             itemAdded: false,
-            purchaseStatus: PurchaseStatus.Added,
-          },
+            purchaseOutcome: PurchaseOutcome.Added,
+          } as PurchaseDetail,
           tab: {
             ...createTabData("USD"),
             status: TabStatus.Full,
@@ -1223,7 +1224,7 @@ describe("Supertab", () => {
         }),
       ).toEqual({
         itemAdded: false,
-        purchaseStatus: PurchaseStatus.Added,
+        purchaseOutcome: PurchaseOutcome.Added,
         tab: {
           currency: {
             isoCode: "USD",
