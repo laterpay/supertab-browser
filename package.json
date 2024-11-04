@@ -16,7 +16,7 @@
   "devDependencies": {
     "@docusaurus/core": "3.5.2",
     "@docusaurus/module-type-aliases": "3.5.2",
-    "@docusaurus/preset-classic": "3.5.2",
+    "@docusaurus/preset-classic": "3.6.0",
     "@mdx-js/react": "^3.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
