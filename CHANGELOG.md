@@ -1,3 +1,9 @@
+## [8.0.1](https://github.com/laterpay/supertab-browser/compare/v8.0.0...v8.0.1) (2024-11-05)
+
+### Bug Fixes
+
+- package dependencies ([#110](https://github.com/laterpay/supertab-browser/issues/110)) ([a9ee94d](https://github.com/laterpay/supertab-browser/commit/a9ee94d317b2dc69438ff09381a909812e53935d))
+
 # [8.0.0](https://github.com/laterpay/supertab-browser/compare/v7.0.0...v8.0.0) (2024-11-01)
 
 ### Features
