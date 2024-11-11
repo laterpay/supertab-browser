@@ -16,7 +16,7 @@
   "devDependencies": {
     "@getsupertab/tapper-sdk": "^10.0.0",
     "@docusaurus/core": "3.6.0",
-    "@docusaurus/module-type-aliases": "3.6.0",
+    "@docusaurus/module-type-aliases": "3.6.1",
     "@docusaurus/preset-classic": "3.6.0",
     "@mdx-js/react": "^3.0.1",
     "@semantic-release/changelog": "^6.0.3",
