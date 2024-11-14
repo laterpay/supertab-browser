@@ -26,7 +26,9 @@ export const handleChildWindow = async <T>({
     if (!isUrlOpened) {
       fetch(url.toString())
         .then(setWindowLocation)
-        .catch(() => {});
+        .catch(() => {
+          setWindowLocation();
+        });
     }
     // eslint-disable-next-line no-empty
   } catch (e) {}
