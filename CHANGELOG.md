@@ -1,3 +1,9 @@
+## [8.0.2](https://github.com/laterpay/supertab-browser/compare/v8.0.1...v8.0.2) (2024-11-14)
+
+### Bug Fixes
+
+- set window location if fails to fetch URL ([a0b449b](https://github.com/laterpay/supertab-browser/commit/a0b449bd4e88e23b99157af24839610c668f5dcb))
+
 ## [8.0.1](https://github.com/laterpay/supertab-browser/compare/v8.0.0...v8.0.1) (2024-11-05)
 
 ### Bug Fixes
