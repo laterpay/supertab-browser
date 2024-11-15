@@ -715,6 +715,7 @@ describe("Supertab", () => {
           paymentModel: "pay_later",
           purchases: [
             {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               recurringDetails: null,
@@ -1051,6 +1052,7 @@ describe("Supertab", () => {
           },
           purchases: [
             {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
               price: {
                 amount: 50,
                 currency: {
@@ -1113,6 +1115,7 @@ describe("Supertab", () => {
           },
           purchases: [
             {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
               price: {
                 amount: 50,
                 currency: {
@@ -1171,6 +1174,7 @@ describe("Supertab", () => {
             paymentModel: "pay_later",
             purchases: [
               {
+                id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
                 price: {
                   amount: 50,
                   currency: {
@@ -1238,6 +1242,7 @@ describe("Supertab", () => {
           },
           purchases: [
             {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
               price: {
                 amount: 50,
                 currency: {
