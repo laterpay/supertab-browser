@@ -1,5 +1,5 @@
 const loadOmegaAnimation = async () => {
-  const { default: omegaAnimation } = await import("./omegaAnimation.ts");
+  const { default: omegaAnimation } = await import("./omegaAnimation");
   return omegaAnimation;
 };
 
@@ -18,16 +18,21 @@ export const handleChildWindow = async <T>({
     throw new Error("Window is null");
   }
 
-  try {
-    const isUrlOpened = openedWindow.location.href === url.toString();
-    const setWindowLocation = () =>
-      (openedWindow.location.href = url.toString());
-
-    if (!isUrlOpened) {
-      setWindowLocation();
+  const setWindowLocation = () => {
+    try {
+      // Direct location assignment (like in handleChildWindow)
+      openedWindow.location = url.toString();
+      // eslint-disable-next-line
+    } catch (e) {
+      openedWindow.location.replace(url.toString());
     }
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
+  };
+
+  const isUrlOpened = openedWindow.location.href === url.toString();
+
+  if (!isUrlOpened) {
+    setWindowLocation();
+  }
 
   let receivedPostMessage = false;
 
@@ -73,29 +78,53 @@ export const openBlankChildWindow = ({
     windowFeatures = `popup=true,width=${width},height=${height},top=${topOffset},left=${leftOffset}`;
   }
 
-  const newWindow = window.open("", target ?? "_blank", windowFeatures);
+  const newWindow = window.open(
+    "about:blank",
+    target ?? "_blank",
+    windowFeatures,
+  );
   let newWindowDocument = null;
 
   try {
     newWindowDocument = newWindow?.document;
-    // eslint-disable-next-line no-empty
+    // eslint-disable-next-line
   } catch (e) {}
 
-  loadOmegaAnimation().then((omegaAnimation) => {
-    if (
-      newWindowDocument &&
-      newWindowDocument.getElementById("supertab-loading-animation") === null
-    ) {
-      newWindowDocument.write(
-        '<html><head><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Supertab</title></head>',
-      );
-      newWindowDocument.write(
-        `<body style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%" id="supertab-loading-animation">
-            <img style="width: 180px; height: auto" src="${omegaAnimation}" />
-            <p style="margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica">Loading your Supertab...</p></body></html>`,
-      );
-    }
-  });
+  if (newWindowDocument) {
+    newWindowDocument.write(
+      '<html><head><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Supertab</title></head>',
+    );
+    newWindowDocument.close();
+
+    loadOmegaAnimation()
+      .then((omegaAnimation) => {
+        if (
+          newWindowDocument &&
+          newWindowDocument.getElementById("supertab-loading-animation") ===
+            null
+        ) {
+          const container = newWindowDocument.createElement("div");
+          container.id = "supertab-loading-animation";
+          container.style.cssText =
+            "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%";
+
+          const img = newWindowDocument.createElement("img");
+          img.src = omegaAnimation;
+          img.style.cssText = "width: 180px; height: auto";
+
+          const text = newWindowDocument.createElement("p");
+          text.style.cssText =
+            "margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica";
+          text.textContent = "Loading your Supertab...";
+
+          container.appendChild(img);
+          container.appendChild(text);
+          newWindowDocument.body.appendChild(container);
+        }
+      })
+      // eslint-disable-next-line
+      .catch((e) => {});
+  }
 
   return newWindow;
 };
