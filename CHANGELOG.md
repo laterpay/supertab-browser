@@ -1,3 +1,9 @@
+# [8.1.0](https://github.com/laterpay/supertab-browser/compare/v8.0.2...v8.1.0) (2024-11-18)
+
+### Features
+
+- Include purchase ids in `purchase` method response ([#122](https://github.com/laterpay/supertab-browser/issues/122)) ([6958cfd](https://github.com/laterpay/supertab-browser/commit/6958cfd445cc86f0e144ef4d736947736ea45a72))
+
 ## [8.0.2](https://github.com/laterpay/supertab-browser/compare/v8.0.1...v8.0.2) (2024-11-14)
 
 ### Bug Fixes
