@@ -1,3 +1,9 @@
+## [8.1.2](https://github.com/laterpay/supertab-browser/compare/v8.1.1...v8.1.2) (2024-11-18)
+
+### Bug Fixes
+
+- close the document after write to prevent "sticky" window ([f9b0165](https://github.com/laterpay/supertab-browser/commit/f9b0165245c61fd3ebf188bfd0e1bd13f2dc10b9))
+
 ## [8.1.1](https://github.com/laterpay/supertab-browser/compare/v8.1.0...v8.1.1) (2024-11-18)
 
 ### Bug Fixes
