@@ -1,3 +1,9 @@
+## [8.1.1](https://github.com/laterpay/supertab-browser/compare/v8.1.0...v8.1.1) (2024-11-18)
+
+### Bug Fixes
+
+- disable pre-fetching of desired window location ([9bc4452](https://github.com/laterpay/supertab-browser/commit/9bc4452bd49162e631c7b9d38ec03a788ed02a66))
+
 # [8.1.0](https://github.com/laterpay/supertab-browser/compare/v8.0.2...v8.1.0) (2024-11-18)
 
 ### Features
