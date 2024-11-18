@@ -474,6 +474,7 @@ export class Supertab {
           );
         }
         return {
+          id: purchase.id,
           purchaseDate: purchase.purchaseDate,
           summary: purchase.summary,
           price: {
