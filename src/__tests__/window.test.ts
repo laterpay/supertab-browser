@@ -34,7 +34,7 @@ describe("window", () => {
         target: "testTarget",
       });
 
-      expect(windowOpen.mock.lastCall?.[0]).toEqual("");
+      expect(windowOpen.mock.lastCall?.[0]).toEqual("about:blank");
       expect(windowOpen.mock.lastCall?.[1]).toEqual("testTarget");
       expect(windowOpen.mock.lastCall?.[2]).toEqual(undefined);
     });
@@ -48,7 +48,7 @@ describe("window", () => {
         target: "testTarget",
       });
 
-      expect(windowOpen.mock.lastCall?.[0]).toEqual("");
+      expect(windowOpen.mock.lastCall?.[0]).toEqual("about:blank");
       expect(windowOpen.mock.lastCall?.[1]).toEqual("testTarget");
       expect(windowOpen.mock.lastCall?.[2]).toInclude("popup");
     });
