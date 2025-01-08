@@ -6,6 +6,8 @@ import {
   AccessResponseToJSON,
   ClientConfig,
   ClientConfigToJSON,
+  ClientExperiencesConfig,
+  ClientExperiencesConfigToJSON,
   HealthResponse,
   HealthResponseToJSON,
   PaginatedTabResponse,
@@ -25,6 +27,23 @@ const withClientConfig = (clientConfig: ClientConfig) => {
       "https://tapi.sbx.supertab.co/v1/public/items/client/:id/config",
       (_, res, ctx) =>
         res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig))),
+    ),
+  );
+
+  return server;
+};
+
+const withClientExperiencesConfig = (
+  clientExperiencesConfig: ClientExperiencesConfig,
+) => {
+  server.use(
+    rest.get(
+      "https://tapi.sbx.supertab.co/v1/public/experiences/:id/config",
+      (_, res, ctx) =>
+        res(
+          ctx.status(200),
+          ctx.json(ClientExperiencesConfigToJSON(clientExperiencesConfig)),
+        ),
     ),
   );
 
@@ -91,6 +110,7 @@ const withPurchase = (purchase: PurchaseOfferingResponse, status = 200) => {
 // Setup requests interception using the given handlers.
 const server = Object.assign(node.setupServer(...handlers), {
   withClientConfig,
+  withClientExperiencesConfig,
   withCurrentUser,
   withHealth,
   withAccessCheck,
