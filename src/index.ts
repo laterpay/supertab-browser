@@ -59,7 +59,7 @@ export class Supertab {
   private language: string;
   private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
-  private _experiencesConfig?: ClientExperiencesConfig;
+  private _clientExperiencesConfig?: ClientExperiencesConfig;
   private systemUrls: SystemUrls;
 
   constructor(options: {
@@ -141,18 +141,18 @@ export class Supertab {
     return this._clientConfig;
   }
 
-  async #getExperiencesConfig() {
-    if (this._experiencesConfig) {
-      return this._experiencesConfig;
+  async #getClientExperiencesConfig() {
+    if (this._clientExperiencesConfig) {
+      return this._clientExperiencesConfig;
     }
 
-    this._experiencesConfig = await new ExperiencesApi(
+    this._clientExperiencesConfig = await new ExperiencesApi(
       this.tapperConfig,
     ).getClientExperiencesConfigV2({
       clientId: this.clientId,
     });
 
-    return this._experiencesConfig;
+    return this._clientExperiencesConfig;
   }
 
   async getOfferings({
@@ -470,7 +470,7 @@ export class Supertab {
     language?: string;
     preferredCurrencyCode?: string;
   } = {}) {
-    const experiencesConfig = await this.#getExperiencesConfig();
+    const experiencesConfig = await this.#getClientExperiencesConfig();
 
     const experience = id
       ? experiencesConfig.experiences.find((experience) => experience.id === id)
@@ -519,7 +519,7 @@ export class Supertab {
   }
 
   async getSiteDetails() {
-    const experiencesConfig = await this.#getExperiencesConfig();
+    const experiencesConfig = await this.#getClientExperiencesConfig();
     const { siteName, siteLogoUrl } = experiencesConfig;
 
     return {
