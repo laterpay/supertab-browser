@@ -185,6 +185,9 @@ export class Supertab {
         );
 
         let connectedSubscriptionOffering;
+        // If the offering has a connected subscription offering, store the id
+        // temporarily to be able to find the formatted connected subscription
+        // offering in the next map function.
         if (eachOffering.connectedSubscriptionOffering?.id) {
           connectedSubscriptionOffering = {
             id: eachOffering.connectedSubscriptionOffering.id,

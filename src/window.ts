@@ -1,7 +1,7 @@
-//const loadOmegaAnimation = async () => {
-//  const { default: omegaAnimation } = await import("./omegaAnimation");
-//  return omegaAnimation;
-//};
+const loadOmegaAnimation = async () => {
+  const { default: omegaAnimation } = await import("./omegaAnimation");
+  return omegaAnimation;
+};
 
 export const handleChildWindow = async <T>({
   url,
@@ -85,48 +85,48 @@ export const openBlankChildWindow = ({
     target ?? "_blank",
     windowFeatures,
   );
-  //let newWindowDocument = null;
+  let newWindowDocument = null;
 
-  //try {
-  //  newWindowDocument = newWindow?.document;
-  //  // eslint-disable-next-line
-  //} catch (e) {}
+  try {
+    newWindowDocument = newWindow?.document;
+    // eslint-disable-next-line
+  } catch (e) {}
 
-  //if (newWindowDocument) {
-  //  newWindowDocument.write(
-  //    '<html><head><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Supertab</title></head>'
-  //  );
-  //  newWindowDocument.close();
+  if (newWindowDocument) {
+    newWindowDocument.write(
+      '<html><head><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"><title>Supertab</title></head>',
+    );
+    newWindowDocument.close();
 
-  //  loadOmegaAnimation()
-  //    .then((omegaAnimation) => {
-  //      if (
-  //        newWindowDocument &&
-  //        newWindowDocument.getElementById("supertab-loading-animation") ===
-  //          null
-  //      ) {
-  //        const container = newWindowDocument.createElement("div");
-  //        container.id = "supertab-loading-animation";
-  //        container.style.cssText =
-  //          "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%";
+    loadOmegaAnimation()
+      .then((omegaAnimation) => {
+        if (
+          newWindowDocument &&
+          newWindowDocument.getElementById("supertab-loading-animation") ===
+            null
+        ) {
+          const container = newWindowDocument.createElement("div");
+          container.id = "supertab-loading-animation";
+          container.style.cssText =
+            "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%";
 
-  //        const img = newWindowDocument.createElement("img");
-  //        img.src = omegaAnimation;
-  //        img.style.cssText = "width: 180px; height: auto";
+          const img = newWindowDocument.createElement("img");
+          img.src = omegaAnimation;
+          img.style.cssText = "width: 180px; height: auto";
 
-  //        const text = newWindowDocument.createElement("p");
-  //        text.style.cssText =
-  //          "margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica";
-  //        text.textContent = "Loading your Supertab...";
+          const text = newWindowDocument.createElement("p");
+          text.style.cssText =
+            "margin-top: -10px; font-size: 16px; font-weight: 400; color: #555; font-family: Helvetica";
+          text.textContent = "Loading your Supertab...";
 
-  //        container.appendChild(img);
-  //        container.appendChild(text);
-  //        newWindowDocument.body.appendChild(container);
-  //      }
-  //    })
-  //    // eslint-disable-next-line
-  //    .catch((e) => {});
-  //}
+          container.appendChild(img);
+          container.appendChild(text);
+          newWindowDocument.body.appendChild(container);
+        }
+      })
+      // eslint-disable-next-line
+      .catch((e) => {});
+  }
 
   return newWindow;
 };
