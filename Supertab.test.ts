@@ -4,7 +4,11 @@ import EventEmitter from "events";
 import Supertab from ".";
 import {
   ClientConfig,
+  ClientExperiencesConfig,
   Currency,
+  CurrencyOperationalStatus,
+  CurrencyRoundingRule,
+  ExperienceType,
   Price,
   PurchaseDetail,
   PurchaseOutcome,
@@ -20,6 +24,7 @@ const setup = ({
   language = "en-US",
   preferredCurrencyCode,
   clientConfigProps,
+  hasExperiences = true,
 }: {
   authenticated?: boolean;
   authExpiresIn?: number;
@@ -29,6 +34,7 @@ const setup = ({
     offeringCurrency?: string;
     suggestedCurrency?: string;
   };
+  hasExperiences?: boolean;
 } = {}) => {
   const emitter = new EventEmitter();
 
@@ -150,6 +156,110 @@ const setup = ({
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
   } as ClientConfig);
 
+  const experience = {
+    id: "test-experience-1",
+    name: "My Experience",
+    type: ExperienceType.BasicPaygate,
+    paygateRedirectUrl: "https://example.com",
+    uiConfig: {},
+    product: {
+      id: "test-product",
+      name: "Test Product",
+      contentKey: "test-content-key",
+      contentKeyRequired: true,
+    },
+    offerings: [
+      {
+        id: "test-offering-id",
+        description: "Test Offering Description",
+        salesModel: "time_pass",
+        paymentModel: "pay_later",
+        suggestedCurrencyPrice: {
+          amount: 100,
+          currency: clientConfigProps?.offeringCurrency ?? "USD",
+        },
+        prices: [
+          {
+            amount: 100,
+            currency: "USD",
+          },
+          {
+            amount: 100,
+            currency: "EUR",
+          },
+          {
+            amount: 100,
+            currency: "BRL",
+          },
+        ] as Price[],
+        recurringDetails: null,
+        timePassDetails: {
+          validTimedelta: "1d",
+        },
+      },
+    ],
+  };
+
+  server.withClientExperiencesConfig({
+    redirectUri: "",
+    siteName: "",
+    siteLogoUrl: "",
+    experiences: hasExperiences
+      ? [experience, { ...experience, id: "test-experience-2" }]
+      : [],
+    currencies: [
+      {
+        id: "usd-currency",
+        name: "US Dollar",
+        symbol: "$",
+        isMainCurrency: true,
+        operationalStatus: CurrencyOperationalStatus.Active,
+        tabLimit: 500,
+        firstTabLimit: 100,
+        googlePayoutsEnabled: true,
+        exchangeRate: 1,
+        roundingRule: CurrencyRoundingRule.Hundredth,
+        isoCode: "USD",
+        baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+      },
+      {
+        id: "eur-currency",
+        name: "Euro",
+        symbol: "€",
+        isMainCurrency: false,
+        operationalStatus: CurrencyOperationalStatus.Active,
+        tabLimit: 500,
+        firstTabLimit: 100,
+        googlePayoutsEnabled: false,
+        exchangeRate: 1,
+        roundingRule: CurrencyRoundingRule.Hundredth,
+        isoCode: "EUR",
+        baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+      },
+      {
+        id: "brl-currency",
+        name: "Brazilian real",
+        symbol: "$R",
+        isMainCurrency: false,
+        operationalStatus: CurrencyOperationalStatus.Active,
+        tabLimit: 500,
+        firstTabLimit: 100,
+        googlePayoutsEnabled: false,
+        exchangeRate: 1,
+        roundingRule: CurrencyRoundingRule.Hundredth,
+        isoCode: "BRL",
+        baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+      },
+    ] as Currency[],
+    suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
+  } as ClientExperiencesConfig);
+
   return {
     client,
     windowOpen,
@@ -157,6 +267,65 @@ const setup = ({
     emitter,
   };
 };
+
+function createTabData(currency: string): TabResponsePurchaseEnhanced {
+  return {
+    id: "test-tab-id",
+    guestEmail: null,
+    closesAt: new Date("2024-01-08T15:34:44.852Z"),
+    createdAt: new Date("2023-11-03T15:34:44.852Z"),
+    updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+    merchantId: "test-merchant-id",
+    userId: "test-user-id",
+    status: "open",
+    paidAt: null,
+    total: 50,
+    limit: 500,
+    currency,
+    paymentModel: "pay_later",
+    purchases: [
+      {
+        id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+        createdAt: new Date("2023-11-03T15:34:44.852Z"),
+        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+        purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+        merchantId: "test-merchant-id",
+        summary: "test-summary",
+        price: {
+          amount: 50,
+          currency,
+        },
+        salesModel: "time_pass",
+        paymentModel: "pay_later",
+        metadata: {
+          additionalProp1: {},
+          additionalProp2: {},
+          additionalProp3: {},
+        },
+        attributedTo: "test-id",
+        offeringId: "test-offering-id",
+        contentKey: "test-content-key",
+        testMode: false,
+        validFrom: null,
+        validTo: null,
+        validTimedelta: null,
+        recurringDetails: null,
+        merchantName: "test-merchant-name",
+      },
+    ],
+    metadata: {
+      additionalProp1: {},
+      additionalProp2: {},
+      additionalProp3: {},
+    },
+    testMode: false,
+    tabStatistics: {
+      purchasesCount: 0,
+      obfuscatedPurchasesCount: 0,
+      obfuscatedPurchasesTotal: 0,
+    },
+  };
+}
 
 describe("Supertab", () => {
   describe("SupertabInit", () => {
@@ -196,10 +365,6 @@ describe("Supertab", () => {
         deletedAt: new Date("2021-01-01T00:00:00.000Z"),
         active: true,
         isEmailVerified: true,
-        email: "user@example.com",
-        registrationOrigin: "supertab",
-        isSuperuser: false,
-        tabCurrency: "USD",
       };
 
       server.withCurrentUser(user);
@@ -353,6 +518,7 @@ describe("Supertab", () => {
             {
               id: "test-tab-id",
               guestEmail: null,
+              closesAt: new Date("2025-01-08T15:34:44.852Z"),
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
               merchantId: "test-merchant-id",
@@ -633,6 +799,7 @@ describe("Supertab", () => {
             {
               id: "test-tab-id",
               guestEmail: null,
+              closesAt: new Date("2024-01-08T15:34:44.852Z"),
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
               merchantId: "test-merchant-id",
@@ -761,6 +928,7 @@ describe("Supertab", () => {
           {
             id: "test-tab-id",
             guestEmail: null,
+            closesAt: new Date("2024-01-08T15:34:44.852Z"),
             createdAt: new Date("2023-11-03T15:34:44.852Z"),
             updatedAt: new Date("2023-11-03T15:34:44.852Z"),
             merchantId: "test-merchant-id",
@@ -834,6 +1002,7 @@ describe("Supertab", () => {
       server.withGetTabById({
         id: "test-tab-id",
         guestEmail: null,
+        closesAt: new Date("2023-01-08T15:34:44.852Z"),
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         merchantId: "test-merchant-id",
@@ -947,64 +1116,6 @@ describe("Supertab", () => {
   });
 
   describe(".purchase", () => {
-    function createTabData(currency: string): TabResponsePurchaseEnhanced {
-      return {
-        id: "test-tab-id",
-        guestEmail: null,
-        createdAt: new Date("2023-11-03T15:34:44.852Z"),
-        updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        merchantId: "test-merchant-id",
-        userId: "test-user-id",
-        status: "open",
-        paidAt: null,
-        total: 50,
-        limit: 500,
-        currency,
-        paymentModel: "pay_later",
-        purchases: [
-          {
-            id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
-            createdAt: new Date("2023-11-03T15:34:44.852Z"),
-            updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-            merchantId: "test-merchant-id",
-            summary: "test-summary",
-            price: {
-              amount: 50,
-              currency,
-            },
-            salesModel: "time_pass",
-            paymentModel: "pay_later",
-            metadata: {
-              additionalProp1: {},
-              additionalProp2: {},
-              additionalProp3: {},
-            },
-            attributedTo: "test-id",
-            offeringId: "test-offering-id",
-            contentKey: "test-content-key",
-            testMode: false,
-            validFrom: null,
-            validTo: null,
-            validTimedelta: null,
-            recurringDetails: null,
-            merchantName: "test-merchant-name",
-          },
-        ],
-        metadata: {
-          additionalProp1: {},
-          additionalProp2: {},
-          additionalProp3: {},
-        },
-        testMode: false,
-        tabStatistics: {
-          purchasesCount: 0,
-          obfuscatedPurchasesCount: 0,
-          obfuscatedPurchasesTotal: 0,
-        },
-      };
-    }
-
     const tabMetaData = {
       count: 1,
       perPage: 1,
@@ -1309,6 +1420,110 @@ describe("Supertab", () => {
       const { client } = setup();
 
       expect(async () => await client.formatAmount(0, "ABC")).toThrow();
+    });
+  });
+
+  describe(".getExperience", () => {
+    beforeEach(() => {
+      server.withGetTab({
+        data: [],
+        metadata: {
+          count: 0,
+          perPage: 1,
+          links: { previous: "", next: "" },
+          numberPages: 0,
+        },
+      });
+    });
+
+    test("return null if no experience is found", async () => {
+      const { client } = setup({ hasExperiences: false });
+
+      expect(await client.getExperience()).toBeNull();
+    });
+
+    test("return first experience if id is not supplied", async () => {
+      const { client } = setup();
+
+      expect(await client.getExperience()).toMatchSnapshot();
+    });
+
+    test("return experience by id", async () => {
+      const { client } = setup();
+
+      expect(
+        await client.getExperience({ id: "test-experience-2" }),
+      ).toMatchSnapshot();
+    });
+
+    test("returns null for non-existent experience id", async () => {
+      const { client } = setup();
+      expect(await client.getExperience({ id: "non-existent-id" })).toBeNull();
+    });
+
+    describe("with no tab", () => {
+      test("uses provided language for price formatting", async () => {
+        const { client } = setup();
+
+        const experience = await client.getExperience({ language: "de-DE" });
+
+        expect(experience?.offerings[0].price.text).toBe("1,00\u00A0$");
+      });
+
+      test("uses provided preferred currency", async () => {
+        const { client } = setup();
+
+        const experience = await client.getExperience({
+          preferredCurrencyCode: "EUR",
+        });
+
+        expect(experience?.offerings[0].price.currency.isoCode).toBe("EUR");
+        expect(experience?.offerings[0].price.text).toBe("€1.00");
+      });
+
+      test("uses suggested currency when no tab or preferred currency", async () => {
+        const { client } = setup({
+          clientConfigProps: { suggestedCurrency: "EUR" },
+        });
+
+        const experience = await client.getExperience();
+
+        expect(experience?.offerings[0].price.currency.isoCode).toBe("EUR");
+        expect(experience?.offerings[0].price.text).toBe("€1.00");
+      });
+    });
+
+    describe("with tab", () => {
+      beforeEach(() => {
+        server.withGetTab({
+          data: [createTabData("BRL")],
+          metadata: {
+            count: 0,
+            perPage: 1,
+            links: { previous: "", next: "" },
+            numberPages: 0,
+          },
+        });
+      });
+
+      test("handles tab currency when tab exists", async () => {
+        const { client } = setup();
+
+        server.withGetTab({
+          data: [createTabData("BRL")],
+          metadata: {
+            count: 1,
+            perPage: 1,
+            links: { previous: "", next: "" },
+            numberPages: 1,
+          },
+        });
+
+        const experience = await client.getExperience();
+
+        expect(experience?.offerings[0].price.currency.isoCode).toBe("BRL");
+        expect(experience?.offerings[0].price.text).toBe("R$1.00");
+      });
     });
   });
 });

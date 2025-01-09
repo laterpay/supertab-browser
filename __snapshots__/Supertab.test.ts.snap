@@ -47,3 +47,113 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
   },
 ]
 `;
+
+exports[`Supertab .getExperience return first experience if id is not supplied 1`] = `
+{
+  "id": "test-experience-1",
+  "name": "My Experience",
+  "offerings": [
+    {
+      "description": "Test Offering Description",
+      "id": "test-offering-id",
+      "paymentModel": "pay_later",
+      "price": {
+        "amount": 100,
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "USD",
+        },
+        "text": "$1.00",
+      },
+      "prices": [
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "EUR",
+          },
+          "text": "€1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "BRL",
+          },
+          "text": "R$1.00",
+        },
+      ],
+      "recurringDetails": undefined,
+      "salesModel": "time_pass",
+      "timePassDetails": {
+        "validTimedelta": "1d",
+      },
+    },
+  ],
+  "type": "basic_paygate",
+  "uiConfig": {},
+}
+`;
+
+exports[`Supertab .getExperience return experience by id 1`] = `
+{
+  "id": "test-experience-2",
+  "name": "My Experience",
+  "offerings": [
+    {
+      "description": "Test Offering Description",
+      "id": "test-offering-id",
+      "paymentModel": "pay_later",
+      "price": {
+        "amount": 100,
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "USD",
+        },
+        "text": "$1.00",
+      },
+      "prices": [
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "EUR",
+          },
+          "text": "€1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "BRL",
+          },
+          "text": "R$1.00",
+        },
+      ],
+      "recurringDetails": undefined,
+      "salesModel": "time_pass",
+      "timePassDetails": {
+        "validTimedelta": "1d",
+      },
+    },
+  ],
+  "type": "basic_paygate",
+  "uiConfig": {},
+}
+`;

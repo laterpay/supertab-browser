@@ -10,29 +10,23 @@ import {
   InternalApi,
   UserIdentityApi,
   ItemsApi,
-  Currency,
   AccessApi,
   ClientConfig,
   TabsApi,
   TabStatus,
   ResponseError,
   PurchaseOfferingResponseFromJSON,
-  Price,
-  SiteOffering,
   TabResponse,
   PurchaseOutcome,
+  ExperiencesApi,
+  ClientExperiencesConfig,
 } from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
-import {
-  Authenticable,
-  FormattedTab,
-  PublicCurrencyDetails,
-  ScreenHint,
-  SystemUrls,
-} from "./types";
+import { Authenticable, FormattedTab, ScreenHint, SystemUrls } from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
+import { getPublicCurrencyDetails, setupCurrencyHandling } from "./utils";
 
 function authenticated(
   target: Authenticable,
@@ -65,6 +59,7 @@ export class Supertab {
   private language: string;
   private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
+  private _clientExperiencesConfig?: ClientExperiencesConfig;
   private systemUrls: SystemUrls;
 
   constructor(options: {
@@ -146,6 +141,20 @@ export class Supertab {
     return this._clientConfig;
   }
 
+  async #getClientExperiencesConfig() {
+    if (this._clientExperiencesConfig) {
+      return this._clientExperiencesConfig;
+    }
+
+    this._clientExperiencesConfig = await new ExperiencesApi(
+      this.tapperConfig,
+    ).getClientExperiencesConfigV2({
+      clientId: this.clientId,
+    });
+
+    return this._clientExperiencesConfig;
+  }
+
   async getOfferings({
     language = this.language,
     preferredCurrencyCode = this.preferredCurrencyCode,
@@ -159,52 +168,21 @@ export class Supertab {
     } catch (e) {}
     /* eslint-enable */
 
-    const presentedCurrency =
-      tab?.currency.isoCode ??
-      preferredCurrencyCode ??
-      clientConfig.suggestedCurrency ??
-      DEFAULT_CURRENCY;
-
-    const currenciesByCode: Record<string, Currency> =
-      clientConfig.currencies.reduce(
-        (acc, eachCurrency) => ({
-          ...acc,
-          [eachCurrency.isoCode]: eachCurrency,
-        }),
-        {},
-      );
-
-    const getPrice = (
-      offering: SiteOffering,
-      price: Price,
-      currencyCode?: string,
-    ) => {
-      const currency =
-        currenciesByCode[currencyCode ?? price.currency] ??
-        currenciesByCode[DEFAULT_CURRENCY];
-
-      const text = formatPrice({
-        amount: offering.price.amount,
-        currency: currency.isoCode,
-        baseUnit: currency.baseUnit,
-        localeCode: language,
-        showZeroFractionDigits: true,
-        showSymbol: currency.isoCode !== "CHF",
+    const { presentedCurrency, currenciesByCode, getPrice } =
+      await setupCurrencyHandling({
+        tab,
+        preferredCurrencyCode,
+        currencies: clientConfig.currencies,
+        suggestedCurrency: clientConfig.suggestedCurrency,
+        language,
       });
-
-      return {
-        amount: offering.price.amount,
-        currency: getPublicCurrencyDetails(currency),
-        text,
-      };
-    };
 
     const offerings = clientConfig.offerings
       .filter((eachOffering) => !!currenciesByCode[eachOffering.price.currency])
       // Format all offerings
       .map((eachOffering) => {
         const prices = eachOffering.prices?.map((eachPrice) =>
-          getPrice(eachOffering, eachPrice),
+          getPrice(eachPrice),
         );
 
         let connectedSubscriptionOffering;
@@ -222,7 +200,7 @@ export class Supertab {
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
           paymentModel: eachOffering.paymentModel,
-          price: getPrice(eachOffering, eachOffering.price, presentedCurrency),
+          price: getPrice(eachOffering.price, presentedCurrency),
           prices,
           timePassDetails: eachOffering.timePassDetails,
           recurringDetails: eachOffering.recurringDetails,
@@ -489,11 +467,71 @@ export class Supertab {
     };
     return formattedTab;
   }
-}
 
-function getPublicCurrencyDetails(currency: Currency): PublicCurrencyDetails {
-  return {
-    isoCode: currency.isoCode,
-    baseUnit: currency.baseUnit,
-  };
+  async getExperience({
+    id,
+    language = this.language,
+    preferredCurrencyCode = this.preferredCurrencyCode,
+  }: {
+    id?: string;
+    language?: string;
+    preferredCurrencyCode?: string;
+  } = {}) {
+    const experiencesConfig = await this.#getClientExperiencesConfig();
+
+    const experience = id
+      ? experiencesConfig.experiences.find((experience) => experience.id === id)
+      : experiencesConfig.experiences?.[0];
+
+    if (!experience) {
+      return null;
+    }
+
+    let tab = null;
+
+    /* eslint-disable */
+    try {
+      tab = await this.getTab();
+    } catch (e) {}
+    /* eslint-enable */
+
+    const { presentedCurrency, getPrice } = await setupCurrencyHandling({
+      tab,
+      preferredCurrencyCode,
+      currencies: experiencesConfig.currencies,
+      suggestedCurrency: experiencesConfig.suggestedCurrency,
+      language,
+    });
+
+    return {
+      id: experience.id,
+      name: experience.name,
+      type: experience.type,
+      uiConfig: experience.uiConfig,
+      offerings: experience.offerings.map((offering) => {
+        const prices = offering.prices.map((price) => getPrice(price));
+
+        return {
+          id: offering.id,
+          description: offering.description,
+          salesModel: offering.salesModel,
+          paymentModel: offering.paymentModel,
+          price: getPrice(offering.suggestedCurrencyPrice!, presentedCurrency),
+          prices,
+          timePassDetails: offering.timePassDetails,
+          recurringDetails: offering.recurringDetails,
+        };
+      }),
+    };
+  }
+
+  async getSiteDetails() {
+    const experiencesConfig = await this.#getClientExperiencesConfig();
+    const { siteName, siteLogoUrl } = experiencesConfig;
+
+    return {
+      siteName,
+      siteLogoUrl,
+    };
+  }
 }
