@@ -179,6 +179,7 @@ export class Supertab {
 
     const offerings = clientConfig.offerings
       .filter((eachOffering) => !!currenciesByCode[eachOffering.price.currency])
+      // Format all offerings
       .map((eachOffering) => {
         const prices = eachOffering.prices?.map((eachPrice) =>
           getPrice(eachPrice),
@@ -206,8 +207,11 @@ export class Supertab {
           connectedSubscriptionOffering,
         };
       })
+      // Add potential connected subscription offerings
       .map((eachOffering, _, offerings) => {
         let connectedSubscriptionOffering;
+        // If the offering has a connected subscription offering, find the
+        // formatted connected subscription offering and add it to the offering.
         if (eachOffering.connectedSubscriptionOffering) {
           connectedSubscriptionOffering = offerings.find(
             (offering) =>
