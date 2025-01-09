@@ -31,9 +31,7 @@ export const handleChildWindow = async <T>({
   const isUrlOpened = openedWindow.location.href === url.toString();
 
   if (!isUrlOpened) {
-    fetch(url.toString())
-      .then(setWindowLocation)
-      .catch(() => setWindowLocation());
+    setWindowLocation();
   }
 
   let receivedPostMessage = false;
