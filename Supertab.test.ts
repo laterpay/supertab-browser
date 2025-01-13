@@ -1108,12 +1108,12 @@ describe("Supertab", () => {
 
     test("respects custom limit parameter", async () => {
       const { client } = setup();
-      const tabsResponse = createTabsResponse("USD", 3);
+      const tabsResponse = createTabsResponse("USD", 10);
 
       server.withGetTab(tabsResponse);
 
-      const tabs = await client.getTabs({ limit: 3 });
-      expect(tabs).toHaveLength(3);
+      const tabs = await client.getTabs({ limit: 10 });
+      expect(tabs).toHaveLength(10);
     });
 
     test("formats tabs with different currencies", async () => {
