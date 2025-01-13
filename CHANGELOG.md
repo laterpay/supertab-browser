@@ -1,3 +1,9 @@
+# [8.4.0](https://github.com/laterpay/supertab-browser/compare/v8.3.0...v8.4.0) (2025-01-13)
+
+### Features
+
+- `.getTabs()` ([#149](https://github.com/laterpay/supertab-browser/issues/149)) ([a51039c](https://github.com/laterpay/supertab-browser/commit/a51039c14319397745b5b33d1c8cb21c68a0276b))
+
 # [8.3.0](https://github.com/laterpay/supertab-browser/compare/v8.2.0...v8.3.0) (2025-01-13)
 
 ### Features
