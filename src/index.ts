@@ -267,7 +267,7 @@ export class Supertab {
     const filterStatuses: TabStatus[] = [TabStatus.Open, TabStatus.Full];
 
     if (filterStatuses.includes(tab?.status)) {
-      return this.formatTab({ tab, clientConfig });
+      return this.formatTab({ tab, config: clientConfig });
     }
     return null;
   }
@@ -318,7 +318,7 @@ export class Supertab {
 
         return {
           status: "success",
-          tab: this.formatTab({ tab, clientConfig }),
+          tab: this.formatTab({ tab, config: clientConfig }),
         };
       },
     });
@@ -358,7 +358,7 @@ export class Supertab {
       return {
         itemAdded: !!detail?.itemAdded,
         purchaseOutcome: detail?.purchaseOutcome || null,
-        tab: this.formatTab({ tab, clientConfig }),
+        tab: this.formatTab({ tab, config: clientConfig }),
       };
     } catch (e) {
       if (e instanceof ResponseError && e.response.status === 402) {
@@ -368,7 +368,7 @@ export class Supertab {
         return {
           itemAdded: !!detail?.itemAdded,
           purchaseOutcome: detail?.purchaseOutcome || null,
-          tab: this.formatTab({ tab, clientConfig }),
+          tab: this.formatTab({ tab, config: clientConfig }),
         };
       }
 
@@ -407,12 +407,20 @@ export class Supertab {
 
   formatTab({
     tab,
+    config,
     clientConfig,
   }: {
     tab: TabResponse;
-    clientConfig: ClientConfig;
+    config?: ClientConfig | ClientExperiencesConfig;
+    clientConfig?: ClientConfig; // keeping for backwards compatibility
   }) {
-    const currencyObject = clientConfig.currencies.find(
+    const configObject = clientConfig || config;
+
+    if (!configObject) {
+      throw new Error("Missing config object");
+    }
+
+    const currencyObject = configObject.currencies.find(
       (currency) => currency.isoCode === tab.currency,
     );
     if (!currencyObject) {

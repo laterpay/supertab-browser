@@ -74,7 +74,7 @@ const setup = ({
     );
   }
 
-  server.withClientConfig({
+  const clientConfig = {
     contentKeys: [
       {
         productId: "product.test-product-id",
@@ -154,7 +154,9 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  } as ClientConfig);
+  } as ClientConfig;
+
+  server.withClientConfig(clientConfig);
 
   const experience = {
     id: "test-experience-1",
@@ -200,7 +202,7 @@ const setup = ({
     ],
   };
 
-  server.withClientExperiencesConfig({
+  const clientExperiencesConfig = {
     redirectUri: "",
     siteName: "",
     siteLogoUrl: "",
@@ -274,12 +276,16 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  } as ClientExperiencesConfig);
+  } as ClientExperiencesConfig;
+
+  server.withClientExperiencesConfig(clientExperiencesConfig);
 
   return {
     client,
     windowOpen,
     checkoutWindow,
+    clientConfig,
+    clientExperiencesConfig,
     emitter,
   };
 };
@@ -1623,6 +1629,137 @@ describe("Supertab", () => {
           text: "CHF\u00A05",
         },
       });
+    });
+  });
+
+  describe(".formatTab", () => {
+    test("formats tab with correct currency and amounts", () => {
+      const { client, clientExperiencesConfig } = setup();
+
+      const tab = createTabData("USD");
+
+      const formattedTab = client.formatTab({
+        tab,
+        config: clientExperiencesConfig,
+      });
+
+      expect(formattedTab).toEqual({
+        id: "test-tab-id",
+        status: "open",
+        total: {
+          amount: 50,
+          text: "$0.50",
+        },
+        limit: {
+          amount: 500,
+          text: "$5",
+        },
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
+        },
+        paymentModel: "pay_later",
+        purchases: [
+          {
+            id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+            summary: "test-summary",
+            price: {
+              amount: 50,
+              text: "$0.50",
+              currency: {
+                isoCode: "USD",
+                baseUnit: 100,
+              },
+            },
+            validTo: null,
+            recurringDetails: null,
+          },
+        ],
+      });
+    });
+
+    test("uses client config when provided", () => {
+      const { client, clientConfig } = setup();
+
+      const tab = createTabData("USD");
+
+      const formattedTab = client.formatTab({
+        tab,
+        clientConfig,
+      });
+
+      expect(formattedTab).toEqual({
+        id: "test-tab-id",
+        status: "open",
+        total: {
+          amount: 50,
+          text: "$0.50",
+        },
+        limit: {
+          amount: 500,
+          text: "$5",
+        },
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
+        },
+        paymentModel: "pay_later",
+        purchases: [
+          {
+            id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+            summary: "test-summary",
+            price: {
+              amount: 50,
+              text: "$0.50",
+              currency: {
+                isoCode: "USD",
+                baseUnit: 100,
+              },
+            },
+            validTo: null,
+            recurringDetails: null,
+          },
+        ],
+      });
+    });
+
+    test("throws error when config is missing", () => {
+      const { client } = setup();
+
+      const tab = createTabData("USD");
+
+      // eslint-disable-next-line
+      expect(() => client.formatTab({ tab, config: null as any })).toThrow(
+        "Missing config object",
+      );
+    });
+
+    test("throws error when currency is not found", () => {
+      const { client, clientExperiencesConfig } = setup();
+
+      const tab = {
+        ...createTabData("USD"),
+        currency: "INVALID",
+      };
+
+      expect(() =>
+        client.formatTab({ tab, config: clientExperiencesConfig }),
+      ).toThrow("Currency details not found");
+    });
+
+    test("throws error on currency mismatch in purchases", () => {
+      const { client, clientExperiencesConfig } = setup();
+
+      const tab = {
+        ...createTabData("EUR"),
+        currency: "USD",
+      };
+
+      expect(() =>
+        client.formatTab({ tab, config: clientExperiencesConfig }),
+      ).toThrow("Currency mismatch");
     });
   });
 });
