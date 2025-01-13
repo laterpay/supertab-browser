@@ -1019,6 +1019,137 @@ describe("Supertab", () => {
     });
   });
 
+  describe(".getTabs", () => {
+    const createTabsResponse = (currency: string, count: number) => ({
+      data: Array(count).fill(createTabData(currency)),
+      metadata: {
+        count,
+        perPage: count,
+        links: { previous: "", next: "" },
+        numberPages: 1,
+      },
+    });
+
+    beforeEach(() => {
+      // Default setup with no tabs
+      server.withGetTab({
+        data: [],
+        metadata: {
+          count: 0,
+          perPage: 1,
+          links: { previous: "", next: "" },
+          numberPages: 0,
+        },
+      });
+    });
+
+    test("returns empty array when no tabs exist", async () => {
+      const { client } = setup();
+
+      server.withGetTab({
+        data: [],
+        metadata: {
+          count: 0,
+          perPage: 1,
+          links: { previous: "", next: "" },
+          numberPages: 0,
+        },
+      });
+
+      const tabs = await client.getTabs();
+      expect(tabs).toEqual([]);
+    });
+
+    test("returns formatted tabs with default parameters", async () => {
+      const { client } = setup();
+      const tabsResponse = createTabsResponse("USD", 1);
+
+      server.withGetTab(tabsResponse);
+
+      const tabs = await client.getTabs();
+
+      expect(tabs).toEqual([
+        {
+          id: "test-tab-id",
+          status: "open",
+          total: {
+            amount: 50,
+            text: "$0.50",
+          },
+          limit: {
+            amount: 500,
+            text: "$5",
+          },
+          currency: {
+            isoCode: "USD",
+            baseUnit: 100,
+          },
+          paymentModel: "pay_later",
+          purchases: [
+            {
+              id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+              purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+              summary: "test-summary",
+              price: {
+                amount: 50,
+                text: "$0.50",
+                currency: {
+                  isoCode: "USD",
+                  baseUnit: 100,
+                },
+              },
+              validTo: null,
+              recurringDetails: null,
+            },
+          ],
+        },
+      ]);
+    });
+
+    test("respects custom limit parameter", async () => {
+      const { client } = setup();
+      const tabsResponse = createTabsResponse("USD", 10);
+
+      server.withGetTab(tabsResponse);
+
+      const tabs = await client.getTabs({ limit: 10 });
+      expect(tabs).toHaveLength(10);
+    });
+
+    test("formats tabs with different currencies", async () => {
+      const { client } = setup();
+      const tabsResponse = {
+        data: [
+          createTabData("USD"),
+          createTabData("EUR"),
+          createTabData("BRL"),
+        ],
+        metadata: {
+          count: 3,
+          perPage: 3,
+          links: { previous: "", next: "" },
+          numberPages: 1,
+        },
+      };
+
+      server.withGetTab(tabsResponse);
+
+      const tabs = await client.getTabs({ limit: 3 });
+
+      expect(tabs[0].currency.isoCode).toBe("USD");
+      expect(tabs[1].currency.isoCode).toBe("EUR");
+      expect(tabs[2].currency.isoCode).toBe("BRL");
+    });
+
+    test("throws error when not authenticated", async () => {
+      const { client } = setup({ authenticated: false });
+
+      await expect(async () => client.getTabs()).toThrow(
+        "Missing auth: getTabs",
+      );
+    });
+  });
+
   describe(".payTab", () => {
     beforeEach(() => {
       server.withGetTabById({

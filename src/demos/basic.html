@@ -130,6 +130,33 @@
         }
       }
 
+      async function getTabs() {
+        log(`Fetching tabs`);
+
+        try {
+          const tabs = await Supertab.getTabs({ limit: 10 });
+          log(
+            JSON.stringify(
+              {
+                tabs,
+              },
+              null,
+              2,
+            ),
+          );
+        } catch (e) {
+          log(
+            JSON.stringify(
+              {
+                error: e.toString(),
+              },
+              null,
+              2,
+            ),
+          );
+        }
+      }
+
       async function payTab() {
         const tab = await Supertab.getTab();
 
@@ -285,6 +312,9 @@
       </li>
       <li>
         <button type="button" onClick="getTab()">Get Tab</button>
+      </li>
+      <li>
+        <button type="button" onClick="getTabs()">Get Tabs</button>
       </li>
       <li>
         <button type="button" onClick="purchase()">Purchase</button>
