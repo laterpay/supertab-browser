@@ -534,4 +534,45 @@ export class Supertab {
       siteLogoUrl,
     };
   }
+
+  async getCurrencyDetails(isoCode: string) {
+    const experiencesConfig = await this.#getClientExperiencesConfig();
+
+    if (!isoCode) {
+      isoCode = experiencesConfig.suggestedCurrency || DEFAULT_CURRENCY;
+    }
+
+    const currency = experiencesConfig.currencies.find(
+      (currency) => currency.isoCode === isoCode,
+    );
+
+    if (!currency) {
+      return null;
+    }
+
+    const formatTabLimit = (amount: number) =>
+      formatPrice({
+        amount,
+        currency: currency.isoCode,
+        baseUnit: currency.baseUnit,
+        localeCode: this.language,
+        showZeroFractionDigits: false,
+        showSymbol: currency.isoCode !== "CHF",
+      });
+
+    return {
+      isoCode: currency.isoCode,
+      name: currency.name,
+      symbol: currency.symbol,
+      baseUnit: currency.baseUnit,
+      firstTabLimit: {
+        amount: currency.firstTabLimit,
+        text: formatTabLimit(currency.firstTabLimit ?? 100),
+      },
+      tabLimit: {
+        amount: currency.tabLimit,
+        text: formatTabLimit(currency.tabLimit ?? 500),
+      },
+    };
+  }
 }
