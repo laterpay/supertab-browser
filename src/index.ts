@@ -20,6 +20,7 @@ import {
   PurchaseOutcome,
   ExperiencesApi,
   ClientExperiencesConfig,
+  PaymentModel,
 } from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -270,6 +271,24 @@ export class Supertab {
       return this.formatTab({ tab, config: clientConfig });
     }
     return null;
+  }
+
+  @authenticated
+  async getTabs(
+    { limit, paymentModel }: { limit: number; paymentModel?: PaymentModel } = {
+      limit: 1,
+      paymentModel: PaymentModel.Later,
+    },
+  ): Promise<FormattedTab[]> {
+    const experiencesConfig = await this.#getClientExperiencesConfig();
+    const tabs = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
+      limit,
+      paymentModel,
+    });
+
+    return tabs.data.map((tab) =>
+      this.formatTab({ tab, config: experiencesConfig }),
+    );
   }
 
   openCheckoutWindow() {
