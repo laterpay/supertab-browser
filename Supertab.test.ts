@@ -258,6 +258,22 @@ const setup = ({
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
       },
+      {
+        id: "chf-currency",
+        name: "Swiss Franc",
+        symbol: "",
+        isMainCurrency: false,
+        operationalStatus: CurrencyOperationalStatus.Active,
+        tabLimit: 500,
+        firstTabLimit: 100,
+        googlePayoutsEnabled: false,
+        exchangeRate: 1,
+        roundingRule: CurrencyRoundingRule.Hundredth,
+        isoCode: "CHF",
+        baseUnit: 100,
+        createdAt: new Date("2021-01-01T00:00:00.000Z"),
+        updatedAt: new Date("2021-01-01T00:00:00.000Z"),
+      },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
   } as ClientExperiencesConfig;
@@ -1529,6 +1545,89 @@ describe("Supertab", () => {
 
         expect(experience?.offerings[0].price.currency.isoCode).toBe("BRL");
         expect(experience?.offerings[0].price.text).toBe("R$1.00");
+      });
+    });
+  });
+
+  describe(".getCurrencyDetails", () => {
+    test("returns currency details for valid ISO code", async () => {
+      const { client } = setup();
+
+      const result = await client.getCurrencyDetails("USD");
+
+      expect(result).toEqual({
+        isoCode: "USD",
+        name: "US Dollar",
+        symbol: "$",
+        baseUnit: 100,
+        firstTabLimit: {
+          amount: 100,
+          text: "$1",
+        },
+        tabLimit: {
+          amount: 500,
+          text: "$5",
+        },
+      });
+    });
+
+    test("returns null for invalid ISO code", async () => {
+      const { client } = setup();
+
+      const result = await client.getCurrencyDetails("INVALID");
+
+      expect(result).toBeNull();
+    });
+
+    test("uses suggested currency when no ISO code provided", async () => {
+      const { client } = setup({
+        clientConfigProps: { suggestedCurrency: "EUR" },
+      });
+
+      const result = await client.getCurrencyDetails("");
+
+      expect(result?.isoCode).toBe("EUR");
+    });
+
+    test("formats tab limits based on locale", async () => {
+      const { client } = setup({ language: "de-DE" });
+
+      const result = await client.getCurrencyDetails("EUR");
+
+      expect(result).toEqual({
+        isoCode: "EUR",
+        name: "Euro",
+        symbol: "€",
+        baseUnit: 100,
+        firstTabLimit: {
+          amount: 100,
+          text: "1\u00A0€",
+        },
+        tabLimit: {
+          amount: 500,
+          text: "5\u00A0€",
+        },
+      });
+    });
+
+    test("formats CHF without currency symbol", async () => {
+      const { client } = setup();
+
+      const result = await client.getCurrencyDetails("CHF");
+
+      expect(result).toEqual({
+        isoCode: "CHF",
+        name: "Swiss Franc",
+        symbol: "",
+        baseUnit: 100,
+        firstTabLimit: {
+          amount: 100,
+          text: "CHF\u00A01",
+        },
+        tabLimit: {
+          amount: 500,
+          text: "CHF\u00A05",
+        },
       });
     });
   });

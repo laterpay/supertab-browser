@@ -1,3 +1,9 @@
+# [8.3.0](https://github.com/laterpay/supertab-browser/compare/v8.2.0...v8.3.0) (2025-01-13)
+
+### Features
+
+- add `getCurrencyDetails` method ([#147](https://github.com/laterpay/supertab-browser/issues/147)) ([5504243](https://github.com/laterpay/supertab-browser/commit/5504243ab711e2522e77ec02b56dfe421b49fd5d))
+
 # [8.2.0](https://github.com/laterpay/supertab-browser/compare/v8.1.2...v8.2.0) (2025-01-09)
 
 ### Features
