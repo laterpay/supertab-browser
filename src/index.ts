@@ -408,15 +408,19 @@ export class Supertab {
   formatTab({
     tab,
     config,
+    clientConfig,
   }: {
     tab: TabResponse;
-    config: ClientConfig | ClientExperiencesConfig;
+    config?: ClientConfig | ClientExperiencesConfig;
+    clientConfig?: ClientConfig; // keeping for backwards compatibility
   }) {
-    if (!config) {
+    const configObject = clientConfig || config;
+
+    if (!configObject) {
       throw new Error("Missing config object");
     }
 
-    const currencyObject = config.currencies.find(
+    const currencyObject = configObject.currencies.find(
       (currency) => currency.isoCode === tab.currency,
     );
     if (!currencyObject) {

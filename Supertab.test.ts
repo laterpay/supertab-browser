@@ -74,7 +74,7 @@ const setup = ({
     );
   }
 
-  server.withClientConfig({
+  const clientConfig = {
     contentKeys: [
       {
         productId: "product.test-product-id",
@@ -154,7 +154,9 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  } as ClientConfig);
+  } as ClientConfig;
+
+  server.withClientConfig(clientConfig);
 
   const experience = {
     id: "test-experience-1",
@@ -266,6 +268,7 @@ const setup = ({
     client,
     windowOpen,
     checkoutWindow,
+    clientConfig,
     clientExperiencesConfig,
     emitter,
   };
@@ -1539,6 +1542,52 @@ describe("Supertab", () => {
       const formattedTab = client.formatTab({
         tab,
         config: clientExperiencesConfig,
+      });
+
+      expect(formattedTab).toEqual({
+        id: "test-tab-id",
+        status: "open",
+        total: {
+          amount: 50,
+          text: "$0.50",
+        },
+        limit: {
+          amount: 500,
+          text: "$5",
+        },
+        currency: {
+          isoCode: "USD",
+          baseUnit: 100,
+        },
+        paymentModel: "pay_later",
+        purchases: [
+          {
+            id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
+            purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+            summary: "test-summary",
+            price: {
+              amount: 50,
+              text: "$0.50",
+              currency: {
+                isoCode: "USD",
+                baseUnit: 100,
+              },
+            },
+            validTo: null,
+            recurringDetails: null,
+          },
+        ],
+      });
+    });
+
+    test("uses client config when provided", () => {
+      const { client, clientConfig } = setup();
+
+      const tab = createTabData("USD");
+
+      const formattedTab = client.formatTab({
+        tab,
+        clientConfig,
       });
 
       expect(formattedTab).toEqual({
