@@ -560,6 +560,9 @@ export class Supertab {
         showSymbol: currency.isoCode !== "CHF",
       });
 
+    const DEFAULT_FIRST_TAB_LIMIT = 100;
+    const DEFAULT_TAB_LIMIT = 500;
+
     return {
       isoCode: currency.isoCode,
       name: currency.name,
@@ -567,11 +570,11 @@ export class Supertab {
       baseUnit: currency.baseUnit,
       firstTabLimit: {
         amount: currency.firstTabLimit,
-        text: formatTabLimit(currency.firstTabLimit ?? 100),
+        text: formatTabLimit(currency.firstTabLimit ?? DEFAULT_FIRST_TAB_LIMIT),
       },
       tabLimit: {
         amount: currency.tabLimit,
-        text: formatTabLimit(currency.tabLimit ?? 500),
+        text: formatTabLimit(currency.tabLimit ?? DEFAULT_TAB_LIMIT),
       },
     };
   }
