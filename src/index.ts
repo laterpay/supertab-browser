@@ -281,6 +281,17 @@ export class Supertab {
   }
 
   @authenticated
+  async getTabs({ limit = 2 }: { limit?: number } = {}): Promise<
+    FormattedTab[]
+  > {
+    const tabs = await new TabsApi(this.tapperConfig).paginatedTabsListUserV1({
+      limit,
+    });
+
+    return tabs.data.map((tab) => this.formatTab({ tab }));
+  }
+
+  @authenticated
   async payTab(
     id: string,
   ): Promise<
