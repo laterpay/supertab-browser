@@ -276,7 +276,7 @@ export class Supertab {
   @authenticated
   async getTabs(
     { limit, paymentModel }: { limit: number; paymentModel?: PaymentModel } = {
-      limit: 1,
+      limit: 2,
       paymentModel: PaymentModel.Later,
     },
   ): Promise<FormattedTab[]> {
