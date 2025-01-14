@@ -27,7 +27,7 @@
     "bun-types": "latest",
     "clsx": "^2.1.1",
     "docusaurus-plugin-typedoc": "^1.0.5",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint-config-prettier": "^10.0.1",
     "happy-dom": "^16.5.3",
     "husky": "^9.1.6",
     "lint-staged": "^15.0.2",
