@@ -1,3 +1,9 @@
+## [8.4.1](https://github.com/laterpay/supertab-browser/compare/v8.4.0...v8.4.1) (2025-01-14)
+
+### Bug Fixes
+
+- make `isoCode` in `getCurrencyDetails` optional ([#150](https://github.com/laterpay/supertab-browser/issues/150)) ([1aac179](https://github.com/laterpay/supertab-browser/commit/1aac1799e5f96b23485ccc620bb8bff9a9a9bbc3))
+
 # [8.4.0](https://github.com/laterpay/supertab-browser/compare/v8.3.0...v8.4.0) (2025-01-13)
 
 ### Features
