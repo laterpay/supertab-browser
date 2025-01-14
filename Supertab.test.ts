@@ -1715,7 +1715,7 @@ describe("Supertab", () => {
         clientConfigProps: { suggestedCurrency: "EUR" },
       });
 
-      const result = await client.getCurrencyDetails("");
+      const result = await client.getCurrencyDetails();
 
       expect(result?.isoCode).toBe("EUR");
     });
