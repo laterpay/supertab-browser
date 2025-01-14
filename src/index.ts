@@ -562,7 +562,7 @@ export class Supertab {
     };
   }
 
-  async getCurrencyDetails(isoCode: string) {
+  async getCurrencyDetails(isoCode?: string) {
     const experiencesConfig = await this.#getClientExperiencesConfig();
 
     if (!isoCode) {
