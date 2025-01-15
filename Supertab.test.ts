@@ -200,6 +200,7 @@ const setup = ({
         },
       },
     ],
+    upsells: [],
   };
 
   const clientExperiencesConfig = {

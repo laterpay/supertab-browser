@@ -106,6 +106,7 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
   },
   "type": "basic_paygate",
   "uiConfig": {},
+  "upsells": [],
 }
 `;
 
@@ -167,5 +168,6 @@ exports[`Supertab .getExperience return experience by id 1`] = `
   },
   "type": "basic_paygate",
   "uiConfig": {},
+  "upsells": [],
 }
 `;

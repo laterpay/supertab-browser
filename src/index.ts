@@ -15,7 +15,7 @@ import {
   TabsApi,
   TabStatus,
   ResponseError,
-  PurchaseOfferingResponseFromJSON,
+  PurchaseEventResponseFromJSON,
   TabResponse,
   PurchaseOutcome,
   ExperiencesApi,
@@ -149,7 +149,7 @@ export class Supertab {
 
     this._clientExperiencesConfig = await new ExperiencesApi(
       this.tapperConfig,
-    ).getClientExperiencesConfigV2({
+    ).getClientExperiencesConfig({
       clientId: this.clientId,
     });
 
@@ -384,7 +384,7 @@ export class Supertab {
       };
     } catch (e) {
       if (e instanceof ResponseError && e.response.status === 402) {
-        const { tab, detail } = PurchaseOfferingResponseFromJSON(
+        const { tab, detail } = PurchaseEventResponseFromJSON(
           await e.response.json(),
         );
         return {
@@ -558,6 +558,7 @@ export class Supertab {
           recurringDetails: offering.recurringDetails,
         };
       }),
+      upsells: experience.upsells,
     };
   }
 

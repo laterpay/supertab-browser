@@ -12,8 +12,8 @@ import {
   HealthResponseToJSON,
   PaginatedTabResponse,
   PaginatedTabResponseToJSON,
-  PurchaseOfferingResponse,
-  PurchaseOfferingResponseToJSON,
+  PurchaseEventResponse,
+  PurchaseEventResponseToJSON,
   TabResponse,
   TabResponseToJSON,
   UserResponse,
@@ -105,14 +105,14 @@ const withGetTabById = (tab: TabResponse) => {
   );
 };
 
-const withPurchase = (purchase: PurchaseOfferingResponse, status = 200) => {
+const withPurchase = (purchase: PurchaseEventResponse, status = 200) => {
   server.use(
     rest.post(
       "https://tapi.sbx.supertab.co/v1/purchase/test-offering-id",
       (_, res, ctx) =>
         res(
           ctx.status(status),
-          ctx.json(PurchaseOfferingResponseToJSON(purchase)),
+          ctx.json(PurchaseEventResponseToJSON(purchase)),
         ),
     ),
   );
