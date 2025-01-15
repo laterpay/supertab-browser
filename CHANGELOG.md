@@ -1,3 +1,9 @@
+# [8.6.0](https://github.com/laterpay/supertab-browser/compare/v8.5.0...v8.6.0) (2025-01-15)
+
+### Features
+
+- make `checkAccess` accept optional `contentKey` to check access for specific key ([#154](https://github.com/laterpay/supertab-browser/issues/154)) ([f259bd2](https://github.com/laterpay/supertab-browser/commit/f259bd2f547db74a92a0899a75a57676529bb14b))
+
 # [8.5.0](https://github.com/laterpay/supertab-browser/compare/v8.4.1...v8.5.0) (2025-01-15)
 
 ### Features
