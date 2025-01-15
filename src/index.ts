@@ -535,6 +535,12 @@ export class Supertab {
       name: experience.name,
       type: experience.type,
       uiConfig: experience.uiConfig,
+      product: {
+        id: experience.product.id,
+        name: experience.product.name,
+        contentKey: experience.product.contentKey,
+        contentKeyRequired: experience.product.contentKeyRequired,
+      },
       offerings: experience.offerings.map((offering) => {
         const prices = offering.prices.map((price) => getPrice(price));
 

@@ -1,3 +1,9 @@
+# [8.5.0](https://github.com/laterpay/supertab-browser/compare/v8.4.1...v8.5.0) (2025-01-15)
+
+### Features
+
+- include product attributes in experience ([#153](https://github.com/laterpay/supertab-browser/issues/153)) ([b8d3003](https://github.com/laterpay/supertab-browser/commit/b8d30039e31c79f7a7645a6966f1a7d76b4cb9f8))
+
 ## [8.4.1](https://github.com/laterpay/supertab-browser/compare/v8.4.0...v8.4.1) (2025-01-14)
 
 ### Bug Fixes
