@@ -98,6 +98,12 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
       },
     },
   ],
+  "product": {
+    "contentKey": "test-content-key",
+    "contentKeyRequired": true,
+    "id": "test-product",
+    "name": "Test Product",
+  },
   "type": "basic_paygate",
   "uiConfig": {},
 }
@@ -153,6 +159,12 @@ exports[`Supertab .getExperience return experience by id 1`] = `
       },
     },
   ],
+  "product": {
+    "contentKey": "test-content-key",
+    "contentKeyRequired": true,
+    "id": "test-product",
+    "name": "Test Product",
+  },
   "type": "basic_paygate",
   "uiConfig": {},
 }
