@@ -194,7 +194,6 @@ const setup = ({
             currency: "BRL",
           },
         ] as Price[],
-        connectedSubscriptionOfferingId: null,
         recurringDetails: null,
         timePassDetails: {
           validTimedelta: "1d",
