@@ -6,7 +6,15 @@ Supertab Browser SDK.
 
 This project uses [bun](https://bun.sh/) as the package manager and runtime. Please ensure you have it installed before proceeding.
 
-## Demo & Installation
+### NPM Token
+
+To access private packages, you need to set up an NPM_TOKEN in your environment. If you are using the shared token, you can skip this step.
+
+For more information on setting it up, please refer to the [NPM Token Guide](https://laterpay-supertab-docs.readthedocs-hosted.com/en/latest/developers/guides/local-dev/#npm-token).
+
+### Development
+
+After cloning the repository, run the following commands to get started:
 
 1. Install dependencies:
 
