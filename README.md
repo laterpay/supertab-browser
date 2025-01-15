@@ -2,11 +2,27 @@
 
 Supertab Browser SDK.
 
-## Installation
+## Requirements
+
+This project uses [bun](https://bun.sh/) as the package manager and runtime. Please ensure you have it installed before proceeding.
+
+## Demo & Installation
+
+1. Install dependencies:
 
 ```bash
-npm install @getsupertab/supertab-browser
+bun install
 ```
+
+2. Start the demo:
+
+```bash
+bun start
+```
+
+This will launch a demo where you can see the response examples and test the Supertab Browser SDK.
+
+3. Note on authentication: Some endpoints in the demo require authentication. Click on the `Auth` button to start the authentication process before using those endpoints.
 
 ## Usage
 
