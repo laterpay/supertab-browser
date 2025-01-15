@@ -70,10 +70,21 @@ const withHealth = (health: HealthResponse) => {
   return server;
 };
 
+let lastAccessCheckRequest: { contentKey?: string } | null = null;
+
 const withAccessCheck = (accessCheck: AccessResponse) => {
   server.use(
-    rest.get("https://tapi.sbx.supertab.co/v2/access/check", (_, res, ctx) =>
-      res(ctx.status(200), ctx.json(AccessResponseToJSON(accessCheck))),
+    rest.get(
+      "https://tapi.sbx.supertab.co/v2/access/check",
+      (req, res, ctx) => {
+        const contentKey = req.url.searchParams.get("content_key") || undefined;
+        lastAccessCheckRequest = { contentKey };
+
+        return res(
+          ctx.status(200),
+          ctx.json(AccessResponseToJSON(accessCheck)),
+        );
+      },
     ),
   );
 };
@@ -107,6 +118,13 @@ const withPurchase = (purchase: PurchaseOfferingResponse, status = 200) => {
   );
 };
 
+const getLastAccessCheckRequest = () => {
+  if (!lastAccessCheckRequest) {
+    throw new Error("No access check request has been made");
+  }
+  return lastAccessCheckRequest;
+};
+
 // Setup requests interception using the given handlers.
 const server = Object.assign(node.setupServer(...handlers), {
   withClientConfig,
@@ -117,6 +135,7 @@ const server = Object.assign(node.setupServer(...handlers), {
   withGetTab,
   withGetTabById,
   withPurchase,
+  getLastAccessCheckRequest,
 });
 
 export { server, rest };

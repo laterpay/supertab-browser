@@ -686,76 +686,8 @@ describe("Supertab", () => {
   });
 
   describe(".checkAccess", () => {
-    const accessClientConfig = {
-      contentKeys: [
-        {
-          contentKey: "test-content-key",
-          offeringIds: ["test-offering-id"],
-          productId: "test-product-id",
-          contentKeyRequired: true,
-        },
-      ],
-      redirectUri: "",
-      siteName: "",
-      testMode: false,
-      offerings: [
-        {
-          id: "test-offering-id",
-          description: "Test Offering Description",
-          createdAt: new Date("2023-11-03T15:34:44.852Z"),
-          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-          deletedAt: null,
-          salesModel: "time_pass",
-          paymentModel: "pay_later",
-          price: {
-            amount: 100,
-            currency: "USD",
-          },
-          prices: [
-            {
-              amount: 100,
-              currency: "USD",
-            },
-            {
-              amount: 100,
-              currency: "EUR",
-            },
-            {
-              amount: 100,
-              currency: "BRL",
-            },
-          ],
-          offeringPrices: [
-            {
-              id: "test-offering-price",
-              createdAt: new Date("2023-11-03T15:34:44.852Z"),
-              updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-              price: {
-                amount: 100,
-                currency: "USD",
-              },
-            },
-          ],
-          isActive: true,
-          connectedSubscriptionOffering: null,
-          subscriptionOfferingId: null,
-        } as SiteOffering,
-      ],
-      currencies: [
-        {
-          isoCode: "USD",
-          baseUnit: 100,
-          createdAt: new Date("2023-11-03T15:34:44.852Z"),
-          updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        },
-      ] as Currency[],
-      suggestedCurrency: "USD",
-    };
-
     test("return access granted", async () => {
       const { client } = setup();
-
-      server.withClientConfig(accessClientConfig);
 
       server.withAccessCheck({
         access: {
@@ -765,8 +697,9 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.checkAccess()).toEqual({
+      expect(await client.checkAccess("test-content-key")).toEqual({
         access: {
+          contentKey: "test-content-key",
           validTo: new Date(1700119519 * 1000),
           isSubscription: false,
         },
@@ -775,8 +708,6 @@ describe("Supertab", () => {
 
     test("set flag `isSubscription` for subscription based access", async () => {
       const { client } = setup();
-
-      server.withClientConfig(accessClientConfig);
 
       server.withAccessCheck({
         access: {
@@ -787,8 +718,9 @@ describe("Supertab", () => {
         },
       });
 
-      expect(await client.checkAccess()).toEqual({
+      expect(await client.checkAccess("test-content-key")).toEqual({
         access: {
+          contentKey: "test-content-key",
           validTo: new Date(1700119519 * 1000),
           isSubscription: true,
         },
@@ -798,15 +730,90 @@ describe("Supertab", () => {
     test("return empty access if no access is found", async () => {
       const { client } = setup();
 
-      server.withClientConfig(accessClientConfig);
-
       server.withAccessCheck({
         access: undefined,
       });
 
-      expect(await client.checkAccess()).toEqual({
+      expect(await client.checkAccess("test-content-key")).toEqual({
         access: null,
       });
+    });
+
+    test("use content key from client config if no content key is provided", async () => {
+      const { client } = setup();
+
+      server.withClientConfig({
+        contentKeys: [
+          {
+            contentKey: "test-content-key-2",
+            offeringIds: ["test-offering-id"],
+            productId: "test-product-id",
+            contentKeyRequired: true,
+          },
+        ],
+        redirectUri: "",
+        siteName: "",
+        offerings: [
+          {
+            id: "test-offering-id",
+            description: "Test Offering Description",
+            createdAt: new Date("2023-11-03T15:34:44.852Z"),
+            updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+            deletedAt: null,
+            salesModel: "time_pass",
+            paymentModel: "pay_later",
+            price: {
+              amount: 100,
+              currency: "USD",
+            },
+            prices: [
+              {
+                amount: 100,
+                currency: "USD",
+              },
+              {
+                amount: 100,
+                currency: "EUR",
+              },
+              {
+                amount: 100,
+                currency: "BRL",
+              },
+            ],
+            offeringPrices: [
+              {
+                id: "test-offering-price",
+                createdAt: new Date("2023-11-03T15:34:44.852Z"),
+                updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+                price: {
+                  amount: 100,
+                  currency: "USD",
+                },
+              },
+            ],
+            isActive: true,
+            connectedSubscriptionOffering: null,
+            subscriptionOfferingId: null,
+          } as SiteOffering,
+        ],
+        currencies: [
+          {
+            isoCode: "USD",
+            baseUnit: 100,
+            createdAt: new Date("2023-11-03T15:34:44.852Z"),
+            updatedAt: new Date("2023-11-03T15:34:44.852Z"),
+          },
+        ] as Currency[],
+        suggestedCurrency: "USD",
+      });
+
+      server.withAccessCheck({ access: undefined });
+
+      await client.checkAccess();
+
+      expect(server.getLastAccessCheckRequest().contentKey).toBe(
+        "test-content-key-2",
+      );
     });
   });
 
