@@ -229,11 +229,13 @@ export class Supertab {
   }
 
   @authenticated
-  async checkAccess() {
-    const clientConfig = await this.#getClientConfig();
-    const contentKey = clientConfig.contentKeys.map(
-      (item) => item.contentKey,
-    )[0] as string;
+  async checkAccess(contentKey?: string) {
+    if (!contentKey) {
+      const clientConfig = await this.#getClientConfig();
+      contentKey = clientConfig.contentKeys.map(
+        (item) => item.contentKey,
+      )[0] as string;
+    }
 
     const access = await new AccessApi(this.tapperConfig).checkAccessV2({
       contentKey,
@@ -242,6 +244,7 @@ export class Supertab {
     if (access.access) {
       return {
         access: {
+          contentKey: access.access.contentKey,
           validTo: access.access.validTo
             ? new Date(access.access.validTo * 1000)
             : undefined,
