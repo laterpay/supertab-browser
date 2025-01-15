@@ -1,3 +1,9 @@
+# [8.7.0](https://github.com/laterpay/supertab-browser/compare/v8.6.0...v8.7.0) (2025-01-15)
+
+### Features
+
+- return `upsells` in experience data ([#156](https://github.com/laterpay/supertab-browser/issues/156)) ([056aeca](https://github.com/laterpay/supertab-browser/commit/056aeca10c733af146f469d33158570557671f7c))
+
 # [8.6.0](https://github.com/laterpay/supertab-browser/compare/v8.5.0...v8.6.0) (2025-01-15)
 
 ### Features
