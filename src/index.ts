@@ -19,7 +19,7 @@ import {
   TabResponse,
   PurchaseOutcome,
   ExperiencesApi,
-  ClientExperiencesConfig,
+  ClientExperiencesConfigResponse,
   PaymentModel,
 } from "@getsupertab/tapper-sdk";
 
@@ -60,7 +60,7 @@ export class Supertab {
   private language: string;
   private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
-  private _clientExperiencesConfig?: ClientExperiencesConfig;
+  private _clientExperiencesConfig?: ClientExperiencesConfigResponse;
   private systemUrls: SystemUrls;
 
   constructor(options: {
@@ -433,7 +433,7 @@ export class Supertab {
     clientConfig,
   }: {
     tab: TabResponse;
-    config?: ClientConfig | ClientExperiencesConfig;
+    config?: ClientConfig | ClientExperiencesConfigResponse;
     clientConfig?: ClientConfig; // keeping for backwards compatibility
   }) {
     const configObject = clientConfig || config;
@@ -545,14 +545,24 @@ export class Supertab {
         contentKeyRequired: experience.product.contentKeyRequired,
       },
       offerings: experience.offerings.map((offering) => {
+        // Format all prices.
         const prices = offering.prices.map((price) => getPrice(price));
+
+        // The price in a currency that's going to be featured in
+        // `price` object. This is providing quick access to the
+        // price without having to iterate over the `prices` array.
+        const preferredCurrencyPrice = offering.prices.find(
+          (price) => price.currency === presentedCurrency,
+        );
 
         return {
           id: offering.id,
           description: offering.description,
           salesModel: offering.salesModel,
           paymentModel: offering.paymentModel,
-          price: getPrice(offering.suggestedCurrencyPrice!, presentedCurrency),
+          // The `preferredCurrencyPrice` is never undefined because
+          // it uses `USD` as a fallback.
+          price: getPrice(preferredCurrencyPrice!),
           prices,
           timePassDetails: offering.timePassDetails,
           recurringDetails: offering.recurringDetails,
