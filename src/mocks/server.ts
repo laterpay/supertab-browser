@@ -6,8 +6,8 @@ import {
   AccessResponseToJSON,
   ClientConfig,
   ClientConfigToJSON,
-  ClientExperiencesConfig,
-  ClientExperiencesConfigToJSON,
+  ClientExperiencesConfigResponse,
+  ClientExperiencesConfigResponseToJSON,
   HealthResponse,
   HealthResponseToJSON,
   PaginatedTabResponse,
@@ -34,7 +34,7 @@ const withClientConfig = (clientConfig: ClientConfig) => {
 };
 
 const withClientExperiencesConfig = (
-  clientExperiencesConfig: ClientExperiencesConfig,
+  clientExperiencesConfig: ClientExperiencesConfigResponse,
 ) => {
   server.use(
     rest.get(
@@ -42,7 +42,9 @@ const withClientExperiencesConfig = (
       (_, res, ctx) =>
         res(
           ctx.status(200),
-          ctx.json(ClientExperiencesConfigToJSON(clientExperiencesConfig)),
+          ctx.json(
+            ClientExperiencesConfigResponseToJSON(clientExperiencesConfig),
+          ),
         ),
     ),
   );
