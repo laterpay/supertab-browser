@@ -545,14 +545,24 @@ export class Supertab {
         contentKeyRequired: experience.product.contentKeyRequired,
       },
       offerings: experience.offerings.map((offering) => {
+        // Format all prices.
         const prices = offering.prices.map((price) => getPrice(price));
+
+        // The price in a currency that's going to be featured in
+        // `price` object. This is providing quick access to the
+        // price without having to iterate over the `prices` array.
+        const preferredCurrencyPrice = offering.prices.find(
+          (price) => price.currency === presentedCurrency,
+        );
 
         return {
           id: offering.id,
           description: offering.description,
           salesModel: offering.salesModel,
           paymentModel: offering.paymentModel,
-          price: getPrice(offering.suggestedCurrencyPrice!, presentedCurrency),
+          // The `preferredCurrencyPrice` is never undefined because
+          // it uses `USD` as a fallback.
+          price: getPrice(preferredCurrencyPrice!, presentedCurrency),
           prices,
           timePassDetails: offering.timePassDetails,
           recurringDetails: offering.recurringDetails,
