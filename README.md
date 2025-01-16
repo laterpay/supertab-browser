@@ -25,7 +25,7 @@ bun install
 2. Start the demo:
 
 ```bash
-bun start
+bun demo
 ```
 
 This will launch a demo where you can see the response examples and test the Supertab Browser SDK.
