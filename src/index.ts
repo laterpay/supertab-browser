@@ -19,7 +19,7 @@ import {
   TabResponse,
   PurchaseOutcome,
   ExperiencesApi,
-  ClientExperiencesConfig,
+  ClientExperiencesConfigResponse,
   PaymentModel,
 } from "@getsupertab/tapper-sdk";
 
@@ -60,7 +60,7 @@ export class Supertab {
   private language: string;
   private preferredCurrencyCode: string | undefined;
   private _clientConfig?: ClientConfig;
-  private _clientExperiencesConfig?: ClientExperiencesConfig;
+  private _clientExperiencesConfig?: ClientExperiencesConfigResponse;
   private systemUrls: SystemUrls;
 
   constructor(options: {
@@ -433,7 +433,7 @@ export class Supertab {
     clientConfig,
   }: {
     tab: TabResponse;
-    config?: ClientConfig | ClientExperiencesConfig;
+    config?: ClientConfig | ClientExperiencesConfigResponse;
     clientConfig?: ClientConfig; // keeping for backwards compatibility
   }) {
     const configObject = clientConfig || config;
