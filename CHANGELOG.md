@@ -1,3 +1,9 @@
+## [8.7.1](https://github.com/laterpay/supertab-browser/compare/v8.7.0...v8.7.1) (2025-01-16)
+
+### Bug Fixes
+
+- move away from relying on suggested currency price in offerings ([#158](https://github.com/laterpay/supertab-browser/issues/158)) ([ce6922e](https://github.com/laterpay/supertab-browser/commit/ce6922ee3a3c016ebf128790b1490924a8a844cd)), closes [#159](https://github.com/laterpay/supertab-browser/issues/159)
+
 # [8.7.0](https://github.com/laterpay/supertab-browser/compare/v8.6.0...v8.7.0) (2025-01-15)
 
 ### Features
