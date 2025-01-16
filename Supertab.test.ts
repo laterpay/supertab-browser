@@ -194,7 +194,7 @@ const setup = ({
             currency: "BRL",
           },
         ] as Price[],
-        recurringDetails: null,
+        recurringDetails: undefined,
         timePassDetails: {
           validTimedelta: "1d",
         },
@@ -312,6 +312,7 @@ function createTabData(currency: string): TabResponsePurchaseEnhanced {
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
         purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+        purchaseIntentItemId: "test-purchase-intent-item-id",
         merchantId: "test-merchant-id",
         summary: "test-summary",
         price: {
@@ -558,6 +559,7 @@ describe("Supertab", () => {
                   createdAt: new Date("2023-11-03T15:34:44.852Z"),
                   updatedAt: new Date("2023-11-03T15:34:44.852Z"),
                   purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                  purchaseIntentItemId: "test-purchase-intent-item-id",
                   merchantId: "test-merchant-id",
                   summary: "test-summary",
                   price: {
@@ -846,6 +848,7 @@ describe("Supertab", () => {
                   createdAt: new Date("2023-11-03T15:34:44.852Z"),
                   updatedAt: new Date("2023-11-03T15:34:44.852Z"),
                   purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                  purchaseIntentItemId: "test-purchase-intent-item-id",
                   merchantId: "test-merchant-id",
                   summary: "test-summary",
                   price: {
@@ -975,6 +978,7 @@ describe("Supertab", () => {
                 createdAt: new Date("2023-11-03T15:34:44.852Z"),
                 updatedAt: new Date("2023-11-03T15:34:44.852Z"),
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
+                purchaseIntentItemId: "test-purchase-intent-item-id",
                 merchantId: "test-merchant-id",
                 summary: "test-summary",
                 price: {
