@@ -562,7 +562,7 @@ export class Supertab {
           paymentModel: offering.paymentModel,
           // The `preferredCurrencyPrice` is never undefined because
           // it uses `USD` as a fallback.
-          price: getPrice(preferredCurrencyPrice!, presentedCurrency),
+          price: getPrice(preferredCurrencyPrice!),
           prices,
           timePassDetails: offering.timePassDetails,
           recurringDetails: offering.recurringDetails,
