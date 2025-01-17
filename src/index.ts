@@ -137,7 +137,6 @@ export class Supertab {
       this.tapperConfig,
     ).getClientConfigV1({
       clientId: this.clientId,
-      currency: "INR",
     });
 
     return this._clientConfig;
