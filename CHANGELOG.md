@@ -1,3 +1,9 @@
+## [8.7.2](https://github.com/laterpay/supertab-browser/compare/v8.7.1...v8.7.2) (2025-01-17)
+
+### Bug Fixes
+
+- return correct price for preferred currency ([#160](https://github.com/laterpay/supertab-browser/issues/160)) ([f4fad67](https://github.com/laterpay/supertab-browser/commit/f4fad67dea8f88da41810b15a9bca18821d6da8f))
+
 ## [8.7.1](https://github.com/laterpay/supertab-browser/compare/v8.7.0...v8.7.1) (2025-01-16)
 
 ### Bug Fixes
