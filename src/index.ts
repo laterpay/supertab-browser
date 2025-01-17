@@ -137,6 +137,7 @@ export class Supertab {
       this.tapperConfig,
     ).getClientConfigV1({
       clientId: this.clientId,
+      currency: "INR",
     });
 
     return this._clientConfig;
@@ -186,6 +187,10 @@ export class Supertab {
           getPrice(eachPrice),
         );
 
+        const preferredCurrencyPrice = eachOffering.prices.find(
+          (price) => price.currency === presentedCurrency,
+        );
+
         let connectedSubscriptionOffering;
         // If the offering has a connected subscription offering, store the id
         // temporarily to be able to find the formatted connected subscription
@@ -201,7 +206,7 @@ export class Supertab {
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
           paymentModel: eachOffering.paymentModel,
-          price: getPrice(eachOffering.price, presentedCurrency),
+          price: getPrice(preferredCurrencyPrice!),
           prices,
           timePassDetails: eachOffering.timePassDetails,
           recurringDetails: eachOffering.recurringDetails,
