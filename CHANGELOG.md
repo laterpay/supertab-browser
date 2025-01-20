@@ -1,3 +1,9 @@
+## [8.7.3](https://github.com/laterpay/supertab-browser/compare/v8.7.2...v8.7.3) (2025-01-20)
+
+### Bug Fixes
+
+- update tapper-sdk to 18.0.0 ([#161](https://github.com/laterpay/supertab-browser/issues/161)) ([d725e71](https://github.com/laterpay/supertab-browser/commit/d725e7122dbb58f29f299764469df84064f0b91a))
+
 ## [8.7.2](https://github.com/laterpay/supertab-browser/compare/v8.7.1...v8.7.2) (2025-01-17)
 
 ### Bug Fixes
