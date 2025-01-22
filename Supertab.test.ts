@@ -4,7 +4,7 @@ import EventEmitter from "events";
 import Supertab from ".";
 import {
   ClientConfig,
-  ClientExperiencesConfig,
+  ClientExperiencesConfigResponse,
   Currency,
   CurrencyOperationalStatus,
   CurrencyRoundingRule,
@@ -175,6 +175,7 @@ const setup = ({
         id: "test-offering-id",
         description: "Test Offering Description",
         salesModel: "time_pass",
+        productId: "test-product-id",
         paymentModel: "pay_later",
         suggestedCurrencyPrice: {
           amount: 100,
@@ -194,13 +195,68 @@ const setup = ({
             currency: "BRL",
           },
         ] as Price[],
-        recurringDetails: undefined,
+        recurringDetails: null,
         timePassDetails: {
           validTimedelta: "1d",
         },
       },
     ],
-    upsells: [],
+    upsells: [
+      {
+        mainOffering: {
+          id: "test-offering-id",
+          description: "Test Offering Description",
+          salesModel: "time_pass",
+          paymentModel: "pay_later",
+          productId: "test-product-id",
+          prices: [
+            {
+              amount: 100,
+              currency: "USD",
+            },
+            {
+              amount: 100,
+              currency: "EUR",
+            },
+            {
+              amount: 100,
+              currency: "BRL",
+            },
+          ] as Price[],
+          timePassDetails: {
+            validTimedelta: "1d",
+          },
+          recurringDetails: null,
+        },
+        upsellOffering: {
+          id: "test-offering-id",
+          description: "Test Offering Description",
+          salesModel: "subscription",
+          paymentModel: "pay_now",
+          productId: "test-product-id",
+          prices: [
+            {
+              amount: 100,
+              currency: "USD",
+            },
+            {
+              amount: 100,
+              currency: "EUR",
+            },
+            {
+              amount: 100,
+              currency: "BRL",
+            },
+          ] as Price[],
+          timePassDetails: null,
+          recurringDetails: {
+            billingInterval: "day",
+            intervalCount: 1,
+          },
+        },
+        discount: 0,
+      },
+    ],
   };
 
   const clientExperiencesConfig = {
@@ -277,7 +333,7 @@ const setup = ({
       },
     ] as Currency[],
     suggestedCurrency: clientConfigProps?.suggestedCurrency ?? "USD",
-  } as ClientExperiencesConfig;
+  } as ClientExperiencesConfigResponse;
 
   server.withClientExperiencesConfig(clientExperiencesConfig);
 
@@ -1624,6 +1680,12 @@ describe("Supertab", () => {
     test("returns null for non-existent experience id", async () => {
       const { client } = setup();
       expect(await client.getExperience({ id: "non-existent-id" })).toBeNull();
+    });
+
+    test("returns upsells", async () => {
+      const { client } = setup();
+
+      expect(await client.getExperience()).toMatchSnapshot();
     });
 
     describe("with no tab", () => {
