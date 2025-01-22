@@ -1,3 +1,9 @@
+## [8.7.4](https://github.com/laterpay/supertab-browser/compare/v8.7.3...v8.7.4) (2025-01-22)
+
+### Bug Fixes
+
+- format upsell offerings in getExperience ([#162](https://github.com/laterpay/supertab-browser/issues/162)) ([28af5a3](https://github.com/laterpay/supertab-browser/commit/28af5a3e2c3e4e145ed264e86386811b24cf28cd))
+
 ## [8.7.3](https://github.com/laterpay/supertab-browser/compare/v8.7.2...v8.7.3) (2025-01-20)
 
 ### Bug Fixes
