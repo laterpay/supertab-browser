@@ -21,6 +21,7 @@ import {
   ExperiencesApi,
   ClientExperiencesConfigResponse,
   PaymentModel,
+  OfferingResponse,
 } from "@getsupertab/tapper-sdk";
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
@@ -537,6 +538,31 @@ export class Supertab {
       language,
     });
 
+    const formatOffering = (offering: OfferingResponse) => {
+      // Format all prices.
+      const prices = offering.prices.map((price) => getPrice(price));
+
+      // The price in a currency that's going to be featured in
+      // `price` object. This is providing quick access to the
+      // price without having to iterate over the `prices` array.
+      const preferredCurrencyPrice = offering.prices.find(
+        (price) => price.currency === presentedCurrency,
+      );
+
+      return {
+        id: offering.id,
+        description: offering.description,
+        salesModel: offering.salesModel,
+        paymentModel: offering.paymentModel,
+        // The `preferredCurrencyPrice` is never undefined because
+        // it uses `USD` as a fallback.
+        price: getPrice(preferredCurrencyPrice!),
+        prices,
+        timePassDetails: offering.timePassDetails,
+        recurringDetails: offering.recurringDetails,
+      };
+    };
+
     return {
       id: experience.id,
       name: experience.name,
@@ -548,31 +574,14 @@ export class Supertab {
         contentKey: experience.product.contentKey,
         contentKeyRequired: experience.product.contentKeyRequired,
       },
-      offerings: experience.offerings.map((offering) => {
-        // Format all prices.
-        const prices = offering.prices.map((price) => getPrice(price));
-
-        // The price in a currency that's going to be featured in
-        // `price` object. This is providing quick access to the
-        // price without having to iterate over the `prices` array.
-        const preferredCurrencyPrice = offering.prices.find(
-          (price) => price.currency === presentedCurrency,
-        );
-
+      offerings: experience.offerings.map(formatOffering),
+      upsells: experience.upsells.map((upsell) => {
         return {
-          id: offering.id,
-          description: offering.description,
-          salesModel: offering.salesModel,
-          paymentModel: offering.paymentModel,
-          // The `preferredCurrencyPrice` is never undefined because
-          // it uses `USD` as a fallback.
-          price: getPrice(preferredCurrencyPrice!),
-          prices,
-          timePassDetails: offering.timePassDetails,
-          recurringDetails: offering.recurringDetails,
+          mainOffering: formatOffering(upsell.mainOffering),
+          upsellOffering: formatOffering(upsell.upsellOffering),
+          discount: upsell.discount,
         };
       }),
-      upsells: experience.upsells,
     };
   }
 

@@ -91,7 +91,7 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
           "text": "R$1.00",
         },
       ],
-      "recurringDetails": undefined,
+      "recurringDetails": null,
       "salesModel": "time_pass",
       "timePassDetails": {
         "validTimedelta": "1d",
@@ -106,7 +106,100 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
   },
   "type": "basic_paygate",
   "uiConfig": {},
-  "upsells": [],
+  "upsells": [
+    {
+      "discount": 0,
+      "mainOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_later",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": null,
+        "salesModel": "time_pass",
+        "timePassDetails": {
+          "validTimedelta": "1d",
+        },
+      },
+      "upsellOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_now",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": {
+          "billingInterval": "day",
+          "intervalCount": 1,
+        },
+        "salesModel": "subscription",
+        "timePassDetails": null,
+      },
+    },
+  ],
 }
 `;
 
@@ -153,7 +246,7 @@ exports[`Supertab .getExperience return experience by id 1`] = `
           "text": "R$1.00",
         },
       ],
-      "recurringDetails": undefined,
+      "recurringDetails": null,
       "salesModel": "time_pass",
       "timePassDetails": {
         "validTimedelta": "1d",
@@ -168,6 +261,254 @@ exports[`Supertab .getExperience return experience by id 1`] = `
   },
   "type": "basic_paygate",
   "uiConfig": {},
-  "upsells": [],
+  "upsells": [
+    {
+      "discount": 0,
+      "mainOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_later",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": null,
+        "salesModel": "time_pass",
+        "timePassDetails": {
+          "validTimedelta": "1d",
+        },
+      },
+      "upsellOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_now",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": {
+          "billingInterval": "day",
+          "intervalCount": 1,
+        },
+        "salesModel": "subscription",
+        "timePassDetails": null,
+      },
+    },
+  ],
+}
+`;
+
+exports[`Supertab .getExperience returns upsells 1`] = `
+{
+  "id": "test-experience-1",
+  "name": "My Experience",
+  "offerings": [
+    {
+      "description": "Test Offering Description",
+      "id": "test-offering-id",
+      "paymentModel": "pay_later",
+      "price": {
+        "amount": 100,
+        "currency": {
+          "baseUnit": 100,
+          "isoCode": "USD",
+        },
+        "text": "$1.00",
+      },
+      "prices": [
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "EUR",
+          },
+          "text": "€1.00",
+        },
+        {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "BRL",
+          },
+          "text": "R$1.00",
+        },
+      ],
+      "recurringDetails": null,
+      "salesModel": "time_pass",
+      "timePassDetails": {
+        "validTimedelta": "1d",
+      },
+    },
+  ],
+  "product": {
+    "contentKey": "test-content-key",
+    "contentKeyRequired": true,
+    "id": "test-product",
+    "name": "Test Product",
+  },
+  "type": "basic_paygate",
+  "uiConfig": {},
+  "upsells": [
+    {
+      "discount": 0,
+      "mainOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_later",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": null,
+        "salesModel": "time_pass",
+        "timePassDetails": {
+          "validTimedelta": "1d",
+        },
+      },
+      "upsellOffering": {
+        "description": "Test Offering Description",
+        "id": "test-offering-id",
+        "paymentModel": "pay_now",
+        "price": {
+          "amount": 100,
+          "currency": {
+            "baseUnit": 100,
+            "isoCode": "USD",
+          },
+          "text": "$1.00",
+        },
+        "prices": [
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "USD",
+            },
+            "text": "$1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "EUR",
+            },
+            "text": "€1.00",
+          },
+          {
+            "amount": 100,
+            "currency": {
+              "baseUnit": 100,
+              "isoCode": "BRL",
+            },
+            "text": "R$1.00",
+          },
+        ],
+        "recurringDetails": {
+          "billingInterval": "day",
+          "intervalCount": 1,
+        },
+        "salesModel": "subscription",
+        "timePassDetails": null,
+      },
+    },
+  ],
 }
 `;
