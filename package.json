@@ -14,7 +14,7 @@
   },
   "repository": "https://github.com/laterpay/supertab-browser.git",
   "devDependencies": {
-    "@getsupertab/tapper-sdk": "^18.0.0",
+    "@getsupertab/tapper-sdk": "^20.0.0",
     "@docusaurus/core": "3.7.0",
     "@docusaurus/module-type-aliases": "3.7.0",
     "@docusaurus/preset-classic": "3.7.0",
