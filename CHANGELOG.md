@@ -1,3 +1,9 @@
+## [8.8.1](https://github.com/laterpay/supertab-browser/compare/v8.8.0...v8.8.1) (2025-01-28)
+
+### Bug Fixes
+
+- export types ([fd5269c](https://github.com/laterpay/supertab-browser/commit/fd5269c02491bbdaa854d2038af743e941ea367b))
+
 # [8.8.0](https://github.com/laterpay/supertab-browser/compare/v8.7.4...v8.8.0) (2025-01-28)
 
 ### Features
