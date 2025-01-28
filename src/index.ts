@@ -26,7 +26,13 @@ import {
 
 import { authFlow, getAuthStatus, getAccessToken, AuthStatus } from "./auth";
 import { DEFAULT_CURRENCY, formatPrice } from "./price";
-import { Authenticable, FormattedTab, ScreenHint, SystemUrls } from "./types";
+import {
+  Authenticable,
+  FormattedTab,
+  ScreenHint,
+  SystemUrls,
+  UiConfig,
+} from "./types";
 import { handleChildWindow, openBlankChildWindow } from "./window";
 import { getPublicCurrencyDetails, setupCurrencyHandling } from "./utils";
 
@@ -567,7 +573,7 @@ export class Supertab {
       id: experience.id,
       name: experience.name,
       type: experience.type,
-      uiConfig: experience.uiConfig,
+      uiConfig: experience.uiConfig as UiConfig,
       product: {
         id: experience.product.id,
         name: experience.product.name,
