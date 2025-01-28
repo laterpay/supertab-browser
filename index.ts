@@ -18,4 +18,5 @@ if (typeof window !== "undefined") {
   };
 }
 
+export * from "./src/types";
 export default Supertab;
