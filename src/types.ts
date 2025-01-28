@@ -22,8 +22,6 @@ export type FormattedTab = Awaited<
 
 export type PublicCurrencyDetails = Pick<Currency, "isoCode" | "baseUnit">;
 
-type UiConfigOfferingId = string | null | undefined;
-
 export type UiConfig = {
   colors: {
     text: string;
@@ -31,13 +29,13 @@ export type UiConfig = {
     highlightedOfferingText?: string;
   };
   mainScreen?: {
-    offeringIds: UiConfigOfferingId[];
+    offeringIds: (string | null)[];
     highlightedOfferingId: string;
-    upsellOfferingIds: string[];
+    upsellOfferingIds: (string | null)[];
   };
   moreOptionsScreen?: {
-    offeringIds: UiConfigOfferingId[];
+    offeringIds: (string | null)[];
     highlightedOfferingId: string;
-    upsellOfferingIds: string[];
+    upsellOfferingIds: (string | null)[];
   };
 };
