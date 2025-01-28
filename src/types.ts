@@ -26,16 +26,16 @@ export type UiConfig = {
   colors: {
     text: string;
     background: string;
-    highlightedOfferingText?: string;
+    highlightedOfferingText: string | null;
   };
-  mainScreen?: {
+  mainScreen: {
     offeringIds: (string | null)[];
-    highlightedOfferingId: string;
+    highlightedOfferingId: string | null;
     upsellOfferingIds: (string | null)[];
   };
-  moreOptionsScreen?: {
+  moreOptionsScreen: {
     offeringIds: (string | null)[];
-    highlightedOfferingId: string;
+    highlightedOfferingId: string | null;
     upsellOfferingIds: (string | null)[];
   };
 };
