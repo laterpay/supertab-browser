@@ -1,3 +1,9 @@
+# [8.8.0](https://github.com/laterpay/supertab-browser/compare/v8.7.4...v8.8.0) (2025-01-28)
+
+### Features
+
+- UiConfig type ([#163](https://github.com/laterpay/supertab-browser/issues/163)) ([4253598](https://github.com/laterpay/supertab-browser/commit/4253598fc5e785c0cc2507af2e5f19780caf9799))
+
 ## [8.7.4](https://github.com/laterpay/supertab-browser/compare/v8.7.3...v8.7.4) (2025-01-22)
 
 ### Bug Fixes
