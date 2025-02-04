@@ -259,7 +259,9 @@ export class Supertab {
           validTo: access.access.validTo
             ? new Date(access.access.validTo * 1000)
             : undefined,
-          isSubscription: !!access.access.subscriptionId,
+          isSubscription:
+            !!access.access.subscriptionId &&
+            access.access.subscriptionId !== "None",
         },
       };
     }
