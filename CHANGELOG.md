@@ -1,3 +1,9 @@
+## [8.8.2](https://github.com/laterpay/supertab-browser/compare/v8.8.1...v8.8.2) (2025-02-04)
+
+### Bug Fixes
+
+- check against subscription id that can be a None string ([#168](https://github.com/laterpay/supertab-browser/issues/168)) ([e26c13e](https://github.com/laterpay/supertab-browser/commit/e26c13e3df204900b6001936f3c863c7f4207049))
+
 ## [8.8.1](https://github.com/laterpay/supertab-browser/compare/v8.8.0...v8.8.1) (2025-01-28)
 
 ### Bug Fixes
