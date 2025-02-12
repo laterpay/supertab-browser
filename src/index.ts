@@ -107,6 +107,7 @@ export class Supertab {
     state?: object;
     redirectUri?: string;
   } = {}) {
+    const experiencesConfig = await this.#getClientExperiencesConfig();
     return authFlow({
       silently: !!silently,
       screenHint,
@@ -114,7 +115,7 @@ export class Supertab {
       authUrl: this.systemUrls.authUrl,
       tokenUrl: this.systemUrls.tokenUrl,
       redirectUri: `${this.systemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${
-        redirectUri ?? window.location.origin
+        redirectUri ?? experiencesConfig.redirectUri
       }`,
       clientId: this.clientId,
     });
