@@ -1,3 +1,9 @@
+## [8.8.3](https://github.com/laterpay/supertab-browser/compare/v8.8.2...v8.8.3) (2025-02-12)
+
+### Bug Fixes
+
+- **CL-1869:** default to redirect URI from experience config ([#175](https://github.com/laterpay/supertab-browser/issues/175)) ([e91dc78](https://github.com/laterpay/supertab-browser/commit/e91dc7811e96e52a22b8792cb635a41a6b4e4893))
+
 ## [8.8.2](https://github.com/laterpay/supertab-browser/compare/v8.8.1...v8.8.2) (2025-02-04)
 
 ### Bug Fixes
