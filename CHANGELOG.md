@@ -1,3 +1,9 @@
+## [8.8.4](https://github.com/laterpay/supertab-browser/compare/v8.8.3...v8.8.4) (2025-02-12)
+
+### Bug Fixes
+
+- **CL-1869:** Use full redirect URI from experiences config ([#176](https://github.com/laterpay/supertab-browser/issues/176)) ([5f0916c](https://github.com/laterpay/supertab-browser/commit/5f0916cc93193176fdc2b7179b22a93e4a7118e8))
+
 ## [8.8.3](https://github.com/laterpay/supertab-browser/compare/v8.8.2...v8.8.3) (2025-02-12)
 
 ### Bug Fixes
