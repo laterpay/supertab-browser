@@ -114,9 +114,9 @@ export class Supertab {
       state,
       authUrl: this.systemUrls.authUrl,
       tokenUrl: this.systemUrls.tokenUrl,
-      redirectUri: `${this.systemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${
-        redirectUri ?? experiencesConfig.redirectUri
-      }`,
+      redirectUri: redirectUri
+        ? `${this.systemUrls.ssoBaseUrl}/oauth2/auth-proxy?origin=${redirectUri}`
+        : experiencesConfig.redirectUri,
       clientId: this.clientId,
     });
   }
