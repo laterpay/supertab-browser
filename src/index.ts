@@ -210,13 +210,12 @@ export class Supertab {
 
         return {
           id: eachOffering.id,
+          duration: eachOffering.duration,
           description: eachOffering.description,
           salesModel: eachOffering.salesModel,
           paymentModel: eachOffering.paymentModel,
           price: getPrice(preferredCurrencyPrice!),
           prices,
-          timePassDetails: eachOffering.timePassDetails,
-          recurringDetails: eachOffering.recurringDetails,
           connectedSubscriptionOffering,
         };
       })
@@ -567,8 +566,7 @@ export class Supertab {
         // it uses `USD` as a fallback.
         price: getPrice(preferredCurrencyPrice!),
         prices,
-        timePassDetails: offering.timePassDetails,
-        recurringDetails: offering.recurringDetails,
+        duration: offering.duration,
       };
     };
 

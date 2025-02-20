@@ -114,8 +114,6 @@ const setup = ({
             currency: "BRL",
           },
         ] as Price[],
-        recurringDetails: null,
-        timePassDetails: null,
         offeringPrices: [
           {
             id: "test-offering-price",
@@ -195,10 +193,6 @@ const setup = ({
             currency: "BRL",
           },
         ] as Price[],
-        recurringDetails: null,
-        timePassDetails: {
-          validTimedelta: "1d",
-        },
       },
     ],
     upsells: [
@@ -223,10 +217,6 @@ const setup = ({
               currency: "BRL",
             },
           ] as Price[],
-          timePassDetails: {
-            validTimedelta: "1d",
-          },
-          recurringDetails: null,
         },
         upsellOffering: {
           id: "test-offering-id",
@@ -248,11 +238,6 @@ const setup = ({
               currency: "BRL",
             },
           ] as Price[],
-          timePassDetails: null,
-          recurringDetails: {
-            billingInterval: "day",
-            intervalCount: 1,
-          },
         },
         discount: 0,
       },
@@ -389,7 +374,6 @@ function createTabData(currency: string): TabResponsePurchaseEnhanced {
         validFrom: null,
         validTo: null,
         validTimedelta: null,
-        recurringDetails: null,
         merchantName: "test-merchant-name",
       },
     ],
@@ -524,8 +508,6 @@ describe("Supertab", () => {
               text: "€1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -554,8 +536,6 @@ describe("Supertab", () => {
               text: "$1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -583,8 +563,6 @@ describe("Supertab", () => {
               text: "R$1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -636,7 +614,6 @@ describe("Supertab", () => {
                   validFrom: null,
                   validTo: null,
                   validTimedelta: null,
-                  recurringDetails: null,
                   merchantName: "test-merchant-name",
                 },
               ],
@@ -683,8 +660,6 @@ describe("Supertab", () => {
               text: "€1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -708,8 +683,6 @@ describe("Supertab", () => {
               text: "€1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -735,8 +708,6 @@ describe("Supertab", () => {
               text: "€1.00",
             },
             prices,
-            recurringDetails: null,
-            timePassDetails: null,
             connectedSubscriptionOffering: undefined,
           },
         ]);
@@ -926,7 +897,6 @@ describe("Supertab", () => {
                   validFrom: null,
                   validTo: null,
                   validTimedelta: null,
-                  recurringDetails: null,
                 },
               ],
               metadata: {
@@ -974,7 +944,6 @@ describe("Supertab", () => {
               id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
-              recurringDetails: null,
               validTo: null,
               price: {
                 amount: 50,
@@ -1056,7 +1025,6 @@ describe("Supertab", () => {
                 validFrom: null,
                 validTo: null,
                 validTimedelta: null,
-                recurringDetails: null,
               },
             ],
             metadata: {
@@ -1167,7 +1135,6 @@ describe("Supertab", () => {
                 },
               },
               validTo: null,
-              recurringDetails: null,
             },
           ],
         },
@@ -1394,7 +1361,6 @@ describe("Supertab", () => {
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: null,
               summary: "test-summary",
               validTo: null,
             },
@@ -1457,7 +1423,6 @@ describe("Supertab", () => {
                 text: "€0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: null,
               summary: "test-summary",
               validTo: null,
             },
@@ -1516,7 +1481,6 @@ describe("Supertab", () => {
                   text: "R$0.50",
                 },
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-                recurringDetails: null,
                 summary: "test-summary",
                 validTo: null,
               },
@@ -1584,7 +1548,6 @@ describe("Supertab", () => {
                 text: "$0.50",
               },
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
-              recurringDetails: null,
               summary: "test-summary",
               validTo: null,
             },
@@ -1878,7 +1841,6 @@ describe("Supertab", () => {
               },
             },
             validTo: null,
-            recurringDetails: null,
           },
         ],
       });
@@ -1924,7 +1886,6 @@ describe("Supertab", () => {
               },
             },
             validTo: null,
-            recurringDetails: null,
           },
         ],
       });
