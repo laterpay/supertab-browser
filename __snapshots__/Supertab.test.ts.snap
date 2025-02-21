@@ -5,6 +5,10 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
   {
     "connectedSubscriptionOffering": undefined,
     "description": "Test Offering Description",
+    "duration": {
+      "count": 5,
+      "unit": "minute",
+    },
     "id": "test-offering-id",
     "paymentModel": "pay_later",
     "price": {
@@ -53,6 +57,10 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -105,6 +113,10 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -145,6 +157,10 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
@@ -195,6 +211,10 @@ exports[`Supertab .getExperience return experience by id 1`] = `
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -247,6 +267,10 @@ exports[`Supertab .getExperience return experience by id 1`] = `
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -287,6 +311,10 @@ exports[`Supertab .getExperience return experience by id 1`] = `
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
@@ -337,6 +365,10 @@ exports[`Supertab .getExperience returns upsells 1`] = `
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -389,6 +421,10 @@ exports[`Supertab .getExperience returns upsells 1`] = `
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -429,6 +465,10 @@ exports[`Supertab .getExperience returns upsells 1`] = `
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
