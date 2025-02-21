@@ -11,7 +11,7 @@ import {
   UserIdentityApi,
   ItemsApi,
   AccessApi,
-  ClientConfig,
+  ClientConfigResponse,
   TabsApi,
   TabStatus,
   ResponseError,
@@ -66,7 +66,7 @@ export class Supertab {
   private tapperConfig: Configuration;
   private language: string;
   private preferredCurrencyCode: string | undefined;
-  private _clientConfig?: ClientConfig;
+  private _clientConfig?: ClientConfigResponse;
   private _clientExperiencesConfig?: ClientExperiencesConfigResponse;
   private systemUrls: SystemUrls;
 
@@ -446,8 +446,8 @@ export class Supertab {
     clientConfig,
   }: {
     tab: TabResponse;
-    config?: ClientConfig | ClientExperiencesConfigResponse;
-    clientConfig?: ClientConfig; // keeping for backwards compatibility
+    config?: ClientConfigResponse | ClientExperiencesConfigResponse;
+    clientConfig?: ClientConfigResponse; // keeping for backwards compatibility
   }) {
     const configObject = clientConfig || config;
 
@@ -576,10 +576,10 @@ export class Supertab {
       type: experience.type,
       uiConfig: experience.uiConfig as UiConfig,
       product: {
-        id: experience.product.id,
-        name: experience.product.name,
-        contentKey: experience.product.contentKey,
-        contentKeyRequired: experience.product.contentKeyRequired,
+        id: experience.product?.id,
+        name: experience.product?.name,
+        contentKey: experience.product?.contentKey,
+        contentKeyRequired: experience.product?.contentKeyRequired,
       },
       offerings: experience.offerings.map(formatOffering),
       upsells: experience.upsells.map((upsell) => {
