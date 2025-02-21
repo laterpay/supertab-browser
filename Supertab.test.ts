@@ -129,6 +129,10 @@ const setup = ({
         isActive: true,
         subscriptionOfferingId: null,
         connectedSubscriptionOffering: null,
+        duration: {
+          count: 5,
+          unit: "minute",
+        },
       },
     ] as SiteOffering[],
     currencies: [
@@ -175,6 +179,10 @@ const setup = ({
         salesModel: "time_pass",
         productId: "test-product-id",
         paymentModel: "pay_later",
+        duration: {
+          count: 5,
+          unit: "minute",
+        },
         suggestedCurrencyPrice: {
           amount: 100,
           currency: clientConfigProps?.offeringCurrency ?? "USD",
@@ -203,6 +211,10 @@ const setup = ({
           salesModel: "time_pass",
           paymentModel: "pay_later",
           productId: "test-product-id",
+          duration: {
+            count: 5,
+            unit: "minute",
+          },
           prices: [
             {
               amount: 100,
@@ -224,6 +236,10 @@ const setup = ({
           salesModel: "subscription",
           paymentModel: "pay_now",
           productId: "test-product-id",
+          duration: {
+            count: 5,
+            unit: "minute",
+          },
           prices: [
             {
               amount: 100,
@@ -527,6 +543,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
@@ -554,6 +574,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
@@ -651,6 +675,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
@@ -674,6 +702,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
@@ -699,6 +731,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
@@ -795,6 +831,10 @@ describe("Supertab", () => {
             price: {
               amount: 100,
               currency: "USD",
+            },
+            duration: {
+              count: 5,
+              unit: "minute",
             },
             prices: [
               {
