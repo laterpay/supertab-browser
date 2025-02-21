@@ -515,6 +515,10 @@ describe("Supertab", () => {
             description: "Test Offering Description",
             salesModel: "time_pass",
             paymentModel: "pay_later",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 100,
               currency: {
