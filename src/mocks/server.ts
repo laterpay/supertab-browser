@@ -4,8 +4,8 @@ import { handlers } from "./handlers";
 import {
   AccessResponse,
   AccessResponseToJSON,
-  ClientConfig,
-  ClientConfigToJSON,
+  ClientConfigResponse,
+  ClientConfigResponseToJSON,
   ClientExperiencesConfigResponse,
   ClientExperiencesConfigResponseToJSON,
   HealthResponse,
@@ -21,12 +21,15 @@ import {
 } from "@getsupertab/tapper-sdk";
 
 // typed mocks handlers
-const withClientConfig = (clientConfig: ClientConfig) => {
+const withClientConfig = (clientConfig: ClientConfigResponse) => {
   server.use(
     rest.get(
       "https://tapi.sbx.supertab.co/v1/public/items/client/:id/config",
       (_, res, ctx) =>
-        res(ctx.status(200), ctx.json(ClientConfigToJSON(clientConfig))),
+        res(
+          ctx.status(200),
+          ctx.json(ClientConfigResponseToJSON(clientConfig)),
+        ),
     ),
   );
 

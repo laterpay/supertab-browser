@@ -5,6 +5,10 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
   {
     "connectedSubscriptionOffering": undefined,
     "description": "Test Offering Description",
+    "duration": {
+      "count": 5,
+      "unit": "minute",
+    },
     "id": "test-offering-id",
     "paymentModel": "pay_later",
     "price": {
@@ -41,9 +45,7 @@ exports[`Supertab .getOfferings with no existing tab return offerings with defau
         "text": "R$1.00",
       },
     ],
-    "recurringDetails": null,
     "salesModel": "time_pass",
-    "timePassDetails": null,
   },
 ]
 `;
@@ -55,6 +57,10 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -91,11 +97,7 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
           "text": "R$1.00",
         },
       ],
-      "recurringDetails": null,
       "salesModel": "time_pass",
-      "timePassDetails": {
-        "validTimedelta": "1d",
-      },
     },
   ],
   "product": {
@@ -111,6 +113,10 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -147,14 +153,14 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": null,
         "salesModel": "time_pass",
-        "timePassDetails": {
-          "validTimedelta": "1d",
-        },
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
@@ -191,12 +197,7 @@ exports[`Supertab .getExperience return first experience if id is not supplied 1
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": {
-          "billingInterval": "day",
-          "intervalCount": 1,
-        },
         "salesModel": "subscription",
-        "timePassDetails": null,
       },
     },
   ],
@@ -210,6 +211,10 @@ exports[`Supertab .getExperience return experience by id 1`] = `
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -246,11 +251,7 @@ exports[`Supertab .getExperience return experience by id 1`] = `
           "text": "R$1.00",
         },
       ],
-      "recurringDetails": null,
       "salesModel": "time_pass",
-      "timePassDetails": {
-        "validTimedelta": "1d",
-      },
     },
   ],
   "product": {
@@ -266,6 +267,10 @@ exports[`Supertab .getExperience return experience by id 1`] = `
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -302,14 +307,14 @@ exports[`Supertab .getExperience return experience by id 1`] = `
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": null,
         "salesModel": "time_pass",
-        "timePassDetails": {
-          "validTimedelta": "1d",
-        },
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
@@ -346,12 +351,7 @@ exports[`Supertab .getExperience return experience by id 1`] = `
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": {
-          "billingInterval": "day",
-          "intervalCount": 1,
-        },
         "salesModel": "subscription",
-        "timePassDetails": null,
       },
     },
   ],
@@ -365,6 +365,10 @@ exports[`Supertab .getExperience returns upsells 1`] = `
   "offerings": [
     {
       "description": "Test Offering Description",
+      "duration": {
+        "count": 5,
+        "unit": "minute",
+      },
       "id": "test-offering-id",
       "paymentModel": "pay_later",
       "price": {
@@ -401,11 +405,7 @@ exports[`Supertab .getExperience returns upsells 1`] = `
           "text": "R$1.00",
         },
       ],
-      "recurringDetails": null,
       "salesModel": "time_pass",
-      "timePassDetails": {
-        "validTimedelta": "1d",
-      },
     },
   ],
   "product": {
@@ -421,6 +421,10 @@ exports[`Supertab .getExperience returns upsells 1`] = `
       "discount": 0,
       "mainOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_later",
         "price": {
@@ -457,14 +461,14 @@ exports[`Supertab .getExperience returns upsells 1`] = `
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": null,
         "salesModel": "time_pass",
-        "timePassDetails": {
-          "validTimedelta": "1d",
-        },
       },
       "upsellOffering": {
         "description": "Test Offering Description",
+        "duration": {
+          "count": 5,
+          "unit": "minute",
+        },
         "id": "test-offering-id",
         "paymentModel": "pay_now",
         "price": {
@@ -501,12 +505,7 @@ exports[`Supertab .getExperience returns upsells 1`] = `
             "text": "R$1.00",
           },
         ],
-        "recurringDetails": {
-          "billingInterval": "day",
-          "intervalCount": 1,
-        },
         "salesModel": "subscription",
-        "timePassDetails": null,
       },
     },
   ],
