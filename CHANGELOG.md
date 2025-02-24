@@ -1,3 +1,23 @@
+# [9.0.0](https://github.com/laterpay/supertab-browser/compare/v8.8.4...v9.0.0) (2025-02-24)
+
+### Features
+
+- move from recurring details and time pass details to duration ([#178](https://github.com/laterpay/supertab-browser/issues/178)) ([5009e5d](https://github.com/laterpay/supertab-browser/commit/5009e5dcc9b5e10c592c02cca261d84e6cda1fae))
+
+### BREAKING CHANGES
+
+- Move from recurring_details and time_pass_details to duration
+
+- fix: fix bundle
+
+- chore: fix types
+
+- chore: adjust specs
+
+- chore: specs
+
+- fix: snapshots
+
 ## [8.8.4](https://github.com/laterpay/supertab-browser/compare/v8.8.3...v8.8.4) (2025-02-12)
 
 ### Bug Fixes
