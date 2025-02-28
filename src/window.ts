@@ -28,7 +28,8 @@ export const handleChildWindow = async <T>({
     }
   };
 
-  const isUrlOpened = openedWindow.location.href === url.toString();
+  const isUrlOpened =
+    openedWindow.location && openedWindow.location.href === url.toString();
 
   if (!isUrlOpened) {
     setWindowLocation();
