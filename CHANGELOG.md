@@ -1,3 +1,9 @@
+## [9.0.1](https://github.com/laterpay/supertab-browser/compare/v9.0.0...v9.0.1) (2025-02-28)
+
+### Bug Fixes
+
+- handle scenario when openedWindow.location is undefined ([fdca888](https://github.com/laterpay/supertab-browser/commit/fdca8884499629fa66a7c3457696afabc75131c5))
+
 # [9.0.0](https://github.com/laterpay/supertab-browser/compare/v8.8.4...v9.0.0) (2025-02-24)
 
 ### Features
