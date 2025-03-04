@@ -363,9 +363,13 @@ export class Supertab {
   async purchase({
     offeringId,
     preferredCurrencyCode = this.preferredCurrencyCode,
+    metadata = {},
   }: {
     offeringId: string;
     preferredCurrencyCode?: string;
+    metadata?: {
+      [key: string]: object;
+    } | null;
   }): Promise<{
     itemAdded: boolean;
     purchaseOutcome: PurchaseOutcome | null;
@@ -386,7 +390,7 @@ export class Supertab {
         offeringId,
         currency,
         purchaseOfferingRequest: {
-          metadata: {},
+          metadata,
         },
       });
 
