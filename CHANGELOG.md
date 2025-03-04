@@ -1,3 +1,9 @@
+# [9.1.0](https://github.com/laterpay/supertab-browser/compare/v9.0.1...v9.1.0) (2025-03-04)
+
+### Features
+
+- CL-1870 allow to pass metadata to the purchase function ([#184](https://github.com/laterpay/supertab-browser/issues/184)) ([47f184b](https://github.com/laterpay/supertab-browser/commit/47f184b0d8f0e51a00aa21f43a55eecbe3e98aa4))
+
 ## [9.0.1](https://github.com/laterpay/supertab-browser/compare/v9.0.0...v9.0.1) (2025-02-28)
 
 ### Bug Fixes
