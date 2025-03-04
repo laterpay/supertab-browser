@@ -367,9 +367,7 @@ export class Supertab {
   }: {
     offeringId: string;
     preferredCurrencyCode?: string;
-    metadata?: {
-      [key: string]: object;
-    } | null;
+    metadata?: { [key: string]: string | number | boolean | null } | null;
   }): Promise<{
     itemAdded: boolean;
     purchaseOutcome: PurchaseOutcome | null;
@@ -390,7 +388,7 @@ export class Supertab {
         offeringId,
         currency,
         purchaseOfferingRequest: {
-          metadata,
+          metadata: metadata as unknown as { [key: string]: object } | null,
         },
       });
 
