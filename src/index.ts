@@ -388,6 +388,10 @@ export class Supertab {
         offeringId,
         currency,
         purchaseOfferingRequest: {
+          // Due to an incorrect type generation by the OpenAPI generator,
+          // the generated type is: { [key: string]: object } | null.
+          // However, according to the docs (https://tapi.sbx.laterpay.net/docs#/),
+          // the correct type should be: { [key: string]: string | number | boolean | null } | null.
           metadata: metadata as unknown as { [key: string]: object } | null,
         },
       });
