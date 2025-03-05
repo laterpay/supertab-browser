@@ -1,3 +1,9 @@
+## [9.1.1](https://github.com/laterpay/supertab-browser/compare/v9.1.0...v9.1.1) (2025-03-05)
+
+### Bug Fixes
+
+- cast wrong metadata generated type ([#186](https://github.com/laterpay/supertab-browser/issues/186)) ([e525c5d](https://github.com/laterpay/supertab-browser/commit/e525c5d3e6a86ac6f74fdd07008d4e94aa56af09))
+
 # [9.1.0](https://github.com/laterpay/supertab-browser/compare/v9.0.1...v9.1.0) (2025-03-04)
 
 ### Features
