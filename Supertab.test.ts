@@ -3,11 +3,11 @@ import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
 import {
-  ClientConfig,
   ClientExperiencesConfigResponse,
   Currency,
   CurrencyOperationalStatus,
   CurrencyRoundingRule,
+  ExperienceConfigResponse,
   ExperienceType,
   Price,
   PurchaseDetail,
@@ -183,10 +183,6 @@ const setup = ({
           count: 5,
           unit: "minute",
         },
-        suggestedCurrencyPrice: {
-          amount: 100,
-          currency: clientConfigProps?.offeringCurrency ?? "USD",
-        },
         prices: [
           {
             amount: 100,
@@ -258,7 +254,7 @@ const setup = ({
         discount: 0,
       },
     ],
-  };
+  } as ExperienceConfigResponse;
 
   const clientExperiencesConfig = {
     redirectUri: "",
@@ -355,7 +351,6 @@ function createTabData(currency: string): TabResponsePurchaseEnhanced {
     closesAt: new Date("2024-01-08T15:34:44.852Z"),
     createdAt: new Date("2023-11-03T15:34:44.852Z"),
     updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-    merchantId: "test-merchant-id",
     userId: "test-user-id",
     status: "open",
     paidAt: null,
@@ -391,6 +386,12 @@ function createTabData(currency: string): TabResponsePurchaseEnhanced {
         validTo: null,
         validTimedelta: null,
         merchantName: "test-merchant-name",
+        completedAt: new Date("2023-11-03T15:34:44.852Z"),
+        duration: {
+          count: 5,
+          unit: "minute",
+        },
+        recurringDetails: null,
       },
     ],
     metadata: {
@@ -438,7 +439,6 @@ describe("Supertab", () => {
         email: "test@supertab.co",
         registrationOrigin: "supertab",
         isSuperuser: false,
-        tabCurrency: "USD",
         lastName: "User",
         createdAt: new Date("2021-01-01T00:00:00.000Z"),
         updatedAt: new Date("2021-01-01T00:00:00.000Z"),
@@ -607,7 +607,6 @@ describe("Supertab", () => {
               closesAt: new Date("2025-01-08T15:34:44.852Z"),
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-              merchantId: "test-merchant-id",
               userId: "test-user-id",
               status: "open",
               paidAt: null,
@@ -643,6 +642,12 @@ describe("Supertab", () => {
                   validTo: null,
                   validTimedelta: null,
                   merchantName: "test-merchant-name",
+                  completedAt: new Date("2023-11-03T15:34:44.852Z"),
+                  duration: {
+                    count: 5,
+                    unit: "minute",
+                  },
+                  recurringDetails: null,
                 },
               ],
               metadata: {
@@ -905,7 +910,6 @@ describe("Supertab", () => {
               closesAt: new Date("2024-01-08T15:34:44.852Z"),
               createdAt: new Date("2023-11-03T15:34:44.852Z"),
               updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-              merchantId: "test-merchant-id",
               userId: "test-user-id",
               status,
               paidAt: null,
@@ -941,6 +945,12 @@ describe("Supertab", () => {
                   validFrom: null,
                   validTo: null,
                   validTimedelta: null,
+                  completedAt: new Date("2023-11-03T15:34:44.852Z"),
+                  duration: {
+                    count: 5,
+                    unit: "minute",
+                  },
+                  recurringDetails: null,
                 },
               ],
               metadata: {
@@ -997,6 +1007,10 @@ describe("Supertab", () => {
                 },
                 text: "$0.50",
               },
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
         });
@@ -1033,7 +1047,6 @@ describe("Supertab", () => {
             closesAt: new Date("2024-01-08T15:34:44.852Z"),
             createdAt: new Date("2023-11-03T15:34:44.852Z"),
             updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-            merchantId: "test-merchant-id",
             userId: "test-user-id",
             status: "closed",
             paidAt: null,
@@ -1069,6 +1082,12 @@ describe("Supertab", () => {
                 validFrom: null,
                 validTo: null,
                 validTimedelta: null,
+                completedAt: new Date("2023-11-03T15:34:44.852Z"),
+                duration: {
+                  count: 5,
+                  unit: "minute",
+                },
+                recurringDetails: null,
               },
             ],
             metadata: {
@@ -1179,6 +1198,10 @@ describe("Supertab", () => {
                 },
               },
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
         },
@@ -1237,7 +1260,6 @@ describe("Supertab", () => {
         closesAt: new Date("2023-01-08T15:34:44.852Z"),
         createdAt: new Date("2023-11-03T15:34:44.852Z"),
         updatedAt: new Date("2023-11-03T15:34:44.852Z"),
-        merchantId: "test-merchant-id",
         userId: "test-user-id",
         status: "full",
         paidAt: null,
@@ -1407,6 +1429,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "open",
@@ -1469,6 +1495,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "open",
@@ -1527,6 +1557,10 @@ describe("Supertab", () => {
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
                 summary: "test-summary",
                 validTo: null,
+                duration: {
+                  count: 5,
+                  unit: "minute",
+                },
               },
             ],
             status: "open",
@@ -1594,6 +1628,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "full",
@@ -1876,6 +1914,10 @@ describe("Supertab", () => {
             id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
             purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
             summary: "test-summary",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 50,
               text: "$0.50",
@@ -1930,6 +1972,10 @@ describe("Supertab", () => {
               },
             },
             validTo: null,
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
           },
         ],
       });

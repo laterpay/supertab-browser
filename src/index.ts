@@ -510,7 +510,7 @@ export class Supertab {
             currency: getPublicCurrencyDetails(currencyObject),
           },
           validTo: purchase.validTo,
-          recurringDetails: purchase.recurringDetails,
+          duration: purchase.duration,
         };
       }),
     };
