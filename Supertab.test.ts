@@ -3,7 +3,6 @@ import { server } from "@/mocks/server";
 import EventEmitter from "events";
 import Supertab from ".";
 import {
-  ClientConfig,
   ClientExperiencesConfigResponse,
   Currency,
   CurrencyOperationalStatus,
@@ -1422,6 +1421,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "open",
@@ -1484,6 +1487,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "open",
@@ -1542,6 +1549,10 @@ describe("Supertab", () => {
                 purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
                 summary: "test-summary",
                 validTo: null,
+                duration: {
+                  count: 5,
+                  unit: "minute",
+                },
               },
             ],
             status: "open",
@@ -1891,6 +1902,10 @@ describe("Supertab", () => {
             id: "purchase.4df706b5-297a-49c5-a4cd-2a10eca12ff9",
             purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
             summary: "test-summary",
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
             price: {
               amount: 50,
               text: "$0.50",
