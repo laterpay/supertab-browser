@@ -1007,6 +1007,10 @@ describe("Supertab", () => {
                 },
                 text: "$0.50",
               },
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
         });
@@ -1194,6 +1198,10 @@ describe("Supertab", () => {
                 },
               },
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
         },
@@ -1620,6 +1628,10 @@ describe("Supertab", () => {
               purchaseDate: new Date("2023-11-03T15:34:44.852Z"),
               summary: "test-summary",
               validTo: null,
+              duration: {
+                count: 5,
+                unit: "minute",
+              },
             },
           ],
           status: "full",
@@ -1960,6 +1972,10 @@ describe("Supertab", () => {
               },
             },
             validTo: null,
+            duration: {
+              count: 5,
+              unit: "minute",
+            },
           },
         ],
       });
