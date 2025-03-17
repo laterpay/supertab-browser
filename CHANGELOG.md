@@ -1,3 +1,13 @@
+# [10.0.0](https://github.com/laterpay/supertab-browser/compare/v9.1.1...v10.0.0) (2025-03-17)
+
+### Bug Fixes
+
+- update `formatTab` to use `duration` ([#191](https://github.com/laterpay/supertab-browser/issues/191)) ([a0e4cd1](https://github.com/laterpay/supertab-browser/commit/a0e4cd15bffd7847fe499cb8d9eb86f57a101c2e))
+
+### BREAKING CHANGES
+
+- `purchase` and `getTab` functions now return a tab with `duration` field, removing `recurringDetails` property.
+
 ## [9.1.1](https://github.com/laterpay/supertab-browser/compare/v9.1.0...v9.1.1) (2025-03-05)
 
 ### Bug Fixes
