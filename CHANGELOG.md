@@ -1,3 +1,9 @@
+## [10.0.1](https://github.com/laterpay/supertab-browser/compare/v10.0.0...v10.0.1) (2025-04-01)
+
+### Bug Fixes
+
+- check for valid content key in the checkAccess ([#196](https://github.com/laterpay/supertab-browser/issues/196)) ([b3837db](https://github.com/laterpay/supertab-browser/commit/b3837db0ad9aaa823ca673f757328109307fcd66))
+
 # [10.0.0](https://github.com/laterpay/supertab-browser/compare/v9.1.1...v10.0.0) (2025-03-17)
 
 ### Bug Fixes
