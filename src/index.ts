@@ -243,9 +243,17 @@ export class Supertab {
   async checkAccess(contentKey?: string) {
     if (!contentKey) {
       const clientConfig = await this.#getClientConfig();
-      contentKey = clientConfig.contentKeys.map(
-        (item) => item.contentKey,
-      )[0] as string;
+      // Find first non-null content key
+      const validContentKey = clientConfig.contentKeys.find(
+        (item) => item.contentKey !== null && item.contentKey !== undefined,
+      )?.contentKey;
+
+      // If no valid content key found, return null access
+      if (!validContentKey) {
+        return { access: null };
+      }
+
+      contentKey = validContentKey;
     }
 
     const access = await new AccessApi(this.tapperConfig).checkAccessV2({
