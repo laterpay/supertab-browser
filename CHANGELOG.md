@@ -1,3 +1,9 @@
+## [10.0.2](https://github.com/laterpay/supertab-browser/compare/v10.0.1...v10.0.2) (2025-04-07)
+
+### Bug Fixes
+
+- authorize cross-origin window ([#197](https://github.com/laterpay/supertab-browser/issues/197)) ([6242266](https://github.com/laterpay/supertab-browser/commit/624226662f73f565d9567c1a5337997c3f97d882))
+
 ## [10.0.1](https://github.com/laterpay/supertab-browser/compare/v10.0.0...v10.0.1) (2025-04-01)
 
 ### Bug Fixes
