@@ -28,8 +28,17 @@ export const handleChildWindow = async <T>({
     }
   };
 
-  const isUrlOpened =
-    openedWindow.location && openedWindow.location.href === url.toString();
+  let isUrlOpened = false;
+
+  // We can't directly access openedWindow.location.href once the page navigates to a cross-origin.
+  try {
+    isUrlOpened =
+      openedWindow.location && openedWindow.location.href === url.toString();
+  } catch (e) {
+    // Cross-origin — can't access href
+    console.log("Cross-origin access error while checking window location:", e);
+    isUrlOpened = false;
+  }
 
   if (!isUrlOpened) {
     setWindowLocation();
