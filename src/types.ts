@@ -22,10 +22,21 @@ export type FormattedTab = Awaited<
 
 export type PublicCurrencyDetails = Pick<Currency, "isoCode" | "baseUnit">;
 
+export type CopyKeys = {
+  title: string;
+  moreOptionsCTA: string;
+};
+
 export type UiConfig = {
   paygateCopy: {
-    title: string;
-    moreOptionsCTA: string;
+    en: CopyKeys;
+    en_GB: CopyKeys;
+    es: CopyKeys;
+    fr: CopyKeys;
+    it: CopyKeys;
+    de: CopyKeys;
+    pt_BR: CopyKeys;
+    ja: CopyKeys;
   };
   colors: {
     text: string;
