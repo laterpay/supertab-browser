@@ -1,3 +1,9 @@
+# [10.1.0](https://github.com/laterpay/supertab-browser/compare/v10.0.2...v10.1.0) (2025-04-10)
+
+### Features
+
+- updates the uiConfig type ([#199](https://github.com/laterpay/supertab-browser/issues/199)) ([46e26e2](https://github.com/laterpay/supertab-browser/commit/46e26e222d25e5ae2ade3b404c66eb314900a5a7))
+
 ## [10.0.2](https://github.com/laterpay/supertab-browser/compare/v10.0.1...v10.0.2) (2025-04-07)
 
 ### Bug Fixes
