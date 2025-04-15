@@ -30,12 +30,12 @@ export type CopyKeys = {
 export type UiConfig = {
   paygateCopy?: {
     en?: CopyKeys;
-    en_GB?: CopyKeys;
+    "en-GB"?: CopyKeys;
     es?: CopyKeys;
     fr?: CopyKeys;
     it?: CopyKeys;
     de?: CopyKeys;
-    pt_BR?: CopyKeys;
+    "pt-BR"?: CopyKeys;
     ja?: CopyKeys;
   };
   colors: {
