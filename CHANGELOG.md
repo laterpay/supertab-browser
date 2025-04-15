@@ -1,3 +1,9 @@
+## [10.1.1](https://github.com/laterpay/supertab-browser/compare/v10.1.0...v10.1.1) (2025-04-15)
+
+### Bug Fixes
+
+- UiConfig type paygate copy ([#201](https://github.com/laterpay/supertab-browser/issues/201)) ([482b6f4](https://github.com/laterpay/supertab-browser/commit/482b6f47eda5bd44eb49e84b776c470f0b042f06))
+
 # [10.1.0](https://github.com/laterpay/supertab-browser/compare/v10.0.2...v10.1.0) (2025-04-10)
 
 ### Features
