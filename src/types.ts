@@ -47,10 +47,12 @@ export type UiConfig = {
     offeringIds: (string | null)[];
     highlightedOfferingId: string;
     upsellOfferingIds: (string | null)[];
+    highlightedUpsellOfferingIds: (string | null)[];
   } | null;
   moreOptionsScreen: {
     offeringIds: (string | null)[];
     highlightedOfferingId: string;
     upsellOfferingIds: (string | null)[];
+    highlightedUpsellOfferingIds: (string | null)[];
   } | null;
 };
