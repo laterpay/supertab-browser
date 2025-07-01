@@ -1,3 +1,9 @@
+# [10.2.0](https://github.com/laterpay/supertab-browser/compare/v10.1.1...v10.2.0) (2025-07-01)
+
+### Features
+
+- add highlighted upsell offering ids to UI config ([#215](https://github.com/laterpay/supertab-browser/issues/215)) ([14e082a](https://github.com/laterpay/supertab-browser/commit/14e082a75df5dd4c0758f66f110f764b9dccd53b))
+
 ## [10.1.1](https://github.com/laterpay/supertab-browser/compare/v10.1.0...v10.1.1) (2025-04-15)
 
 ### Bug Fixes
