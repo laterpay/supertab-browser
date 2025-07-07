@@ -1,3 +1,9 @@
+## [10.2.1](https://github.com/laterpay/supertab-browser/compare/v10.2.0...v10.2.1) (2025-07-07)
+
+### Bug Fixes
+
+- rename `highlightedUpsellOfferingIds` to `highlightedOfferingIds` ([#217](https://github.com/laterpay/supertab-browser/issues/217)) ([dd336b4](https://github.com/laterpay/supertab-browser/commit/dd336b458cb67141fa83ff3d0370f2555d04f758))
+
 # [10.2.0](https://github.com/laterpay/supertab-browser/compare/v10.1.1...v10.2.0) (2025-07-01)
 
 ### Features
