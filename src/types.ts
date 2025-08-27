@@ -41,7 +41,7 @@ export type UiConfig = {
   colors: {
     text: string;
     background: string;
-    highlightedOfferingText: string | null;
+    highlightedOfferingText?: string | null;
   };
   mainScreen: {
     offeringIds: (string | null)[];
