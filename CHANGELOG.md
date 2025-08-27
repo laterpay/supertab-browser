@@ -1,3 +1,9 @@
+## [10.2.2](https://github.com/laterpay/supertab-browser/compare/v10.2.1...v10.2.2) (2025-08-27)
+
+### Bug Fixes
+
+- make highlightedOfferingText optional ([#222](https://github.com/laterpay/supertab-browser/issues/222)) ([4736610](https://github.com/laterpay/supertab-browser/commit/473661024b0fd1f0c5fb957ef76a49f827547f56))
+
 ## [10.2.1](https://github.com/laterpay/supertab-browser/compare/v10.2.0...v10.2.1) (2025-07-07)
 
 ### Bug Fixes
