@@ -1,3 +1,9 @@
+# [10.3.0](https://github.com/laterpay/supertab-browser/compare/v10.2.2...v10.3.0) (2025-09-01)
+
+### Features
+
+- add logo.height to the UiConfig ([#223](https://github.com/laterpay/supertab-browser/issues/223)) ([a52eeda](https://github.com/laterpay/supertab-browser/commit/a52eedafd93b43842db4092c9cb30a2e016dbc45))
+
 ## [10.2.2](https://github.com/laterpay/supertab-browser/compare/v10.2.1...v10.2.2) (2025-08-27)
 
 ### Bug Fixes
