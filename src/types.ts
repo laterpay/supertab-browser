@@ -38,6 +38,9 @@ export type UiConfig = {
     "pt-BR"?: CopyKeys;
     ja?: CopyKeys;
   };
+  logo?: {
+    height?: number;
+  };
   colors: {
     text: string;
     background: string;
