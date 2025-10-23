@@ -1,3 +1,9 @@
+## [10.3.1](https://github.com/laterpay/supertab-browser/compare/v10.3.0...v10.3.1) (2025-10-23)
+
+### Bug Fixes
+
+- add deprecation notice to README ([36e9e14](https://github.com/laterpay/supertab-browser/commit/36e9e14a2ae86d25a2eb69c577c4f3381ef52995))
+
 # [10.3.0](https://github.com/laterpay/supertab-browser/compare/v10.2.2...v10.3.0) (2025-09-01)
 
 ### Features
